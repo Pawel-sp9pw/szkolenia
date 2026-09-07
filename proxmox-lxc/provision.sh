@@ -13,6 +13,8 @@ PHP_TIMEZONE="${PHP_TIMEZONE:-Europe/Warsaw}"
 DB_NAME="${DB_NAME:-moodle}"
 DB_USER="${DB_USER:-moodle}"
 DB_PASS="${DB_PASS:-}"
+REGISTRATION_CONTACT_PHONE="${REGISTRATION_CONTACT_PHONE:-}"
+DEPLOY_REPO_ARCHIVE="${DEPLOY_REPO_ARCHIVE:-https://github.com/Pawel-sp9pw/szkolenia/archive/refs/heads/main.tar.gz}"
 
 MOODLE_DIR="/var/www/moodle"
 MOODLE_DATA="/var/moodledata"
@@ -37,6 +39,8 @@ Webroot Nginx: ${MOODLE_DIR}/public
 Moodledata: ${MOODLE_DATA}
 Cron: /etc/cron.d/moodle
 Nginx: /etc/nginx/sites-available/moodle
+Rejestracja: auth_manualapproval
+Konta oczekujące: ${MOODLE_URL}/auth/manualapproval/pending.php
 EOFSECRETS
   chmod 0600 "$SECRETS_FILE"
 }
@@ -83,19 +87,17 @@ if [[ -z "$ADMIN_PASS" ]]; then
   ADMIN_PASS="Mdl!$(openssl rand -hex 12)Aa9"
 fi
 
-# Zapisz wygenerowane dane od razu, aby były dostępne również po ewentualnym przerwaniu instalacji.
 write_secrets
-
 export DEBIAN_FRONTEND=noninteractive
 
-echo "[1/9] Weryfikuję Debian 13..."
+echo "[1/10] Weryfikuję Debian 13..."
 . /etc/os-release
 if [[ "${ID:-}" != "debian" || "${VERSION_ID:-}" != "13" ]]; then
   echo "Wymagany jest Debian 13. Wykryto: ${PRETTY_NAME:-nieznany system}" >&2
   exit 1
 fi
 
-echo "[2/9] Aktualizuję system i instaluję pakiety..."
+echo "[2/10] Aktualizuję system i instaluję pakiety..."
 apt-get update
 apt-get -y upgrade
 apt-get install -y --no-install-recommends \
@@ -114,10 +116,9 @@ for ext in curl dom gd intl mbstring mysqli sodium xml zip; do
   fi
 done
 [[ "$PHP_MISSING" -eq 0 ]] || exit 1
-
 php -r 'if (version_compare(PHP_VERSION, "8.3.0", "<")) {fwrite(STDERR, "PHP jest za stare\n"); exit(1);} echo "PHP ".PHP_VERSION." OK\n";'
 
-echo "[3/9] Konfiguruję PHP 8.4..."
+echo "[3/10] Konfiguruję PHP 8.4..."
 for sapi in fpm cli; do
   cat > "/etc/php/${PHP_VERSION}/${sapi}/conf.d/99-moodle.ini" <<PHPINI
 memory_limit = 512M
@@ -143,7 +144,7 @@ systemctl enable --now "php${PHP_VERSION}-fpm"
 systemctl restart "php${PHP_VERSION}-fpm"
 [[ -S "$PHP_FPM_SOCKET" ]] || { echo "Brak socketu PHP-FPM: $PHP_FPM_SOCKET" >&2; exit 1; }
 
-echo "[4/9] Konfiguruję MariaDB..."
+echo "[4/10] Konfiguruję MariaDB..."
 cat > /etc/mysql/mariadb.conf.d/60-moodle.cnf <<'DBCONF'
 [mysqld]
 character-set-server = utf8mb4
@@ -170,7 +171,7 @@ GRANT ALL PRIVILEGES ON \`${DB_NAME}\`.* TO '${DB_USER}'@'localhost';
 FLUSH PRIVILEGES;
 SQL
 
-echo "[5/9] Pobieram Moodle $MOODLE_VERSION z moodle.org..."
+echo "[5/10] Pobieram Moodle $MOODLE_VERSION z moodle.org..."
 if [[ -e "$MOODLE_DIR" ]]; then
   INCOMPLETE_BACKUP="/root/moodle-incomplete-$(date +%Y%m%d-%H%M%S)"
   echo "Znaleziono niedokończony katalog $MOODLE_DIR. Przenoszę go do $INCOMPLETE_BACKUP"
@@ -198,7 +199,7 @@ rm -f "$MOODLE_ARCHIVE"
 install -d -o www-data -g www-data -m 0770 "$MOODLE_DATA"
 chown -R www-data:www-data "$MOODLE_DIR"
 
-echo "[6/9] Instaluję Moodle z CLI..."
+echo "[6/10] Instaluję Moodle z CLI..."
 runuser -u www-data -- /usr/bin/php "$MOODLE_DIR/admin/cli/install.php" \
   --non-interactive \
   --agree-license \
@@ -229,7 +230,36 @@ grep -q '\$CFG->routerconfigured = true;' "$MOODLE_DIR/config.php" || {
 
 runuser -u www-data -- /usr/bin/php "$MOODLE_DIR/admin/cli/cfg.php" --name=timezone --set="$PHP_TIMEZONE" >/dev/null
 
-echo "[7/9] Ustawiam bezpieczne prawa dostępu..."
+echo "[7/10] Instaluję auth_manualapproval i konfiguruję rejestrację..."
+DEPLOY_ARCHIVE="/tmp/szkolenia-deploy.tar.gz"
+DEPLOY_DIR="/tmp/szkolenia-deploy"
+rm -rf "$DEPLOY_DIR" "$DEPLOY_ARCHIVE"
+curl -fL --retry 3 --retry-delay 2 "$DEPLOY_REPO_ARCHIVE" -o "$DEPLOY_ARCHIVE"
+mkdir -p "$DEPLOY_DIR"
+tar -xzf "$DEPLOY_ARCHIVE" -C "$DEPLOY_DIR" --strip-components=1
+rm -f "$DEPLOY_ARCHIVE"
+
+[[ -f "$DEPLOY_DIR/moodle/auth/manualapproval/auth.php" ]] || { echo "Brak auth_manualapproval w repo wdrożeniowym." >&2; exit 1; }
+[[ -f "$DEPLOY_DIR/moodle/configure.php" ]] || { echo "Brak moodle/configure.php w repo wdrożeniowym." >&2; exit 1; }
+
+rm -rf "$MOODLE_DIR/public/auth/manualapproval"
+cp -a "$DEPLOY_DIR/moodle/auth/manualapproval" "$MOODLE_DIR/public/auth/manualapproval"
+chown -R www-data:www-data "$MOODLE_DIR/public/auth/manualapproval"
+
+runuser -u www-data -- /usr/bin/php "$MOODLE_DIR/admin/cli/upgrade.php" --non-interactive
+runuser -u www-data -- env \
+  MOODLE_DIR="$MOODLE_DIR" \
+  REGISTRATION_CONTACT_PHONE="$REGISTRATION_CONTACT_PHONE" \
+  /usr/bin/php "$DEPLOY_DIR/moodle/configure.php"
+
+REGISTER_AUTH="$(runuser -u www-data -- /usr/bin/php "$MOODLE_DIR/admin/cli/cfg.php" --name=registerauth 2>/dev/null | tail -n1 | tr -d '\r')"
+if [[ "$REGISTER_AUTH" != "manualapproval" ]]; then
+  echo "Nie udało się ustawić registerauth=manualapproval (otrzymano: $REGISTER_AUTH)." >&2
+  exit 1
+fi
+rm -rf "$DEPLOY_DIR"
+
+echo "[8/10] Ustawiam bezpieczne prawa dostępu..."
 chown -R root:root "$MOODLE_DIR"
 find "$MOODLE_DIR" -type d -exec chmod 0755 {} +
 find "$MOODLE_DIR" -type f -exec chmod 0644 {} +
@@ -239,7 +269,7 @@ chown -R www-data:www-data "$MOODLE_DATA"
 find "$MOODLE_DATA" -type d -exec chmod 0770 {} +
 find "$MOODLE_DATA" -type f -exec chmod 0660 {} +
 
-echo "[8/9] Konfiguruję Nginx i cron..."
+echo "[9/10] Konfiguruję Nginx i cron..."
 cat > /etc/nginx/sites-available/moodle <<NGINX
 server {
     listen 80 default_server;
@@ -289,17 +319,19 @@ cat > /etc/cron.d/moodle <<EOFCRON
 EOFCRON
 chmod 0644 /etc/cron.d/moodle
 systemctl enable --now cron
-
-# Ręczny test crona przed uznaniem instalacji za zakończoną.
 runuser -u www-data -- /usr/bin/php "$MOODLE_DIR/admin/cli/cron.php" >/dev/null
 
-echo "[9/9] Wykonuję testy końcowe..."
+echo "[10/10] Wykonuję testy końcowe..."
 nginx -t
 systemctl is-active --quiet nginx
 systemctl is-active --quiet "php${PHP_VERSION}-fpm"
 systemctl is-active --quiet mariadb
 systemctl is-active --quiet cron
 curl -fsS --max-time 10 http://127.0.0.1/ >/dev/null
+curl -fsS --max-time 10 http://127.0.0.1/login/signup.php | grep -q 'name="institution"' || {
+  echo "Formularz auth_manualapproval nie został poprawnie wyrenderowany." >&2
+  exit 1
+}
 
 write_secrets
 
@@ -310,3 +342,4 @@ echo "============================================================"
 cat "$SECRETS_FILE"
 echo
 echo "Dane są zapisane również w: $SECRETS_FILE (prawa 0600)"
+echo "Rejestracja studentów jest włączona i wymaga zatwierdzenia administratora."
