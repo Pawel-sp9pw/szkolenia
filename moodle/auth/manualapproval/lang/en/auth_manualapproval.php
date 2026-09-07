@@ -7,8 +7,12 @@ $string['passwordagain'] = 'Repeat password';
 $string['passwordsdonotmatch'] = 'The passwords do not match.';
 $string['registrationcomplete'] = 'Registration complete';
 $string['accountawaitingapproval'] = 'Your account has been created and is waiting for administrator approval.';
-$string['signupmessage'] = "Your username: {$a->username}\n\nAccount activation may take up to {$a->days} business days. After that, try to log in using the username above and the password you entered during registration. If you have problems, contact the training administrator by phone.";
-$string['signupmessagephone'] = "Your username: {$a->username}\n\nAccount activation may take up to {$a->days} business days. After that, try to log in using the username above and the password you entered during registration. If you have problems, call: {$a->phone}.";
+$string['signupmessage'] = 'Your username: {$a->username}
+
+Account activation may take up to {$a->days} business days. After that, try to log in using the username above and the password you entered during registration. If you have problems, contact the training administrator by phone.';
+$string['signupmessagephone'] = 'Your username: {$a->username}
+
+Account activation may take up to {$a->days} business days. After that, try to log in using the username above and the password you entered during registration. If you have problems, call: {$a->phone}.';
 $string['continuetologin'] = 'Continue to login';
 $string['activationdays'] = 'Account activation time';
 $string['activationdays_desc'] = 'Number of business days shown as the maximum account activation time.';
@@ -22,7 +26,14 @@ $string['viewprofile'] = 'Edit profile';
 $string['userapproved'] = 'The account for {$a} has been approved.';
 $string['registeredat'] = 'Registered';
 $string['notification_subject'] = 'New Moodle registration';
-$string['notification_body'] = "A new user is waiting for approval.\n\nName: {$a->fullname}\nUsername: {$a->username}\nCompany: {$a->institution}\nPosition: {$a->department}\n\nOpen the pending accounts page in Moodle, verify the details and approve the account.";
+$string['notification_body'] = 'A new user is waiting for approval.
+
+Name: {$a->fullname}
+Username: {$a->username}
+Company: {$a->institution}
+Position: {$a->department}
+
+Open the pending accounts page in Moodle, verify the details and approve the account.';
 $string['notification_small'] = 'New registration: {$a->fullname} ({$a->username})';
 $string['messageprovider:newregistration'] = 'New registration notifications';
 $string['privacy:metadata'] = 'The plugin does not store personal data outside the standard Moodle user account fields.';
