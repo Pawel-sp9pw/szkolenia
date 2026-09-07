@@ -20,6 +20,27 @@ SECRETS_FILE="/root/moodle-install-secrets.txt"
 PHP_VERSION="8.4"
 PHP_FPM_SOCKET="/run/php/php${PHP_VERSION}-fpm.sock"
 
+write_secrets() {
+  cat > "$SECRETS_FILE" <<EOFSECRETS
+Moodle: ${MOODLE_VERSION}
+URL: ${MOODLE_URL}
+Administrator: ${ADMIN_USER}
+Hasło administratora: ${ADMIN_PASS}
+E-mail administratora: ${ADMIN_EMAIL}
+
+Baza danych: ${DB_NAME}
+Użytkownik bazy: ${DB_USER}
+Hasło bazy: ${DB_PASS}
+
+Kod Moodle: ${MOODLE_DIR}
+Webroot Nginx: ${MOODLE_DIR}/public
+Moodledata: ${MOODLE_DATA}
+Cron: /etc/cron.d/moodle
+Nginx: /etc/nginx/sites-available/moodle
+EOFSECRETS
+  chmod 0600 "$SECRETS_FILE"
+}
+
 if [[ $EUID -ne 0 ]]; then
   echo "Provisioning musi być uruchomiony jako root wewnątrz LXC." >&2
   exit 1
@@ -61,6 +82,9 @@ fi
 if [[ -z "$ADMIN_PASS" ]]; then
   ADMIN_PASS="Mdl!$(openssl rand -hex 12)Aa9"
 fi
+
+# Zapisz wygenerowane dane od razu, aby były dostępne również po ewentualnym przerwaniu instalacji.
+write_secrets
 
 export DEBIAN_FRONTEND=noninteractive
 
@@ -277,24 +301,7 @@ systemctl is-active --quiet mariadb
 systemctl is-active --quiet cron
 curl -fsS --max-time 10 http://127.0.0.1/ >/dev/null
 
-cat > "$SECRETS_FILE" <<EOFSECRETS
-Moodle: ${MOODLE_VERSION}
-URL: ${MOODLE_URL}
-Administrator: ${ADMIN_USER}
-Hasło administratora: ${ADMIN_PASS}
-E-mail administratora: ${ADMIN_EMAIL}
-
-Baza danych: ${DB_NAME}
-Użytkownik bazy: ${DB_USER}
-Hasło bazy: ${DB_PASS}
-
-Kod Moodle: ${MOODLE_DIR}
-Webroot Nginx: ${MOODLE_DIR}/public
-Moodledata: ${MOODLE_DATA}
-Cron: /etc/cron.d/moodle
-Nginx: /etc/nginx/sites-available/moodle
-EOFSECRETS
-chmod 0600 "$SECRETS_FILE"
+write_secrets
 
 echo
 echo "============================================================"
