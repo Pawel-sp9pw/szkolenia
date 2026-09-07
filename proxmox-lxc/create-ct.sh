@@ -29,6 +29,7 @@ ADMIN_EMAIL="${ADMIN_EMAIL:-admin@noemail.invalid}"
 PHP_TIMEZONE="${PHP_TIMEZONE:-Europe/Warsaw}"
 DB_NAME="${DB_NAME:-moodle}"
 DB_USER="${DB_USER:-moodle}"
+REGISTRATION_CONTACT_PHONE="${REGISTRATION_CONTACT_PHONE:-}"
 
 REPO_RAW_BASE="${REPO_RAW_BASE:-https://raw.githubusercontent.com/Pawel-sp9pw/szkolenia/main}"
 PROVISION_URL="${PROVISION_URL:-${REPO_RAW_BASE}/proxmox-lxc/provision.sh}"
@@ -129,7 +130,7 @@ bash -n "$TMP_PROVISION"
 pct push "$CTID" "$TMP_PROVISION" /root/moodle-provision.sh
 pct exec "$CTID" -- chmod 0700 /root/moodle-provision.sh
 
-echo "[6/6] Instaluję Nginx, PHP-FPM, MariaDB i Moodle $MOODLE_VERSION..."
+echo "[6/6] Instaluję Nginx, PHP-FPM, MariaDB, Moodle $MOODLE_VERSION i auth_manualapproval..."
 pct exec "$CTID" -- env \
   "MOODLE_VERSION=$MOODLE_VERSION" \
   "MOODLE_URL=$MOODLE_URL" \
@@ -142,6 +143,7 @@ pct exec "$CTID" -- env \
   "PHP_TIMEZONE=$PHP_TIMEZONE" \
   "DB_NAME=$DB_NAME" \
   "DB_USER=$DB_USER" \
+  "REGISTRATION_CONTACT_PHONE=$REGISTRATION_CONTACT_PHONE" \
   bash /root/moodle-provision.sh
 
 if [[ "$START_AFTER_CREATE" != "1" ]]; then
