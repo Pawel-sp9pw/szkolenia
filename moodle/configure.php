@@ -38,8 +38,14 @@ $pattern = '/' . preg_quote($startmarker, '/') . '.*?' . preg_quote($endmarker, 
 $boostscss = trim((string)preg_replace($pattern, '', $boostscss));
 set_config('scss', $boostscss, 'theme_boost');
 
-// Własny motyw potomny odpowiada za branding logowania i rejestracji.
-set_config('theme', 'fub');
+// Motyw ustawiamy dopiero wtedy, gdy został już skopiowany do drzewa Moodle.
+// Przy świeżej instalacji pierwszy etap provisioning instaluje auth_manualapproval,
+// a finalizer dołącza theme_fub i ponownie uruchamia ten helper.
+$themefub = rtrim($moodledir, '/') . '/public/theme/fub/version.php';
+$themeenabled = is_file($themefub);
+if ($themeenabled) {
+    set_config('theme', 'fub');
+}
 
 // Lokalny polski napis przycisku rejestracji. Dzięki temu właściwy tekst jest
 // renderowany po stronie serwera; JS motywu jest dodatkowym zabezpieczeniem.
@@ -67,7 +73,11 @@ assign_capability('moodle/my:manageblocks', CAP_PREVENT, $role->id, $context->id
 purge_all_caches();
 
 echo "Włączono auth_manualapproval i ustawiono rejestrację samoobsługową.\n";
-echo "Ustawiono motyw FUB dla logowania i rejestracji.\n";
+if ($themeenabled) {
+    echo "Ustawiono motyw FUB dla logowania i rejestracji.\n";
+} else {
+    echo "Motyw FUB zostanie włączony w etapie finalizacji.\n";
+}
 echo "Przycisk rejestracji: Zarejestruj się.\n";
 echo "moodle/my:manageblocks dla roli 'user': PREVENT.\n";
 if ($contactphone !== '') {
