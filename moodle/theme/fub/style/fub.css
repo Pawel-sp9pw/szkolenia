@@ -1,0 +1,123 @@
+/* Branding FUB dla stron logowania i rejestracji. */
+body.pagelayout-login .login-layout-left {
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: clamp(2rem, 5vw, 5rem);
+    background:
+        radial-gradient(circle at 18% 20%, rgba(147, 213, 0, .18), transparent 34%),
+        radial-gradient(circle at 82% 78%, rgba(175, 32, 39, .11), transparent 30%),
+        linear-gradient(145deg, #f8fbf5 0%, #eef5ea 100%);
+}
+
+body.pagelayout-login .login-layout-left::before {
+    content: "";
+    position: absolute;
+    width: min(78%, 760px);
+    aspect-ratio: 800 / 138;
+    background-image: url([[pix:theme|logo_fub]]);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    border-radius: 1.5rem;
+    padding: 3rem;
+    box-sizing: content-box;
+    background-color: rgba(255, 255, 255, .88);
+    box-shadow: 0 1.25rem 3.5rem rgba(37, 62, 31, .12);
+}
+
+body.pagelayout-login .login-layout-left-content {
+    display: none !important;
+}
+
+body.pagelayout-login .login-layout-right {
+    background: #ffffff;
+}
+
+body.pagelayout-login .login-layout-right-content {
+    padding: clamp(1.5rem, 4vw, 4rem);
+}
+
+body.pagelayout-login .login-container {
+    width: 100%;
+    max-width: 34rem;
+}
+
+body#page-login-signup .login-container {
+    max-width: 40rem;
+}
+
+body.pagelayout-login .login-heading {
+    font-weight: 700;
+}
+
+body.pagelayout-login #loginbtn,
+body.pagelayout-login .login-signup .btn {
+    width: 100%;
+    min-height: 3.25rem;
+    border-radius: .65rem;
+    font-weight: 700;
+}
+
+body.pagelayout-login .login-signup {
+    margin-top: 1rem;
+}
+
+body.pagelayout-login .login-signup .btn,
+body.pagelayout-login .fub-signup-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #2b9138 !important;
+    background: linear-gradient(135deg, #95d600 0%, #27a541 100%) !important;
+    color: #fff !important;
+    font-size: 1.05rem;
+    box-shadow: 0 .4rem 1.05rem rgba(38, 141, 58, .22);
+    text-decoration: none !important;
+    transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
+}
+
+body.pagelayout-login .login-signup .btn:hover,
+body.pagelayout-login .login-signup .btn:focus,
+body.pagelayout-login .fub-signup-button:hover,
+body.pagelayout-login .fub-signup-button:focus {
+    border-color: #237b30 !important;
+    background: linear-gradient(135deg, #a3df16 0%, #208e38 100%) !important;
+    color: #fff !important;
+    filter: saturate(1.05);
+    transform: translateY(-1px);
+    box-shadow: 0 .55rem 1.3rem rgba(38, 141, 58, .30);
+}
+
+body#page-login-signup form.mform {
+    margin-top: .5rem;
+}
+
+body#page-login-signup form.mform .form-control {
+    min-height: 3rem;
+    border-radius: .55rem;
+}
+
+@media (max-width: 991.98px) {
+    body.pagelayout-login .login-layout-right-content {
+        padding: 1.25rem;
+    }
+
+    body.pagelayout-login .login-container {
+        max-width: 40rem;
+        margin: 0 auto;
+    }
+
+    body.pagelayout-login .login-container::before {
+        content: "";
+        display: block;
+        width: min(100%, 32rem);
+        height: 5.75rem;
+        margin: 0 auto 1.5rem;
+        background-image: url([[pix:theme|logo_fub]]);
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+    }
+}
