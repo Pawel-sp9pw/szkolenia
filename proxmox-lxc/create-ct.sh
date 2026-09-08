@@ -3,7 +3,7 @@ set -euo pipefail
 
 # Moodle LXC installer for Proxmox VE.
 # Run as root on the Proxmox host.
-# Defaults: Debian 12, unprivileged LXC, 2 vCPU, 4 GB RAM, 1 GB swap, 30 GB disk.
+# Defaults: Debian 12, unprivileged LXC, nesting enabled, 2 vCPU, 4 GB RAM, 1 GB swap, 30 GB disk.
 
 CTID="${CTID:-$(pvesh get /cluster/nextid)}"
 CT_HOSTNAME="${CT_HOSTNAME:-moodle-szkolenia}"
@@ -83,7 +83,7 @@ pct create "$CTID" "$TEMPLATE_VOL" \
   --rootfs "${STORAGE}:${ROOTFS_GB}" \
   --net0 "name=eth0,bridge=${BRIDGE},${IP_CONFIG}" \
   --unprivileged 1 \
-  --features nesting=0 \
+  --features nesting=1 \
   --onboot "$ONBOOT" \
   --start 0
 
@@ -142,4 +142,4 @@ fi
 
 echo
 echo "Konfiguracja LXC:"
-pct config "$CTID" | grep -E '^(hostname|cores|memory|swap|rootfs|net0|unprivileged|onboot):' || true
+pct config "$CTID" | grep -E '^(hostname|cores|memory|swap|rootfs|net0|features|unprivileged|onboot):' || true
