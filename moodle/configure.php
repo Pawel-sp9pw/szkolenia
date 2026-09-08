@@ -13,7 +13,7 @@ if (!is_file($configfile)) {
 require($configfile);
 require_once($CFG->libdir . '/accesslib.php');
 
-$auths = \core\di::get(\core\authentication::class)->get_enabled_plugins();
+$auths = \core\authentication::get_enabled_plugins();
 if (!in_array('manualapproval', $auths, true)) {
     $auths[] = 'manualapproval';
     set_config('auth', implode(',', $auths));
