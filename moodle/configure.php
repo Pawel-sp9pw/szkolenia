@@ -42,7 +42,7 @@ $brandingcss = <<<'SCSS'
 body.pagelayout-login #page .login-layout-left {
     background-image: url('https://uniabracka.pl/wp-content/uploads/2021/02/logo-FUB-min-683x455.jpg') !important;
     background-color: #f6f9f2 !important;
-    background-size: min(72%, 680px) auto !important;
+    background-size: 72% auto !important;
     background-position: center center !important;
     background-repeat: no-repeat !important;
 }
@@ -87,7 +87,7 @@ body.pagelayout-login .login-signup .btn-secondary:focus {
 
 @media (max-width: 767.98px) {
     body.pagelayout-login #page .login-layout-left {
-        background-size: min(82%, 520px) auto !important;
+        background-size: 82% auto !important;
         min-height: 12rem;
     }
 }
