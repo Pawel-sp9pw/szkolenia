@@ -3,7 +3,7 @@ set -euo pipefail
 
 # Moodle LXC installer for Proxmox VE.
 # Run as root on the Proxmox host.
-# Defaults: Debian 13, unprivileged LXC, 2 vCPU, 4 GB RAM, 1 GB swap, 30 GB disk.
+# Defaults: Debian 12, unprivileged LXC, 2 vCPU, 4 GB RAM, 1 GB swap, 30 GB disk.
 
 CTID="${CTID:-$(pvesh get /cluster/nextid)}"
 CT_HOSTNAME="${CT_HOSTNAME:-moodle-szkolenia}"
@@ -40,10 +40,7 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 for cmd in pct pveam pvesh curl bash; do
-  command -v "$cmd" >/dev/null 2>&1 || {
-    echo "Brak wymaganego polecenia na hoście Proxmox: $cmd" >&2
-    exit 1
-  }
+  command -v "$cmd" >/dev/null 2>&1 || { echo "Brak wymaganego polecenia: $cmd" >&2; exit 1; }
 done
 
 if pct status "$CTID" >/dev/null 2>&1; then
@@ -51,15 +48,8 @@ if pct status "$CTID" >/dev/null 2>&1; then
   exit 1
 fi
 
-if [[ "$MOODLE_VERSION" != 5.2.* ]]; then
-  echo "Ten instalator jest przygotowany dla Moodle 5.2.x. Otrzymano: $MOODLE_VERSION" >&2
-  exit 1
-fi
-
-if [[ ! "$DB_NAME" =~ ^[A-Za-z0-9_]+$ || ! "$DB_USER" =~ ^[A-Za-z0-9_]+$ ]]; then
-  echo "DB_NAME i DB_USER mogą zawierać wyłącznie litery, cyfry i znak _." >&2
-  exit 1
-fi
+[[ "$MOODLE_VERSION" == 5.2.* ]] || { echo "Instalator jest przygotowany dla Moodle 5.2.x." >&2; exit 1; }
+[[ "$DB_NAME" =~ ^[A-Za-z0-9_]+$ && "$DB_USER" =~ ^[A-Za-z0-9_]+$ ]] || { echo "Nieprawidłowa nazwa bazy/użytkownika." >&2; exit 1; }
 
 cleanup() {
   [[ -n "${TMP_PROVISION:-}" && -f "${TMP_PROVISION:-}" ]] && rm -f "$TMP_PROVISION"
@@ -68,9 +58,9 @@ trap cleanup EXIT
 
 echo "[1/6] Aktualizuję listę szablonów LXC..."
 pveam update >/dev/null
-TEMPLATE="$(pveam available --section system | awk '$2 ~ /^debian-13-standard_/ {print $2}' | sort -V | tail -n1)"
+TEMPLATE="$(pveam available --section system | awk '$2 ~ /^debian-12-standard_/ {print $2}' | sort -V | tail -n1)"
 if [[ -z "${TEMPLATE:-}" ]]; then
-  echo "Nie znaleziono szablonu Debian 13 w pveam." >&2
+  echo "Nie znaleziono szablonu Debian 12 w pveam." >&2
   exit 1
 fi
 
@@ -83,7 +73,7 @@ fi
 
 TEMPLATE_VOL="${TEMPLATE_STORAGE}:vztmpl/${TEMPLATE}"
 
-echo "[3/6] Tworzę unprivileged LXC CTID=$CTID ($CT_HOSTNAME)..."
+echo "[3/6] Tworzę unprivileged LXC Debian 12 CTID=$CTID ($CT_HOSTNAME)..."
 pct create "$CTID" "$TEMPLATE_VOL" \
   --hostname "$CT_HOSTNAME" \
   --ostype debian \
@@ -100,37 +90,29 @@ pct create "$CTID" "$TEMPLATE_VOL" \
 pct start "$CTID"
 echo "[4/6] Czekam na start kontenera i sieci..."
 for _ in $(seq 1 60); do
-  if pct exec "$CTID" -- bash -lc 'ip -4 -o addr show scope global dev eth0 | grep -q .'; then
-    break
-  fi
+  pct exec "$CTID" -- bash -lc 'ip -4 -o addr show scope global dev eth0 | grep -q .' && break
   sleep 1
 done
-
-if ! pct exec "$CTID" -- bash -lc 'ip -4 -o addr show scope global dev eth0 | grep -q .'; then
-  echo "Kontener nie otrzymał adresu IPv4 na eth0. Pozostawiam go uruchomionego do diagnostyki." >&2
-  exit 1
-fi
+pct exec "$CTID" -- bash -lc 'ip -4 -o addr show scope global dev eth0 | grep -q .' || {
+  echo "Kontener nie otrzymał IPv4. Pozostawiam go do diagnostyki." >&2; exit 1;
+}
 
 for _ in $(seq 1 30); do
-  if pct exec "$CTID" -- bash -lc 'getent ahostsv4 deb.debian.org >/dev/null 2>&1'; then
-    break
-  fi
+  pct exec "$CTID" -- bash -lc 'getent ahostsv4 deb.debian.org >/dev/null 2>&1' && break
   sleep 1
 done
+pct exec "$CTID" -- bash -lc 'getent ahostsv4 deb.debian.org >/dev/null 2>&1' || {
+  echo "DNS/Internet w kontenerze nie działa." >&2; exit 1;
+}
 
-if ! pct exec "$CTID" -- bash -lc 'getent ahostsv4 deb.debian.org >/dev/null 2>&1'; then
-  echo "DNS/Internet w kontenerze nie działa. Pozostawiam LXC bez dalszych zmian do diagnostyki." >&2
-  exit 1
-fi
-
-echo "[5/6] Pobieram provisioning z GitHub: $PROVISION_URL"
+echo "[5/6] Pobieram provisioning z GitHub..."
 TMP_PROVISION="$(mktemp /tmp/moodle-provision.XXXXXX.sh)"
 curl -fsSL "$PROVISION_URL" -o "$TMP_PROVISION"
 bash -n "$TMP_PROVISION"
 pct push "$CTID" "$TMP_PROVISION" /root/moodle-provision.sh
 pct exec "$CTID" -- chmod 0700 /root/moodle-provision.sh
 
-echo "[6/6] Instaluję Nginx, PHP-FPM, MariaDB, Moodle $MOODLE_VERSION i auth_manualapproval..."
+echo "[6/6] Instaluję Moodle i konfigurację szkoleniową..."
 pct exec "$CTID" -- env \
   "MOODLE_VERSION=$MOODLE_VERSION" \
   "MOODLE_URL=$MOODLE_URL" \
@@ -146,9 +128,7 @@ pct exec "$CTID" -- env \
   "REGISTRATION_CONTACT_PHONE=$REGISTRATION_CONTACT_PHONE" \
   bash /root/moodle-provision.sh
 
-if [[ "$START_AFTER_CREATE" != "1" ]]; then
-  pct stop "$CTID"
-fi
+if [[ "$START_AFTER_CREATE" != "1" ]]; then pct stop "$CTID"; fi
 
 echo
 echo "============================================================"
@@ -157,8 +137,7 @@ echo "============================================================"
 if [[ "$START_AFTER_CREATE" == "1" ]]; then
   pct exec "$CTID" -- cat /root/moodle-install-secrets.txt
 else
-  echo "Kontener został zatrzymany. Po uruchomieniu dane instalacji odczytasz poleceniem:"
-  echo "  pct exec $CTID -- cat /root/moodle-install-secrets.txt"
+  echo "Po uruchomieniu kontenera: pct exec $CTID -- cat /root/moodle-install-secrets.txt"
 fi
 
 echo
