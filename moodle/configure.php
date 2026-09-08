@@ -13,11 +13,17 @@ if (!is_file($configfile)) {
 require($configfile);
 require_once($CFG->libdir . '/accesslib.php');
 
-$auths = \core\authentication::get_enabled_plugins();
+// Moodle stores enabled authentication plugins in $CFG->auth as a comma-separated list.
+// Work directly with that value so this helper does not depend on authentication service
+// classes whose availability differs between Moodle 5.2 builds.
+$auths = [];
+if (!empty($CFG->auth)) {
+    $auths = array_values(array_filter(array_map('trim', explode(',', (string)$CFG->auth))));
+}
 if (!in_array('manualapproval', $auths, true)) {
     $auths[] = 'manualapproval';
-    set_config('auth', implode(',', $auths));
 }
+set_config('auth', implode(',', array_values(array_unique($auths))));
 
 set_config('registerauth', 'manualapproval');
 set_config('authloginviaemail', 0);
