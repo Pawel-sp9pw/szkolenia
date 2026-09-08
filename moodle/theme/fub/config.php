@@ -14,8 +14,9 @@ $THEME->usescourseindex = true;
 $THEME->activityheaderconfig = ['notitle' => true];
 $THEME->javascripts_footer = ['fub'];
 
-// Reuse the tested Boost layout files while keeping theme_fub as the active
-// theme, so our CSS/JS/template overrides are applied without copying core.
+// Dla większości stron korzystamy bez zmian z layoutów Boost. Strony logowania
+// i rejestracji mają własny layout, dzięki czemu theme_fub pozostaje aktywny
+// i może dostarczyć własne CSS, JS oraz logo.
 $THEME->layouts = [
     'base' => ['theme' => 'boost', 'file' => 'drawers.php', 'regions' => []],
     'standard' => ['theme' => 'boost', 'file' => 'drawers.php', 'regions' => ['side-pre'], 'defaultregion' => 'side-pre'],
@@ -27,7 +28,7 @@ $THEME->layouts = [
     'mycourses' => ['theme' => 'boost', 'file' => 'drawers.php', 'regions' => ['side-pre'], 'defaultregion' => 'side-pre', 'options' => ['nonavbar' => true]],
     'mydashboard' => ['theme' => 'boost', 'file' => 'drawers.php', 'regions' => ['side-pre'], 'defaultregion' => 'side-pre', 'options' => ['nonavbar' => true, 'langmenu' => true]],
     'mypublic' => ['theme' => 'boost', 'file' => 'drawers.php', 'regions' => ['side-pre'], 'defaultregion' => 'side-pre'],
-    'login' => ['theme' => 'boost', 'file' => 'login.php', 'regions' => [], 'options' => ['langmenu' => true]],
+    'login' => ['file' => 'login.php', 'regions' => [], 'options' => ['langmenu' => true]],
     'popup' => ['theme' => 'boost', 'file' => 'columns1.php', 'regions' => [], 'options' => ['nofooter' => true, 'nonavbar' => true]],
     'frametop' => ['theme' => 'boost', 'file' => 'columns1.php', 'regions' => [], 'options' => ['nofooter' => true, 'nocoursefooter' => true]],
     'embedded' => ['theme' => 'boost', 'file' => 'embedded.php', 'regions' => ['side-pre'], 'defaultregion' => 'side-pre'],
