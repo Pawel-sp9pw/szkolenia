@@ -14,10 +14,11 @@ DEPLOY_REPO_ARCHIVE="${DEPLOY_REPO_ARCHIVE:-https://github.com/Pawel-sp9pw/szkol
 
 DEPLOY_ARCHIVE=/tmp/szkolenia-finalize.tar.gz
 DEPLOY_DIR=/tmp/szkolenia-finalize
-rm -rf "$DEPLOY_DIR" "$DEPLOY_ARCHIVE"
+SIGNUP_BODY=/tmp/moodle-signup-test.html
+rm -rf "$DEPLOY_DIR" "$DEPLOY_ARCHIVE" "$SIGNUP_BODY"
 
 cleanup() {
-    rm -rf "$DEPLOY_DIR" "$DEPLOY_ARCHIVE"
+    rm -rf "$DEPLOY_DIR" "$DEPLOY_ARCHIVE" "$SIGNUP_BODY"
 }
 trap cleanup EXIT
 
@@ -29,7 +30,6 @@ tar -xzf "$DEPLOY_ARCHIVE" -C "$DEPLOY_DIR" --strip-components=1
 [[ -f "$DEPLOY_DIR/moodle/configure.php" ]] || { echo "Brak moodle/configure.php w repo." >&2; exit 1; }
 [[ -f "$DEPLOY_DIR/moodle/auth/manualapproval/auth.php" ]] || { echo "Brak auth_manualapproval w repo." >&2; exit 1; }
 
-# Ensure the current plugin code is present before running configuration.
 rm -rf "$MOODLE_DIR/public/auth/manualapproval"
 cp -a "$DEPLOY_DIR/moodle/auth/manualapproval" "$MOODLE_DIR/public/auth/manualapproval"
 chown -R www-data:www-data "$MOODLE_DIR/public/auth/manualapproval"
@@ -104,11 +104,30 @@ systemctl is-active --quiet nginx
 systemctl is-active --quiet "php${PHP_VERSION}-fpm"
 systemctl is-active --quiet mariadb
 systemctl is-active --quiet cron
-curl -fsS --max-time 10 http://127.0.0.1/ >/dev/null
-curl -fsS --max-time 10 http://127.0.0.1/login/signup.php | grep -q 'name="institution"' || {
-    echo "Formularz auth_manualapproval nie przeszedł testu." >&2
+
+WWWROOT="$(runuser -u www-data -- /usr/bin/php8.4 "$MOODLE_DIR/admin/cli/cfg.php" --name=wwwroot 2>/dev/null | tail -n1 | tr -d '\r')"
+[[ -n "$WWWROOT" ]] || { echo "Nie udało się odczytać Moodle wwwroot." >&2; exit 1; }
+
+echo "Testuję formularz pod adresem: ${WWWROOT}/login/signup.php"
+HTTP_CODE="$(curl -sS -L --max-time 15 -o "$SIGNUP_BODY" -w '%{http_code}' "${WWWROOT}/login/signup.php" || true)"
+if [[ "$HTTP_CODE" != "200" ]]; then
+    echo "Formularz rejestracji zwrócił HTTP $HTTP_CODE." >&2
+    echo "--- Fragment odpowiedzi ---" >&2
+    sed -n '1,80p' "$SIGNUP_BODY" >&2 || true
+    echo "--- Ostatnie logi Nginx/PHP ---" >&2
+    tail -n 30 /var/log/nginx/error.log >&2 2>/dev/null || true
+    journalctl -u "php${PHP_VERSION}-fpm" -n 30 --no-pager >&2 2>/dev/null || true
     exit 1
-}
+fi
+
+if ! grep -Eq 'name=["'"']institution["'"']|id=["'"']id_institution["'"']' "$SIGNUP_BODY"; then
+    echo "Formularz auth_manualapproval nie zawiera pola Firma (institution)." >&2
+    echo "--- Tytuł / treść diagnostyczna strony ---" >&2
+    grep -Eio '<title>[^<]*</title>|exception[^<]*|error[^<]*|signup[^<]*|registration[^<]*' "$SIGNUP_BODY" | head -n 40 >&2 || true
+    echo "--- Pierwsze 120 linii odpowiedzi ---" >&2
+    sed -n '1,120p' "$SIGNUP_BODY" >&2 || true
+    exit 1
+fi
 
 echo
 echo "============================================================"
