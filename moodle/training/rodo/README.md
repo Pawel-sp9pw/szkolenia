@@ -51,7 +51,7 @@ Każdy kurs ma własny bank **30 pytań**:
 - kolejność odpowiedzi jest losowana,
 - pytania są sytuacyjne i zawierają wyjaśnienia.
 
-Pliki Moodle XML znajdują się w `questions/`. Można je także importować ręcznie do banku pytań Moodle niezależnie od automatycznego importera.
+Treści kursów i banki pytań są zapisane w skompresowanym manifeście `courses.json.gz.b64`. Importer odtwarza dane, generuje poprawny Moodle XML w czasie importu i ładuje pytania do właściwego banku w Moodle 5.2.
 
 ## Automatyczny import do istniejącego Moodle
 
@@ -95,17 +95,9 @@ bash /root/import-rodo.sh --update-content
 
 Ta opcja aktualizuje nazwy, opis i zarządzane sekcje. Nie kasuje pytań ani prób użytkowników.
 
-## Ręczny import banków pytań
+## Pytania i możliwość dalszej edycji
 
-Pliki:
-
-- `questions/rodo-med.xml`
-- `questions/rodo-rej.xml`
-- `questions/rodo-adm.xml`
-- `questions/rodo-it.xml`
-- `questions/rodo-mkt.xml`
-
-Format: **Moodle XML**.
+Pełna treść wszystkich banków pytań znajduje się w manifeście `courses.json.gz.b64`. Po imporcie pytania są zwykłymi pytaniami Moodle i można je dalej edytować w banku pytań każdego kursu.
 
 ## Podstawy prawne wykorzystane w treści
 
