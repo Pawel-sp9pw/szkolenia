@@ -75,10 +75,17 @@ if [[ "${ID:-}" != debian || "${VERSION_ID:-}" != 12 ]]; then
   exit 1
 fi
 
-echo "[2/11] Aktualizuję system i przygotowuję repo PHP..."
+echo "[2/11] Aktualizuję system, locale i przygotowuję repo PHP..."
 apt-get update
 apt-get -y upgrade
-apt-get install -y --no-install-recommends ca-certificates curl gnupg lsb-release apt-transport-https tar unzip openssl cron nginx mariadb-server mariadb-client
+apt-get install -y --no-install-recommends ca-certificates curl gnupg lsb-release apt-transport-https tar unzip openssl cron nginx mariadb-server mariadb-client locales
+
+sed -i 's/^# *en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
+sed -i 's/^# *pl_PL.UTF-8 UTF-8/pl_PL.UTF-8 UTF-8/' /etc/locale.gen
+locale-gen en_US.UTF-8 pl_PL.UTF-8
+update-locale LANG=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
 
 install -d -m 0755 /etc/apt/keyrings
 curl -fsSL https://packages.sury.org/php/apt.gpg | gpg --dearmor --yes -o /etc/apt/keyrings/sury-php.gpg
@@ -147,7 +154,16 @@ if [[ -e "$MOODLE_DIR" ]]; then
 fi
 BRANCH_CODE="$(awk -F. '{printf "%d%02d", $1, $2}' <<<"$MOODLE_VERSION")"
 MOODLE_ARCHIVE="/tmp/moodle-${MOODLE_VERSION}.tgz"
-curl -fL --retry 3 --retry-delay 2 "https://download.moodle.org/download.php/stable${BRANCH_CODE}/moodle-${MOODLE_VERSION}.tgz" -o "$MOODLE_ARCHIVE"
+MOODLE_DOWNLOAD_URL="https://download.moodle.org/download.php/direct/stable${BRANCH_CODE}/moodle-${MOODLE_VERSION}.tgz"
+rm -f "$MOODLE_ARCHIVE"
+curl -fL --retry 3 --retry-delay 2 "$MOODLE_DOWNLOAD_URL" -o "$MOODLE_ARCHIVE"
+ARCHIVE_SIZE="$(stat -c%s "$MOODLE_ARCHIVE")"
+if (( ARCHIVE_SIZE < 50000000 )); then
+  echo "Pobrany plik Moodle ma tylko ${ARCHIVE_SIZE} bajtów; oczekiwano archiwum > 50 MB. URL: $MOODLE_DOWNLOAD_URL" >&2
+  rm -f "$MOODLE_ARCHIVE"
+  exit 1
+fi
+gzip -t "$MOODLE_ARCHIVE" || { echo "Pobrany plik nie jest poprawnym archiwum gzip Moodle." >&2; rm -f "$MOODLE_ARCHIVE"; exit 1; }
 tar -tzf "$MOODLE_ARCHIVE" | grep -Fx 'moodle/public/index.php' >/dev/null || { echo "Brak katalogu public w archiwum Moodle." >&2; exit 1; }
 tar -tzf "$MOODLE_ARCHIVE" | grep -Fx 'moodle/admin/cli/install.php' >/dev/null || { echo "Brak instalatora CLI Moodle." >&2; exit 1; }
 mkdir -p /var/www
