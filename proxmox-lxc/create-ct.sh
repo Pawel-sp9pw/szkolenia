@@ -33,6 +33,7 @@ REGISTRATION_CONTACT_PHONE="${REGISTRATION_CONTACT_PHONE:-}"
 
 REPO_RAW_BASE="${REPO_RAW_BASE:-https://raw.githubusercontent.com/Pawel-sp9pw/szkolenia/main}"
 PROVISION_URL="${PROVISION_URL:-${REPO_RAW_BASE}/proxmox-lxc/provision.sh}"
+FINALIZER_URL="${FINALIZER_URL:-${REPO_RAW_BASE}/proxmox-lxc/finalize-existing.sh}"
 
 if [[ $EUID -ne 0 ]]; then
   echo "Ten skrypt musi być uruchomiony jako root na hoście Proxmox VE." >&2
@@ -53,10 +54,11 @@ fi
 
 cleanup() {
   [[ -n "${TMP_PROVISION:-}" && -f "${TMP_PROVISION:-}" ]] && rm -f "$TMP_PROVISION"
+  [[ -n "${TMP_FINALIZER:-}" && -f "${TMP_FINALIZER:-}" ]] && rm -f "$TMP_FINALIZER"
 }
 trap cleanup EXIT
 
-echo "[1/6] Aktualizuję listę szablonów LXC..."
+echo "[1/7] Aktualizuję listę szablonów LXC..."
 pveam update >/dev/null
 TEMPLATE="$(pveam available --section system | awk '$2 ~ /^debian-12-standard_/ {print $2}' | sort -V | tail -n1)"
 if [[ -z "${TEMPLATE:-}" ]]; then
@@ -65,15 +67,15 @@ if [[ -z "${TEMPLATE:-}" ]]; then
 fi
 
 if ! pveam list "$TEMPLATE_STORAGE" 2>/dev/null | awk '{print $1}' | grep -q "/${TEMPLATE}$"; then
-  echo "[2/6] Pobieram szablon: $TEMPLATE"
+  echo "[2/7] Pobieram szablon: $TEMPLATE"
   pveam download "$TEMPLATE_STORAGE" "$TEMPLATE"
 else
-  echo "[2/6] Szablon jest już dostępny: $TEMPLATE"
+  echo "[2/7] Szablon jest już dostępny: $TEMPLATE"
 fi
 
 TEMPLATE_VOL="${TEMPLATE_STORAGE}:vztmpl/${TEMPLATE}"
 
-echo "[3/6] Tworzę unprivileged LXC Debian 12 CTID=$CTID ($CT_HOSTNAME)..."
+echo "[3/7] Tworzę unprivileged LXC Debian 12 CTID=$CTID ($CT_HOSTNAME)..."
 pct create "$CTID" "$TEMPLATE_VOL" \
   --hostname "$CT_HOSTNAME" \
   --ostype debian \
@@ -88,7 +90,7 @@ pct create "$CTID" "$TEMPLATE_VOL" \
   --start 0
 
 pct start "$CTID"
-echo "[4/6] Czekam na start kontenera i sieci..."
+echo "[4/7] Czekam na start kontenera i sieci..."
 for _ in $(seq 1 60); do
   pct exec "$CTID" -- bash -lc 'ip -4 -o addr show scope global dev eth0 | grep -q .' && break
   sleep 1
@@ -105,14 +107,14 @@ pct exec "$CTID" -- bash -lc 'getent ahostsv4 deb.debian.org >/dev/null 2>&1' ||
   echo "DNS/Internet w kontenerze nie działa." >&2; exit 1;
 }
 
-echo "[5/6] Pobieram provisioning z GitHub..."
+echo "[5/7] Pobieram provisioning z GitHub..."
 TMP_PROVISION="$(mktemp /tmp/moodle-provision.XXXXXX.sh)"
 curl -fsSL "$PROVISION_URL" -o "$TMP_PROVISION"
 bash -n "$TMP_PROVISION"
 pct push "$CTID" "$TMP_PROVISION" /root/moodle-provision.sh
 pct exec "$CTID" -- chmod 0700 /root/moodle-provision.sh
 
-echo "[6/6] Instaluję Moodle i konfigurację szkoleniową..."
+echo "[6/7] Instaluję Moodle i konfigurację szkoleniową..."
 pct exec "$CTID" -- env \
   "MOODLE_VERSION=$MOODLE_VERSION" \
   "MOODLE_URL=$MOODLE_URL" \
@@ -128,11 +130,22 @@ pct exec "$CTID" -- env \
   "REGISTRATION_CONTACT_PHONE=$REGISTRATION_CONTACT_PHONE" \
   bash /root/moodle-provision.sh
 
+echo "[7/7] Wdrażam motyw FUB, dokładne logo i finalne testy..."
+TMP_FINALIZER="$(mktemp /tmp/moodle-finalizer.XXXXXX.sh)"
+curl -fsSL "$FINALIZER_URL" -o "$TMP_FINALIZER"
+bash -n "$TMP_FINALIZER"
+pct push "$CTID" "$TMP_FINALIZER" /root/moodle-finalize.sh
+pct exec "$CTID" -- chmod 0700 /root/moodle-finalize.sh
+pct exec "$CTID" -- env \
+  "REGISTRATION_CONTACT_PHONE=$REGISTRATION_CONTACT_PHONE" \
+  bash /root/moodle-finalize.sh
+
 if [[ "$START_AFTER_CREATE" != "1" ]]; then pct stop "$CTID"; fi
 
 echo
 echo "============================================================"
 echo "Instalacja zakończona. CTID: $CTID"
+echo "Motyw: FUB"
 echo "============================================================"
 if [[ "$START_AFTER_CREATE" == "1" ]]; then
   pct exec "$CTID" -- cat /root/moodle-install-secrets.txt
