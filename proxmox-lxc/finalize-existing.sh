@@ -120,7 +120,7 @@ if [[ "$HTTP_CODE" != "200" ]]; then
     exit 1
 fi
 
-if ! grep -Eq 'name=["'"']institution["'"']|id=["'"']id_institution["'"']' "$SIGNUP_BODY"; then
+if ! grep -Fq 'name="institution"' "$SIGNUP_BODY" && ! grep -Fq 'id="id_institution"' "$SIGNUP_BODY"; then
     echo "Formularz auth_manualapproval nie zawiera pola Firma (institution)." >&2
     echo "--- Tytuł / treść diagnostyczna strony ---" >&2
     grep -Eio '<title>[^<]*</title>|exception[^<]*|error[^<]*|signup[^<]*|registration[^<]*' "$SIGNUP_BODY" | head -n 40 >&2 || true
