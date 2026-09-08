@@ -30,73 +30,19 @@ set_config('activationdays', 2, 'auth_manualapproval');
 $contactphone = trim((string)(getenv('REGISTRATION_CONTACT_PHONE') ?: ''));
 set_config('contactphone', $contactphone, 'auth_manualapproval');
 
-// Branding ekranu logowania. Korzystamy z raw SCSS motywu Boost zamiast modyfikować core Moodle.
-$existingcss = (string)(get_config('theme_boost', 'scss') ?: '');
+// Usuń poprzednie eksperymentalne style dopisywane bezpośrednio do Boost.
+$boostscss = (string)(get_config('theme_boost', 'scss') ?: '');
 $startmarker = '/* FUB_LOGIN_BRANDING_START */';
 $endmarker = '/* FUB_LOGIN_BRANDING_END */';
 $pattern = '/' . preg_quote($startmarker, '/') . '.*?' . preg_quote($endmarker, '/') . '/s';
-$existingcss = trim((string)preg_replace($pattern, '', $existingcss));
+$boostscss = trim((string)preg_replace($pattern, '', $boostscss));
+set_config('scss', $boostscss, 'theme_boost');
 
-$brandingcss = <<<'SCSS'
-/* FUB_LOGIN_BRANDING_START */
-body.pagelayout-login #page .login-layout-left {
-    background-image: url('https://uniabracka.pl/wp-content/uploads/2021/02/logo-FUB-min-683x455.jpg') !important;
-    background-color: #f6f9f2 !important;
-    background-size: 72% auto !important;
-    background-position: center center !important;
-    background-repeat: no-repeat !important;
-}
+// Własny motyw potomny odpowiada za branding logowania i rejestracji.
+set_config('theme', 'fub');
 
-body.pagelayout-login #page .login-layout-left::after {
-    display: none !important;
-    content: none !important;
-}
-
-body.pagelayout-login #page .login-layout-left-content {
-    display: none !important;
-}
-
-body.pagelayout-login .login-signup {
-    margin-top: 1rem;
-}
-
-body.pagelayout-login .login-signup .btn-secondary {
-    display: block;
-    width: 100%;
-    padding: .85rem 1.25rem;
-    border: 1px solid #2e9f39;
-    border-radius: .55rem;
-    background: linear-gradient(135deg, #8fd400 0%, #23a53f 100%);
-    color: #fff;
-    font-size: 1.05rem;
-    font-weight: 700;
-    text-align: center;
-    box-shadow: 0 .35rem .9rem rgba(35, 133, 54, .2);
-    transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
-}
-
-body.pagelayout-login .login-signup .btn-secondary:hover,
-body.pagelayout-login .login-signup .btn-secondary:focus {
-    background: linear-gradient(135deg, #9cdd13 0%, #1f9138 100%);
-    border-color: #247f32;
-    color: #fff;
-    filter: saturate(1.04);
-    transform: translateY(-1px);
-    box-shadow: 0 .5rem 1.15rem rgba(35, 133, 54, .28);
-}
-
-@media (max-width: 767.98px) {
-    body.pagelayout-login #page .login-layout-left {
-        background-size: 82% auto !important;
-        min-height: 12rem;
-    }
-}
-/* FUB_LOGIN_BRANDING_END */
-SCSS;
-
-set_config('scss', trim($existingcss . "\n\n" . $brandingcss), 'theme_boost');
-
-// Lokalny override polskiego napisu przycisku rejestracji.
+// Lokalny polski napis przycisku rejestracji. Dzięki temu właściwy tekst jest
+// renderowany po stronie serwera; JS motywu jest dodatkowym zabezpieczeniem.
 $langdir = rtrim($CFG->dataroot, '/') . '/lang/pl_local';
 if (!is_dir($langdir) && !mkdir($langdir, 0770, true) && !is_dir($langdir)) {
     throw new RuntimeException('Nie udało się utworzyć katalogu lokalnych tłumaczeń: ' . $langdir);
@@ -121,7 +67,8 @@ assign_capability('moodle/my:manageblocks', CAP_PREVENT, $role->id, $context->id
 purge_all_caches();
 
 echo "Włączono auth_manualapproval i ustawiono rejestrację samoobsługową.\n";
-echo "Zastosowano branding FUB na stronie logowania i przycisk 'Zarejestruj się'.\n";
+echo "Ustawiono motyw FUB dla logowania i rejestracji.\n";
+echo "Przycisk rejestracji: Zarejestruj się.\n";
 echo "moodle/my:manageblocks dla roli 'user': PREVENT.\n";
 if ($contactphone !== '') {
     echo "Telefon kontaktowy rejestracji: {$contactphone}\n";
