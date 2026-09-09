@@ -4,6 +4,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->libdir . '/formslib.php');
+require_once($CFG->libdir . '/authlib.php');
 
 class auth_manualapproval_signup_form extends moodleform {
     protected function definition(): void {
@@ -82,7 +83,7 @@ class auth_manualapproval_signup_form extends moodleform {
 
         if (!empty($CFG->passwordpolicy) && !empty($data['password'])) {
             $errmsg = '';
-            if (!\core\di::get(\core\authentication\password::class)->check_policy($data['password'], $errmsg)) {
+            if (!check_password_policy($data['password'], $errmsg)) {
                 $errors['password'] = $errmsg;
             }
         }
