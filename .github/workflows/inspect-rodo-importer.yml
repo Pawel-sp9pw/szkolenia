@@ -1,0 +1,57 @@
+name: Inspect RODO importer
+
+on:
+  push:
+    paths:
+      - '.github/workflows/inspect-rodo-importer.yml'
+      - 'moodle/training/rodo/**'
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Decode package
+        run: |
+          set -euo pipefail
+          cd moodle/training/rodo
+          base64 -d import.php.gz.b64 | gzip -dc > /tmp/import.php
+          base64 -d courses.json.gz.b64 | gzip -dc > /tmp/courses.json
+      - name: Validate syntax and JSON
+        run: |
+          set -euo pipefail
+          php -l /tmp/import.php
+          python3 -m json.tool /tmp/courses.json >/dev/null
+          echo "JSON bytes: $(wc -c </tmp/courses.json)"
+          echo "Importer bytes: $(wc -c </tmp/import.php)"
+      - name: Inspect category and quiz API usage
+        run: |
+          set -euo pipefail
+          echo '--- CATEGORY REFERENCES ---'
+          grep -n -C 8 -E 'course_category|core_course_category|course_categories|RODO' /tmp/import.php || true
+          echo '--- QUESTION/QUIZ REFERENCES ---'
+          grep -n -C 4 -E 'question_bank_helper|question_get_default_category|add_random_questions|quiz_settings|qformat_xml|importprocess' /tmp/import.php || true
+      - name: Inspect package schema
+        run: |
+          python3 - <<'PY'
+          import json
+          d=json.load(open('/tmp/courses.json'))
+          print('TOP TYPE', type(d).__name__)
+          if isinstance(d, dict):
+              print('TOP KEYS', sorted(d.keys()))
+              courses=d.get('courses', d)
+          else:
+              courses=d
+          if isinstance(courses, dict):
+              items=list(courses.items())
+          else:
+              items=list(enumerate(courses))
+          print('COURSE COUNT', len(items))
+          for k,v in items:
+              if isinstance(v,dict):
+                  print('COURSE', k, 'KEYS', sorted(v.keys()))
+                  for qk in ('questions','questionbank','sections','modules'):
+                      if qk in v:
+                          try: print(' ',qk,'COUNT',len(v[qk]))
+                          except: pass
+          PY
