@@ -1,0 +1,66 @@
+name: Inspect RODO importer 2
+
+on: [push]
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Recover package
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd moodle/training/rodo
+          for f in import.php.gz.b64 courses.json.gz.b64; do
+            echo "--- $f ---"
+            wc -c "$f"
+            python3 - "$f" <<'PY'
+          import pathlib,sys,string
+          p=pathlib.Path(sys.argv[1]); b=p.read_bytes()
+          allowed=set((string.ascii_letters+string.digits+'+/=\r\n\t ').encode())
+          bad=[(i,x) for i,x in enumerate(b) if x not in allowed]
+          print('invalid-byte-count',len(bad),'first-invalid',bad[:30])
+          PY
+          done
+          python3 - <<'PY'
+          import base64,gzip,pathlib,re
+          for src,dst in [('import.php.gz.b64','/tmp/import.php'),('courses.json.gz.b64','/tmp/courses.json')]:
+              raw=pathlib.Path(src).read_text(encoding='utf-8',errors='ignore')
+              clean=''.join(re.findall(r'[A-Za-z0-9+/=]',raw))
+              print(src,'raw',len(raw),'clean',len(clean),'mod4',len(clean)%4)
+              data=base64.b64decode(clean,validate=False)
+              print('decoded',len(data),'magic',data[:8].hex())
+              out=gzip.decompress(data)
+              pathlib.Path(dst).write_bytes(out)
+              print('uncompressed',len(out))
+          PY
+      - name: Validate and inspect importer
+        shell: bash
+        run: |
+          set -euo pipefail
+          php -l /tmp/import.php
+          python3 -m json.tool /tmp/courses.json >/dev/null
+          echo "IMPORTER_BYTES=$(wc -c </tmp/import.php)"
+          echo "JSON_BYTES=$(wc -c </tmp/courses.json)"
+          echo '--- CATEGORY ---'
+          grep -n -C 10 -E 'course_category|core_course_category|course_categories|RODO' /tmp/import.php || true
+          echo '--- QUIZ ---'
+          grep -n -C 5 -E 'question_bank_helper|question_get_default_category|add_random_questions|quiz_settings|qformat_xml|importprocess' /tmp/import.php || true
+      - name: Inspect JSON schema
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json
+          d=json.load(open('/tmp/courses.json'))
+          print('TOP',type(d).__name__)
+          print('TOP_KEYS',sorted(d.keys()) if isinstance(d,dict) else '')
+          c=d.get('courses',d) if isinstance(d,dict) else d
+          items=list(c.items()) if isinstance(c,dict) else list(enumerate(c))
+          print('COURSE_COUNT',len(items))
+          for k,v in items:
+              print('COURSE',k,'KEYS',sorted(v.keys()) if isinstance(v,dict) else type(v).__name__)
+              if isinstance(v,dict):
+                  for qk in ('sections','questions','questionbank','modules'):
+                      if qk in v: print(qk,'COUNT',len(v[qk]))
+          PY
