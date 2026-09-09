@@ -10,9 +10,14 @@ REPO_ARCHIVE="${REPO_ARCHIVE:-https://github.com/Pawel-sp9pw/szkolenia/archive/r
 [[ -x "$PHP_BIN" ]] || { echo "Brak PHP: $PHP_BIN" >&2; exit 1; }
 command -v python3 >/dev/null 2>&1 || { echo "Brak python3." >&2; exit 1; }
 
-TMPDIR="$(mktemp -d /tmp/fub-rodo-import.XXXXXX)"
+TMPDIR="$(mktemp -d /tmp/fub-rodo-download.XXXXXX)"
 ARCHIVE="$TMPDIR/repo.tar.gz"
-cleanup() { rm -rf "$TMPDIR"; }
+RUNDIR="$MOODLE_DIR/.fub-rodo-import"
+
+cleanup() {
+    rm -rf "$TMPDIR"
+    rm -rf "$RUNDIR"
+}
 trap cleanup EXIT
 
 echo "[1/5] Pobieram aktualny pakiet szkoleń z GitHub..."
@@ -20,36 +25,38 @@ curl -fL --retry 3 --retry-delay 2 "$REPO_ARCHIVE" -o "$ARCHIVE"
 mkdir -p "$TMPDIR/repo"
 tar -xzf "$ARCHIVE" -C "$TMPDIR/repo" --strip-components=1
 
-PKG="$TMPDIR/repo/moodle/training/rodo"
-IMPORTER="$PKG/import.php"
-VALIDATOR="$PKG/validate.py"
-
-[[ -f "$IMPORTER" ]] || { echo "Brak importera: $IMPORTER" >&2; exit 1; }
-[[ -f "$VALIDATOR" ]] || { echo "Brak walidatora: $VALIDATOR" >&2; exit 1; }
-[[ -f "$PKG/data/manifest.json" ]] || { echo "Brak manifestu kursów." >&2; exit 1; }
-
-# mktemp tworzy katalog 0700 dla roota. Sam import wykonujemy jako www-data,
-# więc użytkownik ten musi móc przejść przez katalog tymczasowy i odczytać pakiet.
-# Nie zmieniamy właściciela plików Moodle ani nie dajemy prawa zapisu do pakietu.
-chmod 0755 "$TMPDIR" "$TMPDIR/repo"
-find "$PKG" -type d -exec chmod 0755 {} +
-find "$PKG" -type f -exec chmod 0644 {} +
+SRCPKG="$TMPDIR/repo/moodle/training/rodo"
+[[ -f "$SRCPKG/import.php" ]] || { echo "Brak importera w pobranym pakiecie." >&2; exit 1; }
+[[ -f "$SRCPKG/validate.py" ]] || { echo "Brak walidatora w pobranym pakiecie." >&2; exit 1; }
+[[ -f "$SRCPKG/data/manifest.json" ]] || { echo "Brak manifestu kursów." >&2; exit 1; }
 
 echo "[2/5] Waliduję komplet treści i banków pytań..."
-python3 "$VALIDATOR" "$PKG"
+python3 "$SRCPKG/validate.py" "$SRCPKG"
 
 echo "[3/5] Sprawdzam składnię importera PHP..."
-"$PHP_BIN" -l "$IMPORTER"
+"$PHP_BIN" -l "$SRCPKG/import.php"
 
-# Dodatkowa kontrola dokładnie w tym samym kontekście użytkownika,
-# w którym będzie uruchomiony właściwy import.
+# PHP CLI w tej instalacji może mieć ograniczenie dostępu do ścieżek spoza
+# katalogu Moodle (np. open_basedir). Dlatego właściwy import uruchamiamy z
+# tymczasowej kopii wewnątrz $MOODLE_DIR, należącej do www-data.
+rm -rf "$RUNDIR"
+install -d -o www-data -g www-data -m 0700 "$RUNDIR"
+cp -a "$SRCPKG"/. "$RUNDIR"/
+chown -R www-data:www-data "$RUNDIR"
+find "$RUNDIR" -type d -exec chmod 0700 {} +
+find "$RUNDIR" -type f -exec chmod 0600 {} +
+
+IMPORTER="$RUNDIR/import.php"
 runuser -u www-data -- test -r "$IMPORTER" || {
     echo "Użytkownik www-data nie może odczytać importera: $IMPORTER" >&2
     exit 1
 }
 
+# Testujemy dokładnie interpreter PHP i użytkownika używane w następnym kroku.
+runuser -u www-data -- "$PHP_BIN" -l "$IMPORTER"
+
 echo "[4/5] Importuję/aktualizuję kursy RODO..."
-cd /tmp
+cd "$MOODLE_DIR"
 runuser -u www-data -- env MOODLE_DIR="$MOODLE_DIR" "$PHP_BIN" "$IMPORTER" "$@"
 
 echo "[5/5] Gotowe."
