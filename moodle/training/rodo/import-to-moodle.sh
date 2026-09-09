@@ -28,11 +28,25 @@ VALIDATOR="$PKG/validate.py"
 [[ -f "$VALIDATOR" ]] || { echo "Brak walidatora: $VALIDATOR" >&2; exit 1; }
 [[ -f "$PKG/data/manifest.json" ]] || { echo "Brak manifestu kursów." >&2; exit 1; }
 
+# mktemp tworzy katalog 0700 dla roota. Sam import wykonujemy jako www-data,
+# więc użytkownik ten musi móc przejść przez katalog tymczasowy i odczytać pakiet.
+# Nie zmieniamy właściciela plików Moodle ani nie dajemy prawa zapisu do pakietu.
+chmod 0755 "$TMPDIR" "$TMPDIR/repo"
+find "$PKG" -type d -exec chmod 0755 {} +
+find "$PKG" -type f -exec chmod 0644 {} +
+
 echo "[2/5] Waliduję komplet treści i banków pytań..."
 python3 "$VALIDATOR" "$PKG"
 
 echo "[3/5] Sprawdzam składnię importera PHP..."
 "$PHP_BIN" -l "$IMPORTER"
+
+# Dodatkowa kontrola dokładnie w tym samym kontekście użytkownika,
+# w którym będzie uruchomiony właściwy import.
+runuser -u www-data -- test -r "$IMPORTER" || {
+    echo "Użytkownik www-data nie może odczytać importera: $IMPORTER" >&2
+    exit 1
+}
 
 echo "[4/5] Importuję/aktualizuję kursy RODO..."
 cd /tmp
