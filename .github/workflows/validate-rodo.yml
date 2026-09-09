@@ -1,0 +1,46 @@
+name: Validate RODO training package
+
+on:
+  push:
+    paths:
+      - 'moodle/training/rodo/**'
+      - '.github/workflows/validate-rodo.yml'
+  pull_request:
+    paths:
+      - 'moodle/training/rodo/**'
+      - '.github/workflows/validate-rodo.yml'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate package data
+        run: |
+          set -euo pipefail
+          python3 moodle/training/rodo/validate.py moodle/training/rodo
+
+      - name: Validate PHP and shell syntax
+        run: |
+          set -euo pipefail
+          php -l moodle/training/rodo/import.php
+          bash -n moodle/training/rodo/import-to-moodle.sh
+
+      - name: Reject legacy compressed package
+        run: |
+          set -euo pipefail
+          test ! -e moodle/training/rodo/courses.json.gz.b64
+          test ! -e moodle/training/rodo/import.php.gz.b64
+          ! grep -R "courses.json.gz.b64\|import.php.gz.b64" moodle/training/rodo --exclude=README.md
+
+      - name: Check Moodle 5.2 quiz API used by importer
+        run: |
+          set -euo pipefail
+          curl -fsSL --retry 3 https://github.com/moodle/moodle/archive/refs/heads/MOODLE_502_STABLE.tar.gz -o /tmp/moodle502.tgz
+          mkdir -p /tmp/moodle502
+          tar -xzf /tmp/moodle502.tgz -C /tmp/moodle502 --strip-components=1
+          grep -R -q "function add_random_questions" /tmp/moodle502/public/mod/quiz/classes/structure.php
+          grep -R -q "get_default_open_instance_system_type" /tmp/moodle502/public/question/classes/local/bank/question_bank_helper.php
+          grep -R -q "class core_course_category" /tmp/moodle502/public/course/classes/category.php
+          echo "Moodle 5.2 APIs referenced by the importer are present."
