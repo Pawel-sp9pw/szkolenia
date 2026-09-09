@@ -11,12 +11,45 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Decode package
+      - name: Diagnose encoded package
         run: |
           set -euo pipefail
           cd moodle/training/rodo
-          base64 -d import.php.gz.b64 | gzip -dc > /tmp/import.php
-          base64 -d courses.json.gz.b64 | gzip -dc > /tmp/courses.json
+          for f in import.php.gz.b64 courses.json.gz.b64; do
+            echo "--- $f ---"
+            wc -c "$f"
+            echo "head: $(head -c 40 "$f")"
+            echo "tail: $(tail -c 40 "$f")"
+            python3 - "$f" <<'PY'
+          import pathlib,sys,string
+          p=pathlib.Path(sys.argv[1])
+          b=p.read_bytes()
+          allowed=set((string.ascii_letters+string.digits+'+/=\r\n\t ').encode())
+          bad=[(i,x) for i,x in enumerate(b) if x not in allowed]
+          print('invalid-byte-count',len(bad))
+          print('first-invalid',bad[:20])
+          PY
+          done
+      - name: Recover and decode package
+        run: |
+          set -euo pipefail
+          cd moodle/training/rodo
+          python3 - <<'PY'
+          import base64,gzip,pathlib,re
+          for src,dst in [('import.php.gz.b64','/tmp/import.php'),('courses.json.gz.b64','/tmp/courses.json')]:
+              raw=pathlib.Path(src).read_text(encoding='utf-8',errors='ignore')
+              clean=''.join(re.findall(r'[A-Za-z0-9+/=]',raw))
+              print(src,'raw chars',len(raw),'clean chars',len(clean),'mod4',len(clean)%4)
+              try:
+                  data=base64.b64decode(clean,validate=False)
+                  print(src,'decoded bytes',len(data),'magic',data[:8].hex())
+                  out=gzip.decompress(data)
+                  pathlib.Path(dst).write_bytes(out)
+                  print(src,'uncompressed bytes',len(out))
+              except Exception as e:
+                  print(src,'RECOVERY FAILED',repr(e))
+                  raise
+          PY
       - name: Validate syntax and JSON
         run: |
           set -euo pipefail
@@ -28,9 +61,9 @@ jobs:
         run: |
           set -euo pipefail
           echo '--- CATEGORY REFERENCES ---'
-          grep -n -C 8 -E 'course_category|core_course_category|course_categories|RODO' /tmp/import.php || true
+          grep -n -C 10 -E 'course_category|core_course_category|course_categories|RODO' /tmp/import.php || true
           echo '--- QUESTION/QUIZ REFERENCES ---'
-          grep -n -C 4 -E 'question_bank_helper|question_get_default_category|add_random_questions|quiz_settings|qformat_xml|importprocess' /tmp/import.php || true
+          grep -n -C 6 -E 'question_bank_helper|question_get_default_category|add_random_questions|quiz_settings|qformat_xml|importprocess' /tmp/import.php || true
       - name: Inspect package schema
         run: |
           python3 - <<'PY'
@@ -42,16 +75,13 @@ jobs:
               courses=d.get('courses', d)
           else:
               courses=d
-          if isinstance(courses, dict):
-              items=list(courses.items())
-          else:
-              items=list(enumerate(courses))
-          print('COURSE COUNT', len(items))
+          items=list(courses.items()) if isinstance(courses,dict) else list(enumerate(courses))
+          print('COURSE COUNT',len(items))
           for k,v in items:
               if isinstance(v,dict):
-                  print('COURSE', k, 'KEYS', sorted(v.keys()))
+                  print('COURSE',k,'KEYS',sorted(v.keys()))
                   for qk in ('questions','questionbank','sections','modules'):
                       if qk in v:
                           try: print(' ',qk,'COUNT',len(v[qk]))
-                          except: pass
+                          except Exception: pass
           PY
