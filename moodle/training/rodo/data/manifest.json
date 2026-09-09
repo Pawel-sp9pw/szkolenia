@@ -1,0 +1,65 @@
+{
+  "schema": "fub-rodo-v2",
+  "managed_version": "2026-09-09.1",
+  "legal_state": "2026-09-09",
+  "category": {
+    "idnumber": "FUB-RODO",
+    "name": "RODO",
+    "description": "Szkolenia z ochrony danych osobowych i prywatności dla pracowników sieci przychodni."
+  },
+  "defaults": {
+    "quiz": {
+      "random_questions": 5,
+      "attempts": 3,
+      "pass_percent": 80,
+      "shuffle_answers": true
+    }
+  },
+  "courses": [
+    {
+      "key": "medical",
+      "idnumber": "RODO-MED",
+      "fullname": "RODO w praktyce – personel medyczny",
+      "shortname": "RODO | Personel medyczny",
+      "audience": "lekarze, pielęgniarki, technicy RTG, fizjoterapeuci/rehabilitanci i pozostały personel medyczny",
+      "estimated_time": "około 90–120 minut",
+      "quiz_name": "Test końcowy – RODO | Personel medyczny"
+    },
+    {
+      "key": "registration",
+      "idnumber": "RODO-REJ",
+      "fullname": "RODO w praktyce – rejestracja i pacjent",
+      "shortname": "RODO | Rejestracja",
+      "audience": "rejestracja stacjonarna, centralna rejestracja i osoby bezpośrednio obsługujące pacjentów",
+      "estimated_time": "około 90–120 minut",
+      "quiz_name": "Test końcowy – RODO | Rejestracja"
+    },
+    {
+      "key": "admin",
+      "idnumber": "RODO-ADM",
+      "fullname": "RODO w praktyce – administracja i wsparcie",
+      "shortname": "RODO | Administracja",
+      "audience": "księgowość, kadry, płace, dział świadczeń medycznych, dział prawny, BHP, controlling, dział techniczno-majątkowy i pozostała administracja",
+      "estimated_time": "około 90–120 minut",
+      "quiz_name": "Test końcowy – RODO | Administracja"
+    },
+    {
+      "key": "it",
+      "idnumber": "RODO-IT",
+      "fullname": "RODO w praktyce – IT i bezpieczeństwo informacji",
+      "shortname": "RODO | IT",
+      "audience": "IT, administratorzy systemów, osoby utrzymujące infrastrukturę i osoby z dostępem uprzywilejowanym",
+      "estimated_time": "około 100–130 minut",
+      "quiz_name": "Test końcowy – RODO | IT"
+    },
+    {
+      "key": "marketing",
+      "idnumber": "RODO-MKT",
+      "fullname": "RODO w praktyce – marketing i komunikacja",
+      "shortname": "RODO | Marketing",
+      "audience": "marketing, osoby prowadzące WWW i social media, organizatorzy eventów oraz osoby odpowiedzialne za komunikację",
+      "estimated_time": "około 90–120 minut",
+      "quiz_name": "Test końcowy – RODO | Marketing"
+    }
+  ]
+}
