@@ -25,7 +25,11 @@ class auth_plugin_manualapproval extends auth_plugin_base {
             return false;
         }
 
-        return \core\di::get(\core\authentication\password::class)->validate($user, $password);
+        // Moodle 5.2 exposes the internal password API through the established
+        // compatibility wrapper. Do not resolve \core\authentication\password
+        // directly through DI here: that service is not registered in the
+        // Moodle 5.2.2 installation used by this deployment.
+        return validate_internal_user_password($user, $password);
     }
 
     public function user_update_password($user, $newpassword) {
@@ -59,7 +63,7 @@ class auth_plugin_manualapproval extends auth_plugin_base {
         $user->confirmed = 0;
         $user->emailstop = 1;
         $user->maildisplay = 0;
-        $user->password = \core\di::get(\core\authentication\password::class)->hash($plainpassword);
+        $user->password = hash_internal_user_password($plainpassword);
 
         if (empty($user->calendartype)) {
             $user->calendartype = $CFG->calendartype;
