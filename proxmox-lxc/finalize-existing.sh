@@ -119,7 +119,9 @@ cat > /etc/cron.d/moodle <<EOF
 EOF
 chmod 0644 /etc/cron.d/moodle
 systemctl enable --now cron
-runuser -u www-data -- /usr/bin/php8.4 "$MOODLE_DIR/admin/cli/cron.php" >/dev/null
+systemctl is-active --quiet cron
+[[ -s /etc/cron.d/moodle ]] || { echo "Brak wpisu cron Moodle." >&2; exit 1; }
+echo "Cron Moodle skonfigurowany; pierwsze wykonanie nastąpi automatycznie w ciągu minuty."
 
 echo "[5/5] Testy końcowe..."
 nginx -t
