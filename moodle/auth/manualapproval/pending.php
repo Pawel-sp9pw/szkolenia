@@ -2,6 +2,7 @@
 // This file is part of Moodle - http://moodle.org/
 
 require(__DIR__ . '/../../../config.php');
+require_once($CFG->libdir . '/adminlib.php');
 
 require_login();
 admin_externalpage_setup('authmanualapprovalpending');
