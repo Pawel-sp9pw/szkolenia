@@ -11,25 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Diagnose encoded package
-        run: |
-          set -euo pipefail
-          cd moodle/training/rodo
-          for f in import.php.gz.b64 courses.json.gz.b64; do
-            echo "--- $f ---"
-            wc -c "$f"
-            echo "head: $(head -c 40 "$f")"
-            echo "tail: $(tail -c 40 "$f")"
-            python3 - "$f" <<'PY'
-          import pathlib,sys,string
-          p=pathlib.Path(sys.argv[1])
-          b=p.read_bytes()
-          allowed=set((string.ascii_letters+string.digits+'+/=\r\n\t ').encode())
-          bad=[(i,x) for i,x in enumerate(b) if x not in allowed]
-          print('invalid-byte-count',len(bad))
-          print('first-invalid',bad[:20])
-          PY
-          done
       - name: Recover and decode package
         run: |
           set -euo pipefail
@@ -39,16 +20,13 @@ jobs:
           for src,dst in [('import.php.gz.b64','/tmp/import.php'),('courses.json.gz.b64','/tmp/courses.json')]:
               raw=pathlib.Path(src).read_text(encoding='utf-8',errors='ignore')
               clean=''.join(re.findall(r'[A-Za-z0-9+/=]',raw))
-              print(src,'raw chars',len(raw),'clean chars',len(clean),'mod4',len(clean)%4)
-              try:
-                  data=base64.b64decode(clean,validate=False)
-                  print(src,'decoded bytes',len(data),'magic',data[:8].hex())
-                  out=gzip.decompress(data)
-                  pathlib.Path(dst).write_bytes(out)
-                  print(src,'uncompressed bytes',len(out))
-              except Exception as e:
-                  print(src,'RECOVERY FAILED',repr(e))
-                  raise
+              clean += '=' * ((4 - len(clean) % 4) % 4)
+              print(src,'raw chars',len(raw),'normalized chars',len(clean),'mod4',len(clean)%4)
+              data=base64.b64decode(clean,validate=True)
+              print(src,'decoded bytes',len(data),'magic',data[:8].hex())
+              out=gzip.decompress(data)
+              pathlib.Path(dst).write_bytes(out)
+              print(src,'uncompressed bytes',len(out))
           PY
       - name: Validate syntax and JSON
         run: |
@@ -64,7 +42,7 @@ jobs:
           grep -n -C 10 -E 'course_category|core_course_category|course_categories|RODO' /tmp/import.php || true
           echo '--- QUESTION/QUIZ REFERENCES ---'
           grep -n -C 6 -E 'question_bank_helper|question_get_default_category|add_random_questions|quiz_settings|qformat_xml|importprocess' /tmp/import.php || true
-      - name: Inspect package schema
+      - name: Inspect package schema and counts
         run: |
           python3 - <<'PY'
           import json
