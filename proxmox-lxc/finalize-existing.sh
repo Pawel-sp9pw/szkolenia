@@ -5,11 +5,13 @@ MOODLE_DIR="${MOODLE_DIR:-/var/www/moodle}"
 MOODLE_DATA="${MOODLE_DATA:-/var/moodledata}"
 PHP_VERSION="${PHP_VERSION:-8.4}"
 PHP_FPM_SOCKET="/run/php/php${PHP_VERSION}-fpm.sock"
+SITE_URL="${SITE_URL:-https://szkolenia.uniabracka.pl}"
 REGISTRATION_CONTACT_PHONE="${REGISTRATION_CONTACT_PHONE:-}"
 DEPLOY_REPO_ARCHIVE="${DEPLOY_REPO_ARCHIVE:-https://github.com/Pawel-sp9pw/szkolenia/archive/refs/heads/main.tar.gz}"
 
 [[ $EUID -eq 0 ]] || { echo "Uruchom jako root wewnątrz LXC." >&2; exit 1; }
 [[ -f "$MOODLE_DIR/config.php" ]] || { echo "Brak istniejącej instalacji Moodle: $MOODLE_DIR/config.php" >&2; exit 1; }
+[[ "$SITE_URL" =~ ^https?:// ]] || { echo "SITE_URL musi zaczynać się od http:// lub https://." >&2; exit 1; }
 
 DEPLOY_ARCHIVE=/tmp/szkolenia-finalize.tar.gz
 DEPLOY_DIR=/tmp/szkolenia-finalize
@@ -30,6 +32,34 @@ tar -xzf "$DEPLOY_ARCHIVE" -C "$DEPLOY_DIR" --strip-components=1
 [[ -f "$DEPLOY_DIR/moodle/configure.php" ]] || { echo "Brak moodle/configure.php w repo." >&2; exit 1; }
 [[ -f "$DEPLOY_DIR/moodle/auth/manualapproval/auth.php" ]] || { echo "Brak auth_manualapproval w repo." >&2; exit 1; }
 [[ -f "$DEPLOY_DIR/moodle/theme/fub/version.php" ]] || { echo "Brak motywu theme_fub w repo." >&2; exit 1; }
+
+# Ustaw docelowy publiczny URL Moodle bez względu na poprzedni adres IP.
+SITE_URL="$SITE_URL" MOODLE_CONFIG="$MOODLE_DIR/config.php" /usr/bin/php8.4 -r '
+$config = getenv("MOODLE_CONFIG");
+$url = getenv("SITE_URL");
+$content = file_get_contents($config);
+if ($content === false) {
+    fwrite(STDERR, "Nie udało się odczytać config.php\n");
+    exit(1);
+}
+$count = 0;
+$content = preg_replace(
+    "/\\$CFG->wwwroot\\s*=\\s*[^;]+;/",
+    "$CFG->wwwroot = " . var_export($url, true) . ";",
+    $content,
+    1,
+    $count
+);
+if ($count !== 1) {
+    fwrite(STDERR, "Nie znaleziono jednoznacznie wpisu $CFG->wwwroot w config.php\n");
+    exit(1);
+}
+if (file_put_contents($config, $content) === false) {
+    fwrite(STDERR, "Nie udało się zapisać config.php\n");
+    exit(1);
+}
+'
+echo "Ustawiono Moodle wwwroot: $SITE_URL"
 
 rm -rf "$MOODLE_DIR/public/auth/manualapproval"
 cp -a "$DEPLOY_DIR/moodle/auth/manualapproval" "$MOODLE_DIR/public/auth/manualapproval"
@@ -65,6 +95,8 @@ REGISTER_AUTH="$(runuser -u www-data -- /usr/bin/php8.4 "$MOODLE_DIR/admin/cli/c
 [[ "$REGISTER_AUTH" == manualapproval ]] || { echo "Nie ustawiono registerauth=manualapproval (otrzymano: $REGISTER_AUTH)." >&2; exit 1; }
 ACTIVE_THEME="$(runuser -u www-data -- /usr/bin/php8.4 "$MOODLE_DIR/admin/cli/cfg.php" --name=theme 2>/dev/null | tail -n1 | tr -d '\r')"
 [[ "$ACTIVE_THEME" == fub ]] || { echo "Nie ustawiono theme=fub (otrzymano: $ACTIVE_THEME)." >&2; exit 1; }
+CURRENT_WWWROOT="$(runuser -u www-data -- /usr/bin/php8.4 "$MOODLE_DIR/admin/cli/cfg.php" --name=wwwroot 2>/dev/null | tail -n1 | tr -d '\r')"
+[[ "$CURRENT_WWWROOT" == "$SITE_URL" ]] || { echo "Nie ustawiono poprawnie wwwroot (otrzymano: $CURRENT_WWWROOT)." >&2; exit 1; }
 
 echo "[2/5] Ustawiam bezpieczne prawa dostępu..."
 chown -R root:root "$MOODLE_DIR"
@@ -136,7 +168,7 @@ grep -Fq '[[pix:theme|logo_fub]]' "$MOODLE_DIR/public/theme/fub/style/fub.css" |
 }
 
 WWWROOT="$(runuser -u www-data -- /usr/bin/php8.4 "$MOODLE_DIR/admin/cli/cfg.php" --name=wwwroot 2>/dev/null | tail -n1 | tr -d '\r')"
-[[ -n "$WWWROOT" ]] || { echo "Nie udało się odczytać Moodle wwwroot." >&2; exit 1; }
+[[ "$WWWROOT" == "$SITE_URL" ]] || { echo "Nieprawidłowy Moodle wwwroot: $WWWROOT" >&2; exit 1; }
 
 LOGIN_URL="${WWWROOT}/login/index.php"
 echo "Testuję logowanie pod adresem: $LOGIN_URL"
@@ -162,10 +194,12 @@ if ! grep -Fq 'Przychodnia Bracka' "$SIGNUP_BODY"; then
 fi
 
 runuser -u www-data -- /usr/bin/php8.4 "$MOODLE_DIR/admin/cli/purge_caches.php" >/dev/null
+systemctl restart "php${PHP_VERSION}-fpm"
 
 echo
 echo "============================================================"
 echo "Finalizacja Moodle zakończona poprawnie."
+echo "Adres: $SITE_URL"
 echo "Motyw: FUB"
 echo "Logo: lokalny plik z załączonego logo użytkownika"
 echo "Rejestracja: przycisk 'Zarejestruj się'"
