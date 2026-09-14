@@ -42,16 +42,12 @@ if ($content === false) {
     fwrite(STDERR, "Nie udało się odczytać config.php\n");
     exit(1);
 }
+$pattern = "/\\" . chr(36) . "CFG->wwwroot\\s*=\\s*[^;]+;/";
+$replacement = chr(36) . "CFG->wwwroot = " . var_export($url, true) . ";";
 $count = 0;
-$content = preg_replace(
-    "/\\$CFG->wwwroot\\s*=\\s*[^;]+;/",
-    "$CFG->wwwroot = " . var_export($url, true) . ";",
-    $content,
-    1,
-    $count
-);
+$content = preg_replace($pattern, $replacement, $content, 1, $count);
 if ($count !== 1) {
-    fwrite(STDERR, "Nie znaleziono jednoznacznie wpisu $CFG->wwwroot w config.php\n");
+    fwrite(STDERR, "Nie znaleziono jednoznacznie wpisu wwwroot w config.php\n");
     exit(1);
 }
 if (file_put_contents($config, $content) === false) {
