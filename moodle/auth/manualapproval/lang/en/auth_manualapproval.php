@@ -7,33 +7,28 @@ $string['passwordagain'] = 'Repeat password';
 $string['passwordsdonotmatch'] = 'The passwords do not match.';
 $string['registrationcomplete'] = 'Registration complete';
 $string['accountawaitingapproval'] = 'Your account has been created and is waiting for administrator approval.';
-$string['signupmessage'] = 'Your username: {$a->username}
-
-Account activation may take up to {$a->days} business days. After that, try to log in using the username above and the password you entered during registration. If you have problems, contact the training administrator by phone.';
-$string['signupmessagephone'] = 'Your username: {$a->username}
-
-Account activation may take up to {$a->days} business days. After that, try to log in using the username above and the password you entered during registration. If you have problems, call: {$a->phone}.';
+$string['signupmessage'] = 'Your username: {$a->username}\n\nAccount activation may take up to {$a->days} business days. After that, try to log in using the username above and the password you entered during registration. If you have problems, contact the training administrator by phone.';
+$string['signupmessagephone'] = 'Your username: {$a->username}\n\nAccount activation may take up to {$a->days} business days. After that, try to log in using the username above and the password you entered during registration. If you have problems, call: {$a->phone}.';
 $string['continuetologin'] = 'Continue to login';
 $string['activationdays'] = 'Account activation time';
 $string['activationdays_desc'] = 'Number of business days shown as the maximum account activation time.';
 $string['contactphone'] = 'Contact phone';
 $string['contactphone_desc'] = 'Optional phone number displayed after registration.';
 $string['pendingaccounts'] = 'Accounts awaiting approval';
-$string['pendinghelp'] = 'These accounts were created using the self-registration form. Verify the details, approve the account, then assign the user to the appropriate course or courses.';
+$string['pendinghelp'] = 'Verify the account details, select one or more training cohorts and approve the account. The user will automatically receive access to courses linked to the selected cohorts.';
 $string['nopendingaccounts'] = 'There are no accounts awaiting approval.';
 $string['approve'] = 'Approve account';
+$string['approveandassign'] = 'Approve and assign';
 $string['viewprofile'] = 'Edit profile';
 $string['userapproved'] = 'The account for {$a} has been approved.';
+$string['assignedcohorts'] = 'Assigned cohorts: {$a}.';
+$string['trainingcohorts'] = 'Training cohorts';
+$string['selectoneormore'] = 'Select one or more cohorts in the Actions column.';
+$string['selectatleastonecohort'] = 'Select at least one training cohort before approving the account.';
+$string['nocohortsconfigured'] = 'No FUB training cohorts are configured. Run the Moodle finalization script.';
 $string['registeredat'] = 'Registered';
 $string['notification_subject'] = 'New Moodle registration';
-$string['notification_body'] = 'A new user is waiting for approval.
-
-Name: {$a->fullname}
-Username: {$a->username}
-Company: {$a->institution}
-Position: {$a->department}
-
-Open the pending accounts page in Moodle, verify the details and approve the account.';
+$string['notification_body'] = 'A new user is waiting for approval.\n\nName: {$a->fullname}\nUsername: {$a->username}\nCompany: {$a->institution}\nPosition: {$a->department}\n\nOpen the pending accounts page in Moodle, verify the details, select training cohorts and approve the account.';
 $string['notification_small'] = 'New registration: {$a->fullname} ({$a->username})';
 $string['messageprovider:newregistration'] = 'New registration notifications';
 $string['privacy:metadata'] = 'The plugin does not store personal data outside the standard Moodle user account fields.';
