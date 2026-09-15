@@ -7,8 +7,9 @@ define('CLI_SCRIPT', true);
 $moodledir = getenv('MOODLE_DIR') ?: '/var/www/moodle';
 require(rtrim($moodledir, '/') . '/config.php');
 
+$prefix = 'block_myoverview_hidden_course_';
 $like = $DB->sql_like('name', ':pattern', false, false);
-$params = ['pattern' => 'block_myoverview_hidden_course_%'];
+$params = ['pattern' => $DB->sql_like_escape($prefix) . '%'];
 $count = $DB->count_records_select('user_preferences', $like, $params);
 
 if ($count > 0) {
