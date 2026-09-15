@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-SCRIPT_VERSION="2026-09-09-v3"
+SCRIPT_VERSION="2026-09-15-v4"
 MOODLE_DIR="${MOODLE_DIR:-/var/www/moodle}"
 PHP_BIN="${PHP_BIN:-/usr/bin/php8.4}"
 REPO_ARCHIVE="${REPO_ARCHIVE:-https://github.com/Pawel-sp9pw/szkolenia/archive/refs/heads/main.tar.gz}"
@@ -23,24 +23,24 @@ cleanup() {
 }
 trap cleanup EXIT
 
-echo "[1/5] Pobieram aktualny pakiet szkoleń z GitHub..."
+echo "[1/6] Pobieram aktualny pakiet szkoleń z GitHub..."
 curl -fL --retry 3 --retry-delay 2 "$REPO_ARCHIVE" -o "$ARCHIVE"
 mkdir -p "$TMPDIR/repo"
 tar -xzf "$ARCHIVE" -C "$TMPDIR/repo" --strip-components=1
 
 SRCPKG="$TMPDIR/repo/moodle/training/rodo"
 [[ -f "$SRCPKG/import.php" ]] || { echo "Brak importera w pobranym pakiecie." >&2; exit 1; }
+[[ -f "$SRCPKG/ensure-visible-quiz-grades.php" ]] || { echo "Brak helpera widoczności ocen quizów." >&2; exit 1; }
 [[ -f "$SRCPKG/validate.py" ]] || { echo "Brak walidatora w pobranym pakiecie." >&2; exit 1; }
 [[ -f "$SRCPKG/data/manifest.json" ]] || { echo "Brak manifestu kursów." >&2; exit 1; }
 
-echo "[2/5] Waliduję komplet treści i banków pytań..."
+echo "[2/6] Waliduję komplet treści i banków pytań..."
 python3 "$SRCPKG/validate.py" "$SRCPKG"
 
-echo "[3/5] Sprawdzam składnię importera PHP..."
+echo "[3/6] Sprawdzam składnię PHP..."
 "$PHP_BIN" -l "$SRCPKG/import.php"
+"$PHP_BIN" -l "$SRCPKG/ensure-visible-quiz-grades.php"
 
-# Właściwy import uruchamiamy z katalogu wewnątrz Moodle. Eliminuje to zarówno
-# ograniczenia /tmp, jak i ewentualne ustawienia open_basedir dla PHP CLI.
 rm -rf "$RUNDIR"
 install -d -o www-data -g www-data -m 0700 "$RUNDIR"
 cp -a "$SRCPKG"/. "$RUNDIR"/
@@ -49,21 +49,19 @@ find "$RUNDIR" -type d -exec chmod 0700 {} +
 find "$RUNDIR" -type f -exec chmod 0600 {} +
 
 IMPORTER="$RUNDIR/import.php"
+GRADEFIX="$RUNDIR/ensure-visible-quiz-grades.php"
 
-echo "  Runtime importer: $IMPORTER"
-echo "  PHP: $PHP_BIN"
-echo "  Użytkownik: www-data"
-
-runuser -u www-data -- test -r "$IMPORTER" || {
-    echo "Użytkownik www-data nie może odczytać importera: $IMPORTER" >&2
-    exit 1
-}
-
+runuser -u www-data -- test -r "$IMPORTER"
+runuser -u www-data -- test -r "$GRADEFIX"
 runuser -u www-data -- "$PHP_BIN" -l "$IMPORTER"
+runuser -u www-data -- "$PHP_BIN" -l "$GRADEFIX"
 
-echo "[4/5] Importuję/aktualizuję kursy RODO..."
+echo "[4/6] Importuję/aktualizuję kursy RODO..."
 cd "$MOODLE_DIR"
 runuser -u www-data -- env MOODLE_DIR="$MOODLE_DIR" "$PHP_BIN" "$IMPORTER" "$@"
 
-echo "[5/5] Gotowe."
+echo "[5/6] Ustawiam widoczność ocen testów końcowych..."
+runuser -u www-data -- env MOODLE_DIR="$MOODLE_DIR" "$PHP_BIN" "$GRADEFIX"
+
+echo "[6/6] Gotowe."
 echo "Pakiet RODO został zweryfikowany i przetworzony przez Moodle."
