@@ -99,6 +99,37 @@ body#page-login-signup form.mform .form-control {
     border-radius: .55rem;
 }
 
+/* Minimalistyczny tryb szkoleniowy dla zwykłych użytkowników. */
+body.fub-student-mode .drawer-left,
+body.fub-student-mode .drawer-right,
+body.fub-student-mode .drawer-toggles,
+body.fub-student-mode .primary-navigation,
+body.fub-student-mode [data-region="popover-region-messages"],
+body.fub-student-mode .block_calendar_month,
+body.fub-student-mode .block_calendar_upcoming,
+body.fub-student-mode .block_blog_menu,
+body.fub-student-mode .block_blog_recent,
+body.fub-student-mode .block_online_users,
+body.fub-student-mode .activity.modtype_forum {
+    display: none !important;
+}
+
+body.fub-student-mode #page.drawers {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+body.fub-student-mode #page-content,
+body.fub-student-mode .main-inner {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+body.fub-student-mode.pagelayout-mycourses .block:not(.block_myoverview) {
+    display: none !important;
+}
+
 @media (max-width: 991.98px) {
     body.pagelayout-login .login-layout-right-content {
         padding: 1.25rem;
