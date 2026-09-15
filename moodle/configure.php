@@ -30,6 +30,9 @@ set_config('activationdays', 2, 'auth_manualapproval');
 $contactphone = trim((string)(getenv('REGISTRATION_CONTACT_PHONE') ?: ''));
 set_config('contactphone', $contactphone, 'auth_manualapproval');
 
+// Systemowe kohorty szkoleniowe FUB i ich synchronizacja z kursami RODO.
+require(__DIR__ . '/configure-cohorts.php');
+
 // Usuń poprzednie eksperymentalne style dopisywane bezpośrednio do Boost.
 $boostscss = (string)(get_config('theme_boost', 'scss') ?: '');
 $startmarker = '/* FUB_LOGIN_BRANDING_START */';
@@ -73,6 +76,7 @@ assign_capability('moodle/my:manageblocks', CAP_PREVENT, $role->id, $context->id
 purge_all_caches();
 
 echo "Włączono auth_manualapproval i ustawiono rejestrację samoobsługową.\n";
+echo "Skonfigurowano systemowe kohorty szkoleniowe FUB.\n";
 if ($themeenabled) {
     echo "Ustawiono motyw FUB dla logowania i rejestracji.\n";
 } else {
