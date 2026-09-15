@@ -14,8 +14,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         selectors.forEach(function(selector) {
             document.querySelectorAll(selector).forEach(function(element) {
-                // W dropdownie Moodle czasem data-action znajduje się na linku
-                // wewnątrz <li>. Usuwamy cały element menu, jeśli jest dostępny.
                 var menuitem = element.closest('li, .dropdown-item');
                 if (menuitem && menuitem !== element && menuitem.contains(element)) {
                     menuitem.remove();
@@ -25,7 +23,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
-        // Fallback dla elementów filtra bez stabilnych data-attributes.
         document.querySelectorAll('.block_myoverview .dropdown-menu a, .block_myoverview .dropdown-menu button').forEach(function(element) {
             var text = (element.textContent || '').trim().toLowerCase();
             if (text === 'usunięte z widoku' || text === 'courses removed from view' || text === 'removed from view') {
@@ -37,14 +34,48 @@ document.addEventListener('DOMContentLoaded', function() {
 
     removeCourseHidingControls();
 
-    // Course overview jest renderowany i odświeżany asynchronicznie, więc
-    // pilnujemy również kontrolek doładowanych po starcie strony.
     var observer = new MutationObserver(function() {
         removeCourseHidingControls();
     });
     observer.observe(document.body, {childList: true, subtree: true});
 
     if (!document.body.classList.contains('pagelayout-login')) {
+        // Administrator zachowuje pełny interfejs. Zwykły użytkownik dostaje
+        // minimalistyczny widok szkoleniowy skoncentrowany na własnych kursach.
+        var isAdmin = Boolean(document.querySelector(
+            '[data-key="siteadminnode"], a[href*="/admin/search.php"], a[href*="/admin/index.php"], .primary-navigation a[href*="/admin/"]'
+        ));
+
+        if (!isAdmin) {
+            document.body.classList.add('fub-student-mode');
+
+            var removeStudentExtras = function() {
+                var extraSelectors = [
+                    '[data-region="popover-region-messages"]',
+                    'a[href*="/message/"]',
+                    'a[href*="/calendar/"]',
+                    'a[href*="/blog/"]',
+                    '.block_calendar_month',
+                    '.block_calendar_upcoming',
+                    '.block_blog_menu',
+                    '.block_blog_recent',
+                    '.block_online_users',
+                    '.activity.modtype_forum'
+                ];
+
+                extraSelectors.forEach(function(selector) {
+                    document.querySelectorAll(selector).forEach(function(element) {
+                        var item = element.closest('li, .dropdown-item, .nav-item, .block, .activity');
+                        (item || element).remove();
+                    });
+                });
+            };
+
+            removeStudentExtras();
+            var studentObserver = new MutationObserver(removeStudentExtras);
+            studentObserver.observe(document.body, {childList: true, subtree: true});
+        }
+
         return;
     }
 
@@ -56,8 +87,6 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
     }
 
-    // Fallback: na stronie logowania przycisk rejestracji ma być widoczny
-    // nawet jeśli szablon motywu nadrzędnego nie wyrenderował kontenera.
     if (!document.body.id || document.body.id !== 'page-login-index') {
         return;
     }
