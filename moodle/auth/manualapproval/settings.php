@@ -27,3 +27,10 @@ $ADMIN->add('accounts', new admin_externalpage(
     new moodle_url('/auth/manualapproval/pending.php'),
     'moodle/user:update'
 ));
+
+$ADMIN->add('accounts', new admin_externalpage(
+    'authmanualapprovalcohorts',
+    get_string('manageusercohorts', 'auth_manualapproval'),
+    new moodle_url('/auth/manualapproval/cohorts.php'),
+    'moodle/cohort:assign'
+));
