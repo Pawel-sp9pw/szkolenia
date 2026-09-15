@@ -188,7 +188,7 @@ if ($query !== '') {
     } else {
         $like = '%' . $DB->sql_like_escape($query) . '%';
         $fullnameconcat = $DB->sql_concat('firstname', "' '", 'lastname');
-        $where = "deleted = 0 AND id <> :guestid AND (
+        $where = "deleted = 0 AND (
                     " . $DB->sql_like('username', ':username', false, false) . " OR
                     " . $DB->sql_like('firstname', ':firstname', false, false) . " OR
                     " . $DB->sql_like('lastname', ':lastname', false, false) . " OR
@@ -196,7 +196,6 @@ if ($query !== '') {
                     " . $DB->sql_like('email', ':email', false, false) . "
                   )";
         $params = [
-            'guestid' => $CFG->siteguest,
             'username' => $like,
             'firstname' => $like,
             'lastname' => $like,
@@ -217,6 +216,10 @@ if ($query !== '') {
             ];
 
             foreach ($users as $founduser) {
+                if (isguestuser($founduser)) {
+                    continue;
+                }
+
                 $membercohorts = $DB->get_records_sql(
                     'SELECT c.id, c.name
                        FROM {cohort} c
@@ -239,7 +242,7 @@ if ($query !== '') {
                 $table->data[] = [
                     fullname($founduser),
                     s($founduser->username),
-                    $names ? implode(', ', $names) : get_string('nocoho​​rtsassigned', 'auth_manualapproval'),
+                    $names ? implode(', ', $names) : get_string('nocohortsassigned', 'auth_manualapproval'),
                     html_writer::link($editurl, get_string('editcohorts', 'auth_manualapproval')),
                 ];
             }
