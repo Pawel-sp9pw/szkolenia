@@ -1,1 +1,197 @@
-[{"id":"C01","name":"Minimalizacja danych","text":"Do przygotowania listy obecności na obowiązkowym szkoleniu wystarcza imię i nazwisko pracownika. Jakie dane należy umieścić na liście?","answers":["Imię, nazwisko, PESEL i adres","Imię i nazwisko","Imię, nazwisko i numer dowodu","Imię, nazwisko, data urodzenia i PESEL"],"correct":1,"feedback":"Zasada minimalizacji z art. 5 ust. 1 lit. c RODO wymaga ograniczenia danych do tego, co niezbędne dla celu."},{"id":"C02","name":"Dane o zdrowiu","text":"Która informacja może stanowić dane dotyczące zdrowia?","answers":["Wyłącznie wynik badania laboratoryjnego","Wyłącznie formalna diagnoza lekarza","Także informacja ujawniająca korzystanie z określonego świadczenia lub leczenia, zależnie od kontekstu","Tylko dane zapisane w EDM"],"correct":2,"feedback":"Art. 9 RODO obejmuje dane dotyczące zdrowia szeroko. O kwalifikacji decyduje treść i kontekst, a nie wyłącznie miejsce zapisu."},{"id":"C03","name":"Dostęp z ciekawości","text":"Pracownik ma techniczny dostęp do rekordu znajomego pacjenta, ale nie uczestniczy w jego obsłudze. Czy może go otworzyć?","answers":["Tak, skoro system pozwala","Tak, jeżeli nikomu nie powie","Nie, brak potrzeby służbowej oznacza brak uzasadnienia dostępu","Tak, jeśli pacjent jest osobą publiczną"],"correct":2,"feedback":"Techniczna możliwość nie jest równoznaczna z uprawnieniem. Dane można przeglądać tylko w ramach zadań i przyznanych uprawnień."},{"id":"C04","name":"Zgoda RODO","text":"Pacjent odmawia podpisania ogólnej „zgody na RODO”. Czy oznacza to, że placówka nie może prowadzić wymaganej prawem dokumentacji medycznej?","answers":["Tak","Nie, jeżeli przetwarzanie ma inną właściwą podstawę prawną","Tak, chyba że lekarz podpisze oświadczenie","Tylko w przypadku świadczeń NFZ"],"correct":1,"feedback":"Zgoda jest tylko jedną z podstaw. Obowiązki dokumentacyjne i wiele operacji w ochronie zdrowia opiera się na przepisach prawa oraz właściwych przesłankach art. 6 i 9 RODO."},{"id":"C05","name":"Hasło do konta","text":"Przełożony prosi pracownika o podanie hasła do systemu, bo potrzebuje szybko sprawdzić dokument. Co zrobić?","answers":["Podać hasło, bo jest przełożonym","Podać hasło jednorazowo i później zmienić","Nie podawać; zastosować własne uprawnienia, zastępstwo lub właściwą procedurę","Zapisać hasło na kartce i przekazać"],"correct":2,"feedback":"Własne konto zapewnia poufność i rozliczalność. Współdzielenie haseł utrudnia ustalenie autora działań i zwiększa ryzyko."},{"id":"C06","name":"Błędny adresat maila","text":"Po wysłaniu wiadomości pracownik zauważa, że załącznik z danymi trafił do niewłaściwego odbiorcy. Jaka jest pierwsza właściwa reakcja?","answers":["Usunąć wiadomość z folderu Wysłane","Poczekać, czy odbiorca odpowie","Niezwłocznie zgłosić incydent zgodnie z procedurą i ograniczać skutki według instrukcji","Nic nie robić, jeśli dotyczy jednej osoby"],"correct":2,"feedback":"Błędna wysyłka może być naruszeniem ochrony danych. Szybkie zgłoszenie pozwala ocenić ryzyko i podjąć działania w terminach wynikających z art. 33–34 RODO."},{"id":"C07","name":"Blokada ekranu","text":"Pracownik odchodzi od komputera na dwie minuty. Jak powinien postąpić?","answers":["Może zostawić aktywną sesję, bo wróci szybko","Powinien zablokować ekran","Powinien tylko zminimalizować okna","Wystarczy poprosić kolegę, aby pilnował"],"correct":1,"feedback":"Krótki czas nie eliminuje ryzyka. Blokowanie stacji roboczej jest prostym środkiem chroniącym przed nieuprawnionym dostępem."},{"id":"C08","name":"Wydruk","text":"Na wspólnej drukarce pozostaje wydruk z danymi pacjenta. Co jest prawidłowe?","answers":["Może leżeć do końca zmiany","Należy go odebrać niezwłocznie i zabezpieczyć","Można odwrócić kartkę tekstem do dołu","Należy zrobić zdjęcie, żeby pamiętać, do kogo należy"],"correct":1,"feedback":"Poufność obejmuje również dokumenty papierowe. Wydruk nie powinien pozostawać dostępny osobom postronnym."},{"id":"C09","name":"Prawo do usunięcia","text":"Pacjent mówi: „żądam usunięcia wszystkich moich danych”. Co powinien zrobić pracownik, który nie jest wyznaczony do rozpatrywania takich wniosków?","answers":["Natychmiast skasować dane z systemu","Odmówić ustnie i zakończyć rozmowę","Rozpoznać żądanie i przekazać je zgodnie z procedurą do właściwej osoby/komórki","Poprosić pacjenta, aby zadzwonił za rok"],"correct":2,"feedback":"Prawa z art. 12–22 RODO mają określone warunki i wyjątki. Np. obowiązek prawny może wyłączać usunięcie w danym zakresie."},{"id":"C10","name":"Prywatny e-mail","text":"Pracownik chce wysłać służbowy plik z danymi na prywatną skrzynkę, aby dokończyć pracę w domu. Co jest właściwe?","answers":["Może, jeśli plik ma hasło","Może, jeśli usunie wiadomość rano","Nie powinien używać prywatnego, niezatwierdzonego kanału; należy użyć zatwierdzonego rozwiązania","Może, jeśli dane dotyczą tylko pracowników"],"correct":2,"feedback":"Przeniesienie danych do prywatnego systemu tworzy niekontrolowaną kopię i może naruszyć przyjęte środki bezpieczeństwa."},{"id":"C11","name":"Rodzina pacjenta","text":"Osoba dzwoniąca mówi: „jestem żoną pacjenta, proszę powiedzieć, kiedy ma wizytę”. Co powinien zrobić pracownik?","answers":["Podać termin, bo małżonek jest osobą bliską","Najpierw zweryfikować tożsamość i uprawnienie zgodnie z procedurą","Podać tylko nazwę lekarza","Poprosić o PESEL i zawsze podać informację"],"correct":1,"feedback":"Pokrewieństwo lub małżeństwo nie zastępuje automatycznie podstawy do ujawnienia każdej informacji. Trzeba sprawdzić tożsamość, uprawnienie i zakres."},{"id":"C12","name":"Raport statystyczny","text":"Do raportu zarządczego potrzebna jest liczba wizyt w każdej placówce. Który wariant najlepiej realizuje minimalizację?","answers":["Lista wszystkich pacjentów z PESEL i wizytami","Zagregowana liczba wizyt według placówek","Pełna baza wizyt bez nazwisk, ale z PESEL","Kopie skierowań"],"correct":1,"feedback":"Jeżeli cel można osiągnąć na danych zagregowanych, nie ma potrzeby przekazywania danych identyfikujących."},{"id":"C13","name":"Incydent dostępności","text":"Ransomware blokuje dostęp do bazy pacjentów, ale nie ma dowodu wycieku. Czy zdarzenie może być naruszeniem ochrony danych?","answers":["Nie, naruszenie dotyczy wyłącznie ujawnienia","Tak, naruszenie może dotyczyć także utraty dostępności","Nie, jeśli serwer jest w Polsce","Tylko gdy atak trwa ponad 72 godziny"],"correct":1,"feedback":"Definicja naruszenia obejmuje m.in. utratę, zniszczenie i nieuprawniony dostęp; bezpieczeństwo obejmuje poufność, integralność i dostępność."},{"id":"C14","name":"Autouzupełnianie adresata","text":"Przed wysłaniem maila pracownik widzi, że program podstawił podobnie brzmiący, ale inny adres. Co powinien zrobić?","answers":["Wysłać i potem poprosić o usunięcie","Sprawdzić i poprawić adres przed wysłaniem","Usunąć temat wiadomości, wtedy jest bezpiecznie","Dodać drugiego odbiorcę do DW"],"correct":1,"feedback":"Kontrola adresata i załączników przed wysłaniem jest podstawowym środkiem zapobiegającym częstym naruszeniom."},{"id":"C15","name":"Podstawa dostępu","text":"Które zdanie najlepiej opisuje zasadę dostępu do danych w organizacji?","answers":["Każdy pracownik może przeglądać wszystkie dane organizacji","Dostęp powinien odpowiadać zadaniom i być ograniczony do potrzebnego zakresu","Dostęp zależy wyłącznie od stażu pracy","Kierownik ma automatycznie dostęp do wszystkich danych podwładnych i pacjentów"],"correct":1,"feedback":"Zasada najmniejszych uprawnień realizuje minimalizację, poufność i rozliczalność. Dostęp powinien wynikać z roli i zadania."}]
+[
+  {
+    "id": "C01",
+    "name": "Minimalizacja danych",
+    "text": "Do przygotowania listy obecności na obowiązkowym szkoleniu wystarcza imię i nazwisko pracownika. Jakie dane należy umieścić na liście?",
+    "answers": [
+      "Imię i nazwisko oraz dział organizacyjny, aby łatwiej rozliczyć frekwencję",
+      "Imię i nazwisko",
+      "Imię, nazwisko i służbowy adres e-mail, bo jest już znany pracodawcy",
+      "Imię, nazwisko i numer pracownika, nawet jeśli nie jest potrzebny do celu"
+    ],
+    "correct": 1,
+    "feedback": "Zasada minimalizacji z art. 5 ust. 1 lit. c RODO wymaga ograniczenia danych do tego, co niezbędne dla celu."
+  },
+  {
+    "id": "C02",
+    "name": "Dane o zdrowiu",
+    "text": "Która informacja może stanowić dane dotyczące zdrowia?",
+    "answers": [
+      "Każda informacja znajdująca się w systemie medycznym, niezależnie od treści",
+      "Tylko rozpoznanie postawione przez lekarza",
+      "Także informacja, która w danym kontekście ujawnia stan zdrowia, leczenie lub korzystanie ze świadczenia",
+      "Wyłącznie wynik badania albo kod ICD"
+    ],
+    "correct": 2,
+    "feedback": "Art. 9 RODO obejmuje dane dotyczące zdrowia szeroko. O kwalifikacji decyduje treść i kontekst, a nie wyłącznie miejsce zapisu."
+  },
+  {
+    "id": "C03",
+    "name": "Dostęp z ciekawości",
+    "text": "Pracownik ma techniczny dostęp do rekordu znajomego pacjenta, ale nie uczestniczy w jego obsłudze. Czy może go otworzyć?",
+    "answers": [
+      "Może, jeżeli nie dokonuje żadnej zmiany w rekordzie",
+      "Może, jeżeli zna pacjenta prywatnie i zachowa informację dla siebie",
+      "Nie powinien otwierać rekordu bez związku z wykonywanym zadaniem",
+      "Może, jeśli dostęp nie wymaga dodatkowego zatwierdzenia"
+    ],
+    "correct": 2,
+    "feedback": "Techniczna możliwość nie jest równoznaczna z uprawnieniem. Dane można przeglądać tylko w ramach zadań i przyznanych uprawnień."
+  },
+  {
+    "id": "C04",
+    "name": "Zgoda RODO",
+    "text": "Pacjent odmawia podpisania ogólnej „zgody na RODO”. Czy oznacza to, że placówka nie może prowadzić wymaganej prawem dokumentacji medycznej?",
+    "answers": [
+      "Brak podpisu blokuje tylko przetwarzanie danych szczególnej kategorii",
+      "Placówka może przetwarzać dane wyłącznie do czasu cofnięcia zgody",
+      "Brak podpisu uniemożliwia prowadzenie dokumentacji, ale nie udzielenie świadczenia",
+      "Nie, jeśli przetwarzanie opiera się na właściwej podstawie prawnej niezależnej od zgody"
+    ],
+    "correct": 3,
+    "feedback": "Zgoda jest tylko jedną z podstaw. Obowiązki dokumentacyjne i wiele operacji w ochronie zdrowia opiera się na przepisach prawa oraz właściwych przesłankach art. 6 i 9 RODO."
+  },
+  {
+    "id": "C05",
+    "name": "Hasło do konta",
+    "text": "Przełożony prosi pracownika o podanie hasła do systemu, bo potrzebuje szybko sprawdzić dokument. Co zrobić?",
+    "answers": [
+      "Przekazać hasło jednorazowo, jeżeli polecenie pochodzi od bezpośredniego przełożonego",
+      "Odmówić przekazania hasła i zastosować przewidziany sposób dostępu, zastępstwa albo nadania uprawnień",
+      "Przekazać hasło po wcześniejszej zmianie na tymczasowe",
+      "Udostępnić aktywną sesję na swoim komputerze, ale pozostać przy stanowisku"
+    ],
+    "correct": 1,
+    "feedback": "Własne konto zapewnia poufność i rozliczalność. Współdzielenie haseł utrudnia ustalenie autora działań i zwiększa ryzyko."
+  },
+  {
+    "id": "C06",
+    "name": "Błędny adresat maila",
+    "text": "Po wysłaniu wiadomości pracownik zauważa, że załącznik z danymi trafił do niewłaściwego odbiorcy. Jaka jest pierwsza właściwa reakcja?",
+    "answers": [
+      "Najpierw spróbować samodzielnie skontaktować się z odbiorcą, a zgłoszenie zrobić dopiero, jeśli nie odpowie",
+      "Usunąć wiadomość z własnej skrzynki i sprawdzić, czy odbiorca ją otworzył",
+      "Niezwłocznie zgłosić incydent zgodnie z procedurą i równolegle podejmować dozwolone działania ograniczające skutki",
+      "Ocenić samodzielnie, czy dane były wystarczająco wrażliwe, aby wymagały zgłoszenia"
+    ],
+    "correct": 2,
+    "feedback": "Błędna wysyłka może być naruszeniem ochrony danych. Szybkie zgłoszenie pozwala ocenić ryzyko i podjąć działania w terminach wynikających z art. 33–34 RODO."
+  },
+  {
+    "id": "C07",
+    "name": "Blokada ekranu",
+    "text": "Pracownik odchodzi od komputera na dwie minuty. Jak powinien postąpić?",
+    "answers": [
+      "Zablokować ekran przed odejściem od stanowiska, niezależnie od przewidywanego czasu nieobecności",
+      "Zminimalizować aplikacje z danymi, jeśli nieobecność będzie krótsza niż 5 minut",
+      "Wylogować się tylko wtedy, gdy stanowisko znajduje się w miejscu dostępnym dla pacjentów",
+      "Pozostawić sesję aktywną, jeśli w pomieszczeniu są wyłącznie współpracownicy"
+    ],
+    "correct": 0,
+    "feedback": "Krótki czas nie eliminuje ryzyka. Blokowanie stacji roboczej jest prostym środkiem chroniącym przed nieuprawnionym dostępem."
+  },
+  {
+    "id": "C08",
+    "name": "Wydruk",
+    "text": "Na wspólnej drukarce pozostaje wydruk z danymi pacjenta. Co jest prawidłowe?",
+    "answers": [
+      "Odwrócić wydruk tekstem do dołu i odebrać go przy najbliższej okazji",
+      "Przenieść wydruk na biurko osoby, która najprawdopodobniej go wydrukowała",
+      "Niezwłocznie zabezpieczyć wydruk i przekazać go właściwej osobie zgodnie z przyjętą praktyką",
+      "Zostawić go na drukarce, jeśli urządzenie znajduje się w strefie pracowniczej"
+    ],
+    "correct": 2,
+    "feedback": "Poufność obejmuje również dokumenty papierowe. Wydruk nie powinien pozostawać dostępny osobom postronnym."
+  },
+  {
+    "id": "C09",
+    "name": "Prawo do usunięcia",
+    "text": "Pacjent mówi: „żądam usunięcia wszystkich moich danych”. Co powinien zrobić pracownik, który nie jest wyznaczony do rozpatrywania takich wniosków?",
+    "answers": [
+      "Poinformować pacjenta, że danych medycznych nigdy nie można usuwać i zamknąć sprawę",
+      "Samodzielnie usunąć te dane, które nie wyglądają na wymagane prawem",
+      "Przyjąć żądanie i przekazać je do właściwej osoby lub komórki zgodnie z procedurą, bez przesądzania wyniku",
+      "Poprosić o ponowne złożenie żądania po zakończeniu okresu przechowywania dokumentacji"
+    ],
+    "correct": 2,
+    "feedback": "Prawa z art. 12–22 RODO mają określone warunki i wyjątki. Np. obowiązek prawny może wyłączać usunięcie w danym zakresie."
+  },
+  {
+    "id": "C10",
+    "name": "Prywatny e-mail",
+    "text": "Pracownik chce wysłać służbowy plik z danymi na prywatną skrzynkę, aby dokończyć pracę w domu. Co jest właściwe?",
+    "answers": [
+      "Można wysłać plik na prywatną skrzynkę, jeśli jest zaszyfrowany i hasło zostanie wysłane innym kanałem",
+      "Można, jeśli pracownik ma służbowy komputer w domu",
+      "Nie należy używać prywatnego, niezatwierdzonego kanału; trzeba skorzystać z rozwiązania dopuszczonego przez organizację",
+      "Można przesłać tylko te pliki, które nie zawierają PESEL"
+    ],
+    "correct": 2,
+    "feedback": "Przeniesienie danych do prywatnego systemu tworzy niekontrolowaną kopię i może naruszyć przyjęte środki bezpieczeństwa."
+  },
+  {
+    "id": "C11",
+    "name": "Rodzina pacjenta",
+    "text": "Osoba dzwoniąca mówi: „jestem żoną pacjenta, proszę powiedzieć, kiedy ma wizytę”. Co powinien zrobić pracownik?",
+    "answers": [
+      "Jeżeli rozmówca zna datę urodzenia pacjenta, można potwierdzić termin bez dalszej weryfikacji",
+      "Należy zweryfikować tożsamość rozmówcy i jego uprawnienie w zakresie wymaganym procedurą przed ujawnieniem informacji",
+      "Można potwierdzić sam fakt wizyty, ale nie wolno podać lekarza ani godziny",
+      "Małżonkowi można przekazać dane organizacyjne wizyty, o ile nie dotyczą rozpoznania"
+    ],
+    "correct": 1,
+    "feedback": "Pokrewieństwo lub małżeństwo nie zastępuje automatycznie podstawy do ujawnienia każdej informacji. Trzeba sprawdzić tożsamość, uprawnienie i zakres."
+  },
+  {
+    "id": "C12",
+    "name": "Raport statystyczny",
+    "text": "Do raportu zarządczego potrzebna jest liczba wizyt w każdej placówce. Który wariant najlepiej realizuje minimalizację?",
+    "answers": [
+      "Zestawienie liczby wizyt według placówek bez danych identyfikujących pacjentów",
+      "Eksport wizyt z identyfikatorem pacjenta zamiast imienia i nazwiska",
+      "Pełny eksport, jeżeli odbiorcą jest tylko kierownictwo",
+      "Lista pacjentów z usuniętymi nazwiskami, ale pozostawionym PESEL"
+    ],
+    "correct": 0,
+    "feedback": "Jeżeli cel można osiągnąć na danych zagregowanych, nie ma potrzeby przekazywania danych identyfikujących."
+  },
+  {
+    "id": "C13",
+    "name": "Incydent dostępności",
+    "text": "Ransomware blokuje dostęp do bazy pacjentów, ale nie ma dowodu wycieku. Czy zdarzenie może być naruszeniem ochrony danych?",
+    "answers": [
+      "Nie, jeśli nie stwierdzono ujawnienia danych osobie trzeciej",
+      "Tak, ponieważ naruszenie może dotyczyć także utraty dostępności danych, nawet bez potwierdzonego wycieku",
+      "Tylko wtedy, gdy niedostępność trwa co najmniej 72 godziny",
+      "Tak, ale wyłącznie gdy nie ma aktualnej kopii zapasowej"
+    ],
+    "correct": 1,
+    "feedback": "Definicja naruszenia obejmuje m.in. utratę, zniszczenie i nieuprawniony dostęp; bezpieczeństwo obejmuje poufność, integralność i dostępność."
+  },
+  {
+    "id": "C14",
+    "name": "Autouzupełnianie adresata",
+    "text": "Przed wysłaniem maila pracownik widzi, że program podstawił podobnie brzmiący, ale inny adres. Co powinien zrobić?",
+    "answers": [
+      "Jeżeli adres różni się tylko jednym znakiem, można wysłać i w razie potrzeby skorygować później",
+      "Usunąć wrażliwe słowa z tematu, ale pozostawić adres podpowiedziany przez program",
+      "Przed wysłaniem zweryfikować adresata i załączniki, a błędną podpowiedź poprawić",
+      "Dodać właściwego adresata do DW, aby mieć pewność, że wiadomość do niego dotrze"
+    ],
+    "correct": 2,
+    "feedback": "Kontrola adresata i załączników przed wysłaniem jest podstawowym środkiem zapobiegającym częstym naruszeniom."
+  },
+  {
+    "id": "C15",
+    "name": "Podstawa dostępu",
+    "text": "Które zdanie najlepiej opisuje zasadę dostępu do danych w organizacji?",
+    "answers": [
+      "Dostęp może być szerszy niż aktualne zadania, jeśli użytkownik ma obowiązek zachowania poufności",
+      "Zakres dostępu powinien wynikać z roli i wykonywanego zadania oraz być ograniczony do niezbędnego minimum",
+      "Kierownik może mieć pełny dostęp do danych zespołu, nawet jeśli nie są mu potrzebne operacyjnie",
+      "Dostęp jest prawidłowy, jeśli został technicznie nadany przez administratora systemu"
+    ],
+    "correct": 1,
+    "feedback": "Zasada najmniejszych uprawnień realizuje minimalizację, poufność i rozliczalność. Dostęp powinien wynikać z roli i zadania."
+  }
+]
