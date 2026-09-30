@@ -4,12 +4,12 @@
     "name": "Rozmowa na korytarzu",
     "text": "Lekarz chce omówić szczegóły trudnego przypadku z kolegą, który uczestniczy w leczeniu. Gdzie powinien to zrobić?",
     "answers": [
-      "W dyżurce, jeżeli drzwi są uchylone i rozmowa trwa krótko",
       "W miejscu zapewniającym poufność, przekazując tylko informacje potrzebne do konsultacji",
+      "W dyżurce, jeżeli drzwi są uchylone i rozmowa trwa krótko",
       "Na korytarzu poza godzinami przyjęć, jeśli nie ma kolejki pacjentów",
       "W komunikatorze prywatnym, jeżeli konsultant jest pracownikiem placówki"
     ],
-    "correct": 1,
+    "correct": 0,
     "feedback": "Konsultacja może być potrzebna, ale powinna odbywać się z zachowaniem poufności i minimalnego zakresu."
   },
   {
@@ -18,11 +18,11 @@
     "text": "Pielęgniarka zauważa w systemie nazwisko znanej osoby, której nie obsługuje. Co może zrobić?",
     "answers": [
       "Może sprawdzić podstawowe dane, ale nie otwierać wyników badań",
-      "Może otworzyć rekord, jeśli nie wykonuje żadnych zmian",
       "Nie powinna otwierać dokumentacji bez związku z wykonywanym zadaniem",
+      "Może otworzyć rekord, jeśli nie wykonuje żadnych zmian",
       "Może sprawdzić rekord, jeśli pacjent jest osobą publiczną i informacja nie opuści placówki"
     ],
-    "correct": 2,
+    "correct": 1,
     "feedback": "Zawodowy dostęp techniczny nie uprawnia do przeglądania dokumentacji bez związku z udzielanym świadczeniem."
   },
   {
@@ -30,12 +30,12 @@
     "name": "Korekta wpisu EDM",
     "text": "Lekarz zauważa błąd w swoim wpisie w EDM. Co jest właściwe?",
     "answers": [
-      "Skorygować wpis przy użyciu przewidzianego mechanizmu, z zachowaniem historii i wymaganych oznaczeń",
       "Usunąć błędny wpis i odtworzyć go ponownie z poprawną treścią",
       "Dodać nowy wpis bez odnoszenia się do poprzedniego, aby nie eksponować pomyłki",
+      "Skorygować wpis przy użyciu przewidzianego mechanizmu, z zachowaniem historii i wymaganych oznaczeń",
       "Poprosić administratora o zmianę treści w bazie, jeśli zachowa kopię poprzedniej wersji"
     ],
-    "correct": 0,
+    "correct": 2,
     "feedback": "Integralność dokumentacji wymaga stosowania przewidzianych mechanizmów korekty, a nie usuwania historii."
   },
   {
@@ -45,10 +45,10 @@
     "answers": [
       "Może, jeśli telefon jest szyfrowany i zabezpieczony biometrią",
       "Może, jeżeli zdjęcie zostanie natychmiast wysłane lekarzowi i usunięte",
-      "Tylko wtedy, gdy użycie urządzenia i sposób wykonania zdjęcia są zgodne z zatwierdzoną procedurą oraz narzędziami organizacji",
-      "Może po ustnej zgodzie pacjenta, bo celem jest konsultacja medyczna"
+      "Może po ustnej zgodzie pacjenta, bo celem jest konsultacja medyczna",
+      "Tylko wtedy, gdy użycie urządzenia i sposób wykonania zdjęcia są zgodne z zatwierdzoną procedurą oraz narzędziami organizacji"
     ],
-    "correct": 2,
+    "correct": 3,
     "feedback": "Cel medyczny nie usuwa wymogu odpowiednich środków bezpieczeństwa i kontroli nad kopiami danych."
   },
   {
@@ -56,12 +56,12 @@
     "name": "Rodzina pacjenta",
     "text": "Córka dorosłego pacjenta pyta lekarza o rozpoznanie. Co powinien zrobić lekarz?",
     "answers": [
-      "Jeżeli córka zna PESEL pacjenta, można przekazać podstawowe informacje",
       "Należy sprawdzić jej uprawnienie do informacji i działać zgodnie z prawami pacjenta oraz zakresem upoważnienia",
+      "Jeżeli córka zna PESEL pacjenta, można przekazać podstawowe informacje",
       "Można przekazać informacje o rozpoznaniu, ale nie o leczeniu",
       "Można udzielić informacji, jeśli pacjent pozostaje pod opieką tej samej placówki od dawna"
     ],
-    "correct": 1,
+    "correct": 0,
     "feedback": "Bliskość rodzinna nie oznacza automatycznie pełnego prawa do informacji o stanie zdrowia."
   },
   {
@@ -83,11 +83,11 @@
     "text": "Technik RTG potrzebuje danych do wykonania badania. Czy powinien przeglądać całą historię leczenia?",
     "answers": [
       "Powinien mieć dostęp do całej historii, bo może zawierać informacje ważne dla bezpieczeństwa badania",
-      "Powinien korzystać z zakresu potrzebnego do wykonania badania, chyba że szerszy dostęp jest uzasadniony klinicznie",
       "Powinien przeglądać tylko dane z ostatnich 12 miesięcy",
+      "Powinien korzystać z zakresu potrzebnego do wykonania badania, chyba że szerszy dostęp jest uzasadniony klinicznie",
       "Może korzystać z pełnej historii, jeśli system przyznał mu takie uprawnienia"
     ],
-    "correct": 1,
+    "correct": 2,
     "feedback": "Minimalizacja i dostęp według zadania oznaczają, że nie należy przeglądać danych niezwiązanych z badaniem."
   },
   {
@@ -96,11 +96,11 @@
     "text": "Lekarz chce wykorzystać obraz diagnostyczny na szkoleniu. Co należy zrobić?",
     "answers": [
       "Wystarczy usunąć imię, nazwisko i PESEL, ponieważ reszta nie identyfikuje pacjenta bezpośrednio",
-      "Należy ocenić ryzyko identyfikacji na podstawie całego materiału i zastosować zatwierdzone zasady użycia oraz skuteczne usunięcie identyfikatorów",
       "Można użyć materiału bez zmian, jeśli szkolenie jest wyłącznie dla personelu medycznego",
-      "Wystarczy usunąć dane z nagłówka obrazu, bez analizy cech widocznych na samym obrazie"
+      "Wystarczy usunąć dane z nagłówka obrazu, bez analizy cech widocznych na samym obrazie",
+      "Należy ocenić ryzyko identyfikacji na podstawie całego materiału i zastosować zatwierdzone zasady użycia oraz skuteczne usunięcie identyfikatorów"
     ],
-    "correct": 1,
+    "correct": 3,
     "feedback": "Anonimizacja wymaga oceny całości ryzyka identyfikacji, a nie usunięcia jednego pola."
   },
   {
@@ -108,12 +108,12 @@
     "name": "Wspólne konto",
     "text": "Dwie pielęgniarki używają jednego loginu do systemu. Dlaczego to niewłaściwe?",
     "answers": [
-      "Wspólne konto jest dopuszczalne na jednym oddziale, jeśli hasło zna tylko personel",
       "Jest niewłaściwe głównie dlatego, że utrudnia rozliczalność działań i kontrolę indywidualnych uprawnień",
+      "Wspólne konto jest dopuszczalne na jednym oddziale, jeśli hasło zna tylko personel",
       "Można je stosować, jeśli wszystkie działania są rejestrowane z numerem stanowiska",
       "Problem dotyczy tylko sytuacji, gdy konto ma uprawnienia administracyjne"
     ],
-    "correct": 1,
+    "correct": 0,
     "feedback": "Indywidualne konta pozwalają przypisać działania do konkretnej osoby i ograniczać uprawnienia."
   },
   {
@@ -135,11 +135,11 @@
     "text": "Czy śmierć pacjenta oznacza, że personel może dowolnie opowiadać o jego leczeniu?",
     "answers": [
       "Po śmierci pacjenta tajemnica medyczna przestaje obowiązywać, ale nadal obowiązuje RODO",
-      "Obowiązki dotyczące tajemnicy i zasad udostępniania nadal mogą mieć zastosowanie po śmierci pacjenta",
       "Informacje można ujawniać po upływie okresu przechowywania dokumentacji",
+      "Obowiązki dotyczące tajemnicy i zasad udostępniania nadal mogą mieć zastosowanie po śmierci pacjenta",
       "Można przekazywać informacje, jeśli nie zawierają numeru PESEL ani adresu"
     ],
-    "correct": 1,
+    "correct": 2,
     "feedback": "Śmierć pacjenta nie daje swobody publicznego ujawniania informacji o jego leczeniu."
   },
   {
@@ -148,11 +148,11 @@
     "text": "Do przychodni trafia lokalny celebryta. Czy personel może poinformować współpracowników, że jest pacjentem placówki?",
     "answers": [
       "Można poinformować zespół, jeśli informacja nie dotyczy rozpoznania ani wyników badań",
-      "Informację powinny znać wyłącznie osoby, które potrzebują jej do wykonywania obowiązków",
       "Można przekazać informację przełożonym wszystkich działów ze względu na potencjalne zainteresowanie mediów",
-      "Można powiedzieć współpracownikom po zakończeniu wizyty, o ile nie zapiszą tego w systemie"
+      "Można powiedzieć współpracownikom po zakończeniu wizyty, o ile nie zapiszą tego w systemie",
+      "Informację powinny znać wyłącznie osoby, które potrzebują jej do wykonywania obowiązków"
     ],
-    "correct": 1,
+    "correct": 3,
     "feedback": "Sam fakt korzystania ze świadczeń może być wrażliwy; zasada potrzeby służbowej nadal obowiązuje."
   },
   {
@@ -160,12 +160,12 @@
     "name": "Wydanie dokumentacji",
     "text": "Osoba upoważniona przychodzi po kopię dokumentacji. Co należy sprawdzić?",
     "answers": [
-      "Wystarczy potwierdzić tożsamość osoby odbierającej dokumentację; zakres upoważnienia wynika z samego faktu jego istnienia",
       "Należy sprawdzić tożsamość odbiorcy, istnienie jego uprawnienia oraz zakres dokumentacji, do którego jest upoważniony",
+      "Wystarczy potwierdzić tożsamość osoby odbierającej dokumentację; zakres upoważnienia wynika z samego faktu jego istnienia",
       "Jeżeli osoba ma oryginał upoważnienia, dodatkowa weryfikacja tożsamości nie jest potrzebna",
       "Można wydać pełną dokumentację, jeśli upoważnienie nie wskazuje konkretnego zakresu"
     ],
-    "correct": 1,
+    "correct": 0,
     "feedback": "Udostępnienie wymaga pewności co do odbiorcy, podstawy jego uprawnienia i właściwego zakresu."
   },
   {
@@ -187,11 +187,11 @@
     "text": "Zdjęcie pacjenta wykonano w celach dokumentacji klinicznej. Czy marketing może użyć go w poście?",
     "answers": [
       "Marketing może użyć zdjęcia, jeśli nie pokazuje pełnej twarzy pacjenta",
-      "Wykorzystanie do marketingu wymaga odrębnej oceny podstawy, celu i zakresu, niezależnie od tego, że zdjęcie powstało klinicznie",
       "Można użyć zdjęcia, jeśli lekarz prowadzący zaakceptuje publikację",
+      "Wykorzystanie do marketingu wymaga odrębnej oceny podstawy, celu i zakresu, niezależnie od tego, że zdjęcie powstało klinicznie",
       "Można użyć zdjęcia, jeśli pacjent wcześniej zgodził się na dokumentację fotograficzną leczenia"
     ],
-    "correct": 1,
+    "correct": 2,
     "feedback": "Zmiana celu z dokumentacji klinicznej na marketing wymaga odrębnej analizy prawnej i odpowiednich zgód/podstaw."
   }
 ]
