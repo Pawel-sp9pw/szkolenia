@@ -114,6 +114,7 @@ function fub_rodo_save_new_version(
     $form->shuffleanswers = 1;
     $form->answernumbering = 'abc';
     $form->showstandardinstruction = 0;
+    $form->shownumcorrect = 1;
 
     $form->answer = [];
     $form->fraction = [];
