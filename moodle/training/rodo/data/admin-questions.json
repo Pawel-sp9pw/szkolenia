@@ -4,12 +4,12 @@
     "name": "Diagnoza pracownika",
     "text": "Kierownik pyta kadry o diagnozę pracownika przebywającego na zwolnieniu. Co jest właściwe?",
     "answers": [
-      "Przekazać kierownikowi ogólną informację o rodzaju schorzenia, jeśli wpływa ono na organizację pracy",
       "Ujawnić wyłącznie informacje, do których kierownik ma podstawę i rzeczywistą potrzebę, bez przekazywania diagnozy bez podstawy",
+      "Przekazać kierownikowi ogólną informację o rodzaju schorzenia, jeśli wpływa ono na organizację pracy",
       "Przekazać diagnozę ustnie, ale nie utrwalać jej w wiadomości",
       "Przekazać informację, jeśli pracownik przebywa na zwolnieniu dłużej niż 30 dni"
     ],
-    "correct": 1,
+    "correct": 0,
     "feedback": "Dane zdrowotne pracownika są szczególną kategorią, a dostęp przełożonego nie jest nieograniczony."
   },
   {
@@ -31,11 +31,11 @@
     "text": "Po zakończeniu rekrutacji rekruter trzyma wszystkie CV w prywatnym folderze „na przyszłość”. Jak to ocenić?",
     "answers": [
       "Można przechowywać CV bezterminowo, jeśli kandydat sam przesłał je do organizacji",
-      "Przechowywanie wymaga właściwej podstawy, określonego okresu retencji i kontrolowanego miejsca",
       "Można zachować wszystkie CV przez okres równy okresowi przechowywania akt pracowniczych",
+      "Przechowywanie wymaga właściwej podstawy, określonego okresu retencji i kontrolowanego miejsca",
       "Wystarczy przenieść CV do prywatnego folderu rekrutera, jeśli dostęp ma tylko on"
     ],
-    "correct": 1,
+    "correct": 2,
     "feedback": "Ograniczenie celu i przechowywania wymaga kontrolowania retencji danych kandydatów."
   },
   {
@@ -44,11 +44,11 @@
     "text": "Do raportu potrzebna jest liczba świadczeń według placówki. Jaki eksport wybrać?",
     "answers": [
       "Eksport z identyfikatorem pacjenta zamiast nazwiska, żeby umożliwić późniejszą weryfikację",
-      "Zagregowane dane bez identyfikacji pacjentów, jeśli wystarczają do celu raportowego",
       "Pełna tabela z danymi pacjentów, jeśli raport trafia wyłącznie do controllingu",
-      "Dane z PESEL zaszyfrowane w arkuszu, bo szyfrowanie zastępuje minimalizację"
+      "Dane z PESEL zaszyfrowane w arkuszu, bo szyfrowanie zastępuje minimalizację",
+      "Zagregowane dane bez identyfikacji pacjentów, jeśli wystarczają do celu raportowego"
     ],
-    "correct": 1,
+    "correct": 3,
     "feedback": "Dane zagregowane realizują cel przy mniejszym ryzyku i lepiej spełniają minimalizację."
   },
   {
@@ -56,12 +56,12 @@
     "name": "Faktura",
     "text": "Czy księgowość powinna dostawać pełną dokumentację medyczną pacjenta, jeśli do rozliczenia potrzebuje danych z faktury?",
     "answers": [
-      "Księgowość może otrzymywać pełną dokumentację, jeśli dokument dotyczy odpłatnego świadczenia",
       "Zakres danych powinien być ograniczony do informacji potrzebnych do rozliczenia",
+      "Księgowość może otrzymywać pełną dokumentację, jeśli dokument dotyczy odpłatnego świadczenia",
       "Można przekazać pełną dokumentację, jeśli jest przesyłana wewnątrz organizacji",
       "Pełna dokumentacja jest dopuszczalna, jeśli księgowość ma podpisane upoważnienia do danych osobowych"
     ],
-    "correct": 1,
+    "correct": 0,
     "feedback": "Cel księgowy nie uzasadnia automatycznie pełnego dostępu do danych klinicznych."
   },
   {
@@ -82,12 +82,12 @@
     "name": "Dokumentacja BHP",
     "text": "Gdzie powinna być przechowywana dokumentacja powypadkowa zawierająca dane o zdrowiu?",
     "answers": [
-      "W wydzielonym repozytorium lub miejscu z dostępem ograniczonym do osób uprawnionych",
       "W folderze HR dostępnym wszystkim kierownikom, bo dokument dotyczy pracownika",
       "W aktach ogólnych pracownika bez dodatkowych ograniczeń, jeśli dokument jest papierowy",
+      "W wydzielonym repozytorium lub miejscu z dostępem ograniczonym do osób uprawnionych",
       "W prywatnym zaszyfrowanym folderze specjalisty BHP na jego komputerze"
     ],
-    "correct": 0,
+    "correct": 2,
     "feedback": "Dokumentacja BHP może zawierać szczególne kategorie danych i wymaga ograniczonego dostępu."
   },
   {
@@ -96,11 +96,11 @@
     "text": "Komputer z systemu kadrowego ma trafić do zewnętrznego serwisu. Co należy zrobić?",
     "answers": [
       "Przekazać urządzenie po wylogowaniu użytkownika, jeśli serwis podpisał umowę poufności",
-      "Przed przekazaniem ocenić zawartość danych, zastosować wymagane zabezpieczenia i zapewnić właściwe warunki dostępu serwisu",
       "Wystarczy utworzyć nowe konto serwisowe bez hasła do systemu kadrowego",
-      "Można oddać komputer bez dodatkowych działań, jeśli dysk jest wewnętrzny i urządzenie nie opuszcza kraju"
+      "Można oddać komputer bez dodatkowych działań, jeśli dysk jest wewnętrzny i urządzenie nie opuszcza kraju",
+      "Przed przekazaniem ocenić zawartość danych, zastosować wymagane zabezpieczenia i zapewnić właściwe warunki dostępu serwisu"
     ],
-    "correct": 1,
+    "correct": 3,
     "feedback": "Serwis urządzenia może oznaczać dostęp do danych; trzeba zabezpieczyć cały nośnik i proces."
   },
   {
@@ -108,12 +108,12 @@
     "name": "Stary dysk",
     "text": "Dysk z komputera przychodni jest przeznaczony do likwidacji. Co zrobić?",
     "answers": [
-      "Wykonać szybkie formatowanie i zachować protokół przekazania sprzętu",
       "Zastosować zatwierdzoną metodę bezpiecznego usunięcia danych lub fizycznego zniszczenia nośnika zgodnie z procedurą",
+      "Wykonać szybkie formatowanie i zachować protokół przekazania sprzętu",
       "Usunąć partycję i sprzedać dysk po sprawdzeniu, że system nie startuje",
       "Zaszyfrować dysk nowym kluczem i pozostawić go w magazynie bez dalszych działań"
     ],
-    "correct": 1,
+    "correct": 0,
     "feedback": "Cykl życia danych obejmuje również nośniki wycofywane z użycia."
   },
   {
@@ -135,11 +135,11 @@
     "text": "Kadry pozyskują dane dziecka pracownika dla konkretnego świadczenia pracowniczego. Czy mogą użyć ich do dowolnej innej akcji?",
     "answers": [
       "Dane można wykorzystać również do innych świadczeń pracowniczych, jeśli dotyczą tej samej rodziny",
-      "Należy przestrzegać celu i podstawy, dla których dane zostały zebrane, a nowe użycie wymaga osobnej oceny",
       "Można wykorzystać dane do celów administracyjnych, jeśli nie zawierają PESEL",
+      "Należy przestrzegać celu i podstawy, dla których dane zostały zebrane, a nowe użycie wymaga osobnej oceny",
       "Można użyć danych w nowym celu po upływie roku od ich zebrania"
     ],
-    "correct": 1,
+    "correct": 2,
     "feedback": "Ograniczenie celu zabrania dowolnego wtórnego wykorzystywania danych."
   },
   {
@@ -148,11 +148,11 @@
     "text": "Analityk eksportuje dane na pulpit i po zakończeniu raportu zostawia plik bezterminowo. Co jest problemem?",
     "answers": [
       "Plik roboczy może pozostać na pulpicie, jeśli komputer jest służbowy i ma hasło",
-      "Pozostawienie niekontrolowanej kopii po zakończeniu celu zwiększa ryzyko i może naruszać zasady retencji oraz minimalizacji",
       "Wystarczy zmienić nazwę pliku na neutralną i przenieść go do katalogu użytkownika",
-      "Problem istnieje tylko wtedy, gdy plik zawiera dane szczególnej kategorii"
+      "Problem istnieje tylko wtedy, gdy plik zawiera dane szczególnej kategorii",
+      "Pozostawienie niekontrolowanej kopii po zakończeniu celu zwiększa ryzyko i może naruszać zasady retencji oraz minimalizacji"
     ],
-    "correct": 1,
+    "correct": 3,
     "feedback": "Kopie robocze powinny podlegać kontroli, dostępowi i retencji."
   },
   {
@@ -160,12 +160,12 @@
     "name": "Wejście technika do gabinetu",
     "text": "Technik ma naprawić klimatyzację w gabinecie, gdzie na biurku leżą karty pacjentów. Co powinien zrobić personel?",
     "answers": [
-      "Jeśli technik jest pracownikiem tej samej organizacji, nie trzeba dodatkowo zabezpieczać dokumentów",
       "Przed rozpoczęciem prac trzeba zabezpieczyć dokumenty albo zapewnić taki nadzór, by technik nie miał niepotrzebnego dostępu",
+      "Jeśli technik jest pracownikiem tej samej organizacji, nie trzeba dodatkowo zabezpieczać dokumentów",
       "Wystarczy poprosić technika o podpisanie oświadczenia poufności przy wejściu",
       "Można pozostawić dokumenty, jeśli technik pracuje krócej niż godzinę"
     ],
-    "correct": 1,
+    "correct": 0,
     "feedback": "Bezpieczeństwo organizacyjne obejmuje zabezpieczenie danych przed przypadkowym dostępem osób, które nie potrzebują ich do zadania."
   },
   {
@@ -187,11 +187,11 @@
     "text": "Czy pracownik administracji, który technicznie ma dostęp do folderu HR, może czytać akta kolegi z ciekawości?",
     "answers": [
       "Może czytać akta, jeśli techniczny dostęp został nadany do całego folderu HR",
-      "Nie może, jeśli dostęp nie wynika z konkretnego zadania i uprawnienia",
       "Może zapoznać się z aktami bez kopiowania dokumentów, bo nie dochodzi wtedy do dalszego przetwarzania",
+      "Nie może, jeśli dostęp nie wynika z konkretnego zadania i uprawnienia",
       "Może, jeśli jest pracownikiem administracji i obowiązuje go tajemnica służbowa"
     ],
-    "correct": 1,
+    "correct": 2,
     "feedback": "Dostęp techniczny nie jest upoważnieniem do dowolnego zapoznawania się z danymi."
   }
 ]
