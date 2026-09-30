@@ -4,12 +4,12 @@
     "name": "Zdjęcie z eventu",
     "text": "Podczas akcji profilaktycznej wykonano zdjęcie, na którym pacjent jest wyraźnie rozpoznawalny. Czy można je automatycznie opublikować w social media?",
     "answers": [
-      "Można opublikować, jeśli wydarzenie było otwarte i pacjent nie zgłosił sprzeciwu podczas wykonywania zdjęcia",
       "Przed publikacją trzeba ustalić właściwą podstawę i zakres wykorzystania; przy rozpoznawalnym wizerunku zwykle potrzebna jest odpowiednia zgoda na rozpowszechnianie",
+      "Można opublikować, jeśli wydarzenie było otwarte i pacjent nie zgłosił sprzeciwu podczas wykonywania zdjęcia",
       "Można opublikować organicznie, ale płatna promocja wymaga osobnej zgody",
       "Można opublikować po usunięciu metadanych zdjęcia, jeśli twarz pozostaje widoczna"
     ],
-    "correct": 1,
+    "correct": 0,
     "feedback": "Samo wykonanie zdjęcia nie oznacza automatycznie prawa do jego publikacji. Trzeba uwzględnić ochronę danych oraz przepisy o rozpowszechnianiu wizerunku."
   },
   {
@@ -31,11 +31,11 @@
     "text": "Czy adresy e-mail pacjentów zebrane do obsługi wizyt można bez dalszej analizy wykorzystać do newslettera marketingowego?",
     "answers": [
       "Można użyć adresów, jeśli newsletter dotyczy usług zdrowotnych tej samej placówki",
-      "Trzeba odrębnie ocenić zgodność celu, podstawę prawną i wymogi dotyczące komunikacji marketingowej",
       "Można wysłać pierwszą wiadomość bez zgody, jeśli zawiera link do rezygnacji z dalszej komunikacji",
+      "Trzeba odrębnie ocenić zgodność celu, podstawę prawną i wymogi dotyczące komunikacji marketingowej",
       "Można wykorzystać bazę, jeśli adresy zostały podane dobrowolnie podczas rejestracji"
     ],
-    "correct": 1,
+    "correct": 2,
     "feedback": "Dane zebrane do obsługi świadczeń nie mogą być automatycznie wykorzystywane do dowolnego nowego celu marketingowego."
   },
   {
@@ -44,11 +44,11 @@
     "text": "Pracownik wysyła wiadomość do 120 pacjentów i umieszcza wszystkie adresy w polu DO. Jaki jest podstawowy problem?",
     "answers": [
       "Użycie pola DO jest dopuszczalne, jeśli wiadomość nie zawiera danych o stanie zdrowia",
-      "Problemem jest ujawnienie adresów pozostałym odbiorcom; trzeba zastosować rozwiązanie, które nie ujawnia listy adresowej",
       "Wystarczy przenieść odbiorców do DW, bo wtedy wiadomość ma charakter kopii",
-      "Można użyć pola DO, jeśli wszyscy odbiorcy są pacjentami tej samej placówki"
+      "Można użyć pola DO, jeśli wszyscy odbiorcy są pacjentami tej samej placówki",
+      "Problemem jest ujawnienie adresów pozostałym odbiorcom; trzeba zastosować rozwiązanie, które nie ujawnia listy adresowej"
     ],
-    "correct": 1,
+    "correct": 3,
     "feedback": "Ujawnienie adresów e-mail innym odbiorcom może stanowić naruszenie poufności danych."
   },
   {
@@ -56,12 +56,12 @@
     "name": "Pixel reklamowy",
     "text": "Marketing chce dodać do strony rejestracji pacjenta zewnętrzny pixel reklamowy śledzący zachowanie użytkownika. Co należy zrobić przed wdrożeniem?",
     "answers": [
-      "Jeżeli dostawca pixela jest znaną firmą i ma siedzibę w UE, można wdrożyć go bez dodatkowej analizy",
       "Przed wdrożeniem trzeba ocenić zakres danych, podstawę prawną, obowiązki informacyjne, zgody trackingowe oraz odbiorców i transfery",
+      "Jeżeli dostawca pixela jest znaną firmą i ma siedzibę w UE, można wdrożyć go bez dodatkowej analizy",
       "Wystarczy zablokować pixel do chwili zaakceptowania regulaminu strony przez użytkownika",
       "Można wdrożyć pixel na stronie rejestracji, jeśli nie przekazuje on bezpośrednio imienia i nazwiska"
     ],
-    "correct": 1,
+    "correct": 0,
     "feedback": "Narzędzia śledzące mogą wiązać się z przekazywaniem danych podmiotom trzecim i wymagają analizy prywatności oraz zgodności z przepisami dotyczącymi cookies/trackingu."
   },
   {
@@ -69,12 +69,12 @@
     "name": "Formularz leadowy",
     "text": "Formularz kampanii pyta o imię, telefon, PESEL, adres, zawód i stan zdrowia, choć celem jest tylko kontakt w sprawie bezpłatnego badania. Co jest nieprawidłowe?",
     "answers": [
-      "Zakres danych może być nadmierny; formularz powinien zbierać tylko informacje potrzebne do kontaktu i realizacji konkretnego celu",
       "Wszystkie pola są dopuszczalne, jeśli formularz oznaczy je jako opcjonalne",
+      "Zakres danych może być nadmierny; formularz powinien zbierać tylko informacje potrzebne do kontaktu i realizacji konkretnego celu",
       "PESEL i stan zdrowia można zbierać od razu, bo potencjalnie mogą być potrzebne później przy kwalifikacji",
       "Zakres jest prawidłowy, jeśli formularz ma zgodę marketingową pod wszystkimi polami"
     ],
-    "correct": 0,
+    "correct": 1,
     "feedback": "Art. 5 ust. 1 lit. c RODO wymaga ograniczenia danych do tego, co adekwatne i niezbędne."
   },
   {
@@ -83,11 +83,11 @@
     "text": "Pracownik zgodził się na wykonanie zdjęcia podczas wydarzenia wewnętrznego. Czy oznacza to automatycznie zgodę na reklamę płatną w mediach społecznościowych?",
     "answers": [
       "Zgoda na wykonanie zdjęcia obejmuje też późniejsze wykorzystanie reklamowe, o ile pracownik nie cofnął jej przed publikacją",
-      "Zakres wykorzystania trzeba ocenić odrębnie; zgoda na samo utrwalenie nie musi obejmować płatnej reklamy i konkretnych kanałów",
       "Jeśli zdjęcie wykonano w miejscu pracy, pracodawca może wykorzystać je we wszystkich kanałach związanych z marką",
+      "Zakres wykorzystania trzeba ocenić odrębnie; zgoda na samo utrwalenie nie musi obejmować płatnej reklamy i konkretnych kanałów",
       "Wystarczy poinformować pracownika po publikacji, jeśli reklama nie narusza jego dobrego imienia"
     ],
-    "correct": 1,
+    "correct": 2,
     "feedback": "Zakres wykorzystania wizerunku powinien być jasno określony. Zgoda na samo utrwalenie nie musi obejmować szerokiej publikacji reklamowej."
   },
   {
@@ -96,11 +96,11 @@
     "text": "Użytkownik publicznie pisze pod postem przychodni: „Leczę się u Was onkologicznie”. Czy marketing może wykorzystać ten komentarz w reklamie jako rekomendację?",
     "answers": [
       "Publiczny komentarz można wykorzystać w reklamie, jeśli zachowa się oryginalny kontekst i nazwę użytkownika",
-      "Nie automatycznie; dalsze wykorzystanie komentarza jako materiału reklamowego wymaga osobnej oceny podstawy i celu, zwłaszcza przy danych o zdrowiu",
       "Można wykorzystać treść po usunięciu nazwy profilu, bo staje się wtedy anonimowa",
-      "Można cytować komentarz bez zgody, jeśli użytkownik pozostawił go na publicznym profilu placówki"
+      "Można cytować komentarz bez zgody, jeśli użytkownik pozostawił go na publicznym profilu placówki",
+      "Nie automatycznie; dalsze wykorzystanie komentarza jako materiału reklamowego wymaga osobnej oceny podstawy i celu, zwłaszcza przy danych o zdrowiu"
     ],
-    "correct": 1,
+    "correct": 3,
     "feedback": "Zmiana kontekstu z komentarza użytkownika na materiał reklamowy wymaga odrębnej oceny podstawy i zakresu wykorzystania danych, zwłaszcza danych o zdrowiu."
   },
   {
@@ -108,12 +108,12 @@
     "name": "Konkurs w social media",
     "text": "W konkursie wymagane jest podanie daty urodzenia, adresu zamieszkania i PESEL, choć nagroda jest wysyłana tylko zwycięzcy. Jak postąpić?",
     "answers": [
-      "Warto zebrać wszystkie dane od razu, aby po wyłonieniu zwycięzcy nie kontaktować się ponownie",
       "Na etapie udziału należy ograniczyć dane do niezbędnych, a dodatkowe dane zwycięzcy zebrać dopiero, gdy są rzeczywiście potrzebne",
+      "Warto zebrać wszystkie dane od razu, aby po wyłonieniu zwycięzcy nie kontaktować się ponownie",
       "Można zebrać PESEL od wszystkich, jeśli zostanie usunięty po zakończeniu konkursu",
       "Zakres danych jest dopuszczalny, jeżeli regulamin wymienia wszystkie pola i uczestnik go akceptuje"
     ],
-    "correct": 1,
+    "correct": 0,
     "feedback": "Minimalizacja danych oznacza również właściwe rozłożenie zbierania informacji w czasie."
   },
   {
@@ -135,11 +135,11 @@
     "text": "Marketing chce pokazać na Instagramie kulisy pracy lekarza. Na zdjęciu biurka widać fragment dokumentacji pacjenta. Co zrobić?",
     "answers": [
       "Można opublikować zdjęcie, jeśli dokumentacja jest nieostra i odbiorca musiałby ją powiększyć",
-      "Materiał trzeba przygotować tak, aby nie zawierał danych pacjenta; najlepiej wykonać nowe ujęcie bez dokumentacji albo skutecznie ją usunąć z obrazu",
       "Wystarczy zamazać nazwisko, nawet jeśli widoczne są inne identyfikatory i informacje kliniczne",
+      "Materiał trzeba przygotować tak, aby nie zawierał danych pacjenta; najlepiej wykonać nowe ujęcie bez dokumentacji albo skutecznie ją usunąć z obrazu",
       "Publikacja w relacji znikającej po 24 godzinach istotnie ogranicza problem i może zastąpić pełne usunięcie danych"
     ],
-    "correct": 1,
+    "correct": 2,
     "feedback": "Krótkotrwała publikacja nadal jest ujawnieniem danych. Materiały promocyjne trzeba przygotowywać tak, aby nie zawierały danych pacjentów."
   },
   {
@@ -148,11 +148,11 @@
     "text": "Film promocyjny jest nagrywany w poczekalni podczas normalnych godzin pracy. Jak ograniczyć ryzyko?",
     "answers": [
       "Wystarczy oznaczyć wejście informacją o nagrywaniu; osoby pozostające w poczekalni można wtedy filmować",
-      "Nagranie trzeba zorganizować tak, aby osoby postronne nie były identyfikowalne albo by udział osób był świadomy i odpowiednio uregulowany",
       "Można nagrywać pacjentów z daleka bez dodatkowych działań, jeśli nie podaje się ich nazwisk",
-      "Wystarczy usunąć dźwięk z filmu, ponieważ sam obraz poczekalni nie ujawnia korzystania ze świadczeń"
+      "Wystarczy usunąć dźwięk z filmu, ponieważ sam obraz poczekalni nie ujawnia korzystania ze świadczeń",
+      "Nagranie trzeba zorganizować tak, aby osoby postronne nie były identyfikowalne albo by udział osób był świadomy i odpowiednio uregulowany"
     ],
-    "correct": 1,
+    "correct": 3,
     "feedback": "W placówce medycznej szczególnie ważne jest uniknięcie przypadkowego ujawnienia faktu korzystania ze świadczeń przez osoby postronne."
   },
   {
@@ -160,12 +160,12 @@
     "name": "Odbiorca danych w kampanii",
     "text": "Agencja reklamowa dostaje listę pacjentów z numerami telefonów do prowadzenia kampanii SMS. Co należy ustalić?",
     "answers": [
-      "Jeśli agencja działa na zlecenie placówki, nie trzeba osobno ustalać jej roli ani warunków dostępu do danych",
       "Należy ustalić rolę agencji, zakres i cel przetwarzania, podstawę kontaktu, właściwe postanowienia umowne oraz zabezpieczenia",
+      "Jeśli agencja działa na zlecenie placówki, nie trzeba osobno ustalać jej roli ani warunków dostępu do danych",
       "Wystarczy, że agencja podpisze NDA, bo reguluje ono poufność listy pacjentów",
       "Jeżeli dane są przekazane w zaszyfrowanym pliku, analiza podstawy prawnej i roli agencji nie jest konieczna"
     ],
-    "correct": 1,
+    "correct": 0,
     "feedback": "Przekazanie danych partnerowi marketingowemu wymaga ustalenia ról stron i warunków zgodnego z prawem przetwarzania."
   },
   {
@@ -187,11 +187,11 @@
     "text": "Influencer ma nagrać materiał w placówce. Jakie działanie jest najbezpieczniejsze?",
     "answers": [
       "Najbezpieczniej ograniczyć się do pisemnego zobowiązania influencera, że nie pokaże danych pacjentów",
-      "Trzeba z góry ustalić scenariusz, miejsca i zasady nagrania oraz fizycznie ograniczyć możliwość utrwalenia pacjentów i dokumentacji",
       "Można pozwolić na swobodne nagrywanie, jeśli materiał zostanie później zaakceptowany przez marketing przed publikacją",
+      "Trzeba z góry ustalić scenariusz, miejsca i zasady nagrania oraz fizycznie ograniczyć możliwość utrwalenia pacjentów i dokumentacji",
       "Wystarczy nagrywać poza gabinetami, bo poczekalnia nie zawiera danych medycznych"
     ],
-    "correct": 1,
+    "correct": 2,
     "feedback": "Planowanie materiału z wyprzedzeniem pozwala ograniczyć ryzyko przypadkowego ujawnienia danych i naruszenia prywatności pacjentów."
   }
 ]
