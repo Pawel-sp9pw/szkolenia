@@ -31,11 +31,11 @@
     "text": "Pacjent pyta przy pełnej kolejce o wynik wrażliwego badania. Co powinien zrobić pracownik?",
     "answers": [
       "Odpowiedzieć półgłosem, jeśli pacjent sam poruszył temat przy kolejce",
-      "Zapewnić bardziej prywatny sposób rozmowy i ograniczyć ujawnienie szczegółów osobom postronnym",
       "Podać tylko nazwę badania, a wynik zapisać na kartce i wręczyć bez weryfikacji",
+      "Zapewnić bardziej prywatny sposób rozmowy i ograniczyć ujawnienie szczegółów osobom postronnym",
       "Poprosić kolejkę o odsunięcie się, bez zmiany miejsca rozmowy"
     ],
-    "correct": 1,
+    "correct": 2,
     "feedback": "Obowiązek poufności wymaga takiej organizacji rozmowy, aby ograniczyć przypadkowe ujawnienie."
   },
   {
@@ -44,11 +44,11 @@
     "text": "Monitor rejestratorki jest widoczny dla pacjentów czekających w kolejce. Co należy zrobić?",
     "answers": [
       "Jeżeli na ekranie widać tylko nazwiska i godziny wizyt, dodatkowe zabezpieczenie nie jest potrzebne",
-      "Należy tak ustawić stanowisko lub zastosować zabezpieczenie, aby osoby postronne nie mogły odczytywać danych",
       "Wystarczy ustawić automatyczną blokadę ekranu po pięciu minutach bezczynności",
-      "Można pozostawić monitor widoczny, jeśli rejestratorka kontroluje, kto stoi przy ladzie"
+      "Można pozostawić monitor widoczny, jeśli rejestratorka kontroluje, kto stoi przy ladzie",
+      "Należy tak ustawić stanowisko lub zastosować zabezpieczenie, aby osoby postronne nie mogły odczytywać danych"
     ],
-    "correct": 1,
+    "correct": 3,
     "feedback": "Ochrona prywatności obejmuje organizację stanowiska i ograniczenie widoczności danych dla osób postronnych."
   },
   {
@@ -56,12 +56,12 @@
     "name": "SMS przypominający",
     "text": "Co jest dobrą zasadą przy SMS przypominającym o wizycie?",
     "answers": [
-      "Wiadomość powinna zawierać tyle szczegółów, aby pacjent jednoznacznie wiedział, jakiego świadczenia dotyczy, nawet jeśli ujawnia specjalizację",
       "Należy stosować zatwierdzoną treść o możliwie neutralnym i minimalnym zakresie informacji",
+      "Wiadomość powinna zawierać tyle szczegółów, aby pacjent jednoznacznie wiedział, jakiego świadczenia dotyczy, nawet jeśli ujawnia specjalizację",
       "Można podać nazwisko lekarza i rozpoznanie, jeśli wiadomość jest wysyłana na numer zapisany w systemie",
       "Najbezpieczniej nie wysyłać żadnych przypomnień, ponieważ SMS zawsze stanowi naruszenie poufności"
     ],
-    "correct": 1,
+    "correct": 0,
     "feedback": "Minimalizacja ogranicza skutki sytuacji, gdy wiadomość trafi do osoby mającej dostęp do telefonu."
   },
   {
@@ -69,12 +69,12 @@
     "name": "Błędny e-mail pacjenta",
     "text": "Pacjent dyktuje nowy adres e-mail, na który ma trafić dokument. Co wcześniej?",
     "answers": [
-      "Przeprowadzić wymaganą weryfikację i upewnić się co do poprawności nowego adresu przed wysłaniem dokumentu",
       "Wysłać najpierw wiadomość testową zawierającą nazwisko pacjenta i poprosić o potwierdzenie",
+      "Przeprowadzić wymaganą weryfikację i upewnić się co do poprawności nowego adresu przed wysłaniem dokumentu",
       "Zmienić adres w systemie od razu, jeśli nowy adres zawiera imię lub nazwisko pacjenta",
       "Wysłać dokument na stary i nowy adres jednocześnie, aby ograniczyć ryzyko niedostarczenia"
     ],
-    "correct": 0,
+    "correct": 1,
     "feedback": "Zmiana kanału dostarczenia wrażliwych danych wymaga pewności co do tożsamości i poprawności adresu."
   },
   {
@@ -83,11 +83,11 @@
     "text": "Która zasada jest najważniejsza przy wywoływaniu pacjentów?",
     "answers": [
       "Zawsze używać pełnego imienia i nazwiska, ponieważ poprawna identyfikacja ma pierwszeństwo przed minimalizacją",
-      "Stosować przyjęty w organizacji sposób identyfikacji, ujawniając tylko zakres potrzebny do bezpiecznego wywołania pacjenta",
       "Używać numeru PESEL, ponieważ jest bardziej jednoznaczny niż nazwisko",
+      "Stosować przyjęty w organizacji sposób identyfikacji, ujawniając tylko zakres potrzebny do bezpiecznego wywołania pacjenta",
       "Dostosowywać sposób wywołania wyłącznie do życzenia pacjenta, niezależnie od procedury placówki"
     ],
-    "correct": 1,
+    "correct": 2,
     "feedback": "Należy równoważyć prawidłową identyfikację z minimalizacją ujawnianych danych."
   },
   {
@@ -96,11 +96,11 @@
     "text": "Na ladzie leży lista pacjentów z godzinami wizyt. Co jest właściwe?",
     "answers": [
       "Lista może pozostać na ladzie, jeżeli znajduje się po stronie personelu",
-      "Należy zabezpieczyć ją przed wglądem osób postronnych i odkładać w miejsce kontrolowane, gdy nie jest używana",
       "Wystarczy usunąć z listy numery telefonów, pozostawiając nazwiska i godziny wizyt",
-      "Można przykryć ją innymi dokumentami, jeśli rejestracja jest stale obsadzona"
+      "Można przykryć ją innymi dokumentami, jeśli rejestracja jest stale obsadzona",
+      "Należy zabezpieczyć ją przed wglądem osób postronnych i odkładać w miejsce kontrolowane, gdy nie jest używana"
     ],
-    "correct": 1,
+    "correct": 3,
     "feedback": "Listy zawierające dane pacjentów powinny być chronione przed przypadkowym wglądem."
   },
   {
@@ -108,12 +108,12 @@
     "name": "Centralna rejestracja",
     "text": "Czy pracownik centralnej rejestracji powinien otwierać pełną historię pacjenta przy każdej zmianie terminu?",
     "answers": [
-      "Pracownik może otwierać pełną historię, jeśli dostęp wynika z pracy w centralnej rejestracji",
       "Powinien korzystać z danych potrzebnych do konkretnej czynności, a szerszy dostęp tylko wtedy, gdy rzeczywiście jest uzasadniony",
+      "Pracownik może otwierać pełną historię, jeśli dostęp wynika z pracy w centralnej rejestracji",
       "Przy zmianie terminu zawsze należy sprawdzić wcześniejsze rozpoznania, aby uniknąć pomyłki",
       "Pełna historia może być przeglądana, jeśli pacjent jest obsługiwany w więcej niż jednej placówce tej samej organizacji"
     ],
-    "correct": 1,
+    "correct": 0,
     "feedback": "Przynależność do tej samej organizacji nie znosi zasady minimalizacji i dostępu według zadania."
   },
   {
@@ -135,11 +135,11 @@
     "text": "Pracodawca dzwoni, aby potwierdzić, czy pracownik był dziś u lekarza. Co robi rejestracja?",
     "answers": [
       "Można potwierdzić sam fakt wizyty, jeżeli pracodawca nie pyta o rozpoznanie",
-      "Nie należy ujawniać informacji bez właściwej podstawy lub uprawnienia; trzeba zastosować obowiązującą procedurę",
       "Można podać informację, jeżeli rozmówca dzwoni z numeru firmowego pracodawcy",
+      "Nie należy ujawniać informacji bez właściwej podstawy lub uprawnienia; trzeba zastosować obowiązującą procedurę",
       "Można potwierdzić obecność pacjenta, jeśli wizyta odbyła się w godzinach pracy"
     ],
-    "correct": 1,
+    "correct": 2,
     "feedback": "Fakt wizyty jest daną osobową i może ujawniać informacje o zdrowiu. Sam status pracodawcy nie daje automatycznego prawa do informacji."
   },
   {
@@ -148,11 +148,11 @@
     "text": "Pacjent stoi przy ladzie z partnerem. Czy to wystarcza, aby omawiać przy partnerze pełne dane medyczne?",
     "answers": [
       "Obecność partnera przy ladzie można uznać za zgodę na przekazanie informacji organizacyjnych i medycznych",
-      "Nie należy automatycznie zakładać zgody na pełne ujawnienie; zakres rozmowy trzeba dostosować i w razie potrzeby potwierdzić wolę pacjenta",
       "Jeśli partner pomaga pacjentowi odpowiadać na pytania, można przekazać mu wszystkie informacje",
-      "Wystarczy zapytać partnera, czy pacjent pozwala mu słuchać rozmowy"
+      "Wystarczy zapytać partnera, czy pacjent pozwala mu słuchać rozmowy",
+      "Nie należy automatycznie zakładać zgody na pełne ujawnienie; zakres rozmowy trzeba dostosować i w razie potrzeby potwierdzić wolę pacjenta"
     ],
-    "correct": 1,
+    "correct": 3,
     "feedback": "Sama obecność osoby trzeciej nie jest zawsze wystarczającą podstawą do nieograniczonego ujawnienia."
   },
   {
@@ -187,11 +187,11 @@
     "text": "Rozmówca denerwuje się i żąda natychmiast informacji, odmawiając weryfikacji. Co powinien zrobić pracownik?",
     "answers": [
       "Jeżeli rozmówca poprawnie poda część danych, można zrezygnować z pozostałych elementów weryfikacji, aby uspokoić sytuację",
-      "Nie ujawniać danych bez wymaganej weryfikacji; wyjaśnić procedurę i wskazać bezpieczną alternatywną ścieżkę",
       "Przekazać wyłącznie informacje organizacyjne, nawet jeśli procedura wymaga wcześniejszej weryfikacji",
+      "Nie ujawniać danych bez wymaganej weryfikacji; wyjaśnić procedurę i wskazać bezpieczną alternatywną ścieżkę",
       "Skierować rozmowę do innego pracownika, który może podjąć decyzję o pominięciu weryfikacji"
     ],
-    "correct": 1,
+    "correct": 2,
     "feedback": "Presja czasu lub emocje nie znoszą obowiązku ochrony poufności."
   }
 ]
