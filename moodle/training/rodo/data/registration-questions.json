@@ -1,1 +1,197 @@
-[{"id":"R01","name":"Telefoniczna weryfikacja","text":"Rozmówca mówi, że jest pacjentem i prosi o szczegóły wizyty. Jaki model jest najbezpieczniejszy?","answers":["Pracownik podaje PESEL i pyta, czy się zgadza","Rozmówca sam podaje wymagane dane kontrolne zgodnie z procedurą","Wystarczy imię i nazwisko","Wystarczy numer telefonu z którego dzwoni"],"correct":1,"feedback":"Weryfikacja powinna polegać na aktywnym podaniu wymaganych informacji przez rozmówcę i być proporcjonalna do ryzyka."},{"id":"R02","name":"Matka pełnoletniego pacjenta","text":"Matka 25-letniego pacjenta pyta o termin jego wizyty. Co zrobić?","answers":["Podać, bo jest matką","Sprawdzić jej tożsamość i uprawnienie zgodnie z procedurą","Podać tylko godzinę","Podać, jeśli zna PESEL"],"correct":1,"feedback":"Pokrewieństwo z dorosłym pacjentem nie daje automatycznie prawa do jego danych."},{"id":"R03","name":"Kolejka przy ladzie","text":"Pacjent pyta przy pełnej kolejce o wynik wrażliwego badania. Co powinien zrobić pracownik?","answers":["Głośno odpowiedzieć, bo pacjent sam zapytał","Zapewnić bardziej prywatny sposób rozmowy i nie ujawniać szczegółów przy osobach postronnych","Odmówić każdej informacji","Poprosić innych pacjentów, żeby nie słuchali"],"correct":1,"feedback":"Obowiązek poufności wymaga takiej organizacji rozmowy, aby ograniczyć przypadkowe ujawnienie."},{"id":"R04","name":"Ekran rejestracji","text":"Monitor rejestratorki jest widoczny dla pacjentów czekających w kolejce. Co należy zrobić?","answers":["Nic, jeśli czcionka jest mała","Zmienić ustawienie stanowiska/ekranu lub zastosować odpowiednie zabezpieczenie widoczności","Wyłączyć tylko nazwiska","Przykryć ekran kartką"],"correct":1,"feedback":"Ochrona prywatności obejmuje organizację stanowiska i ograniczenie widoczności danych dla osób postronnych."},{"id":"R05","name":"SMS przypominający","text":"Co jest dobrą zasadą przy SMS przypominającym o wizycie?","answers":["Wpisywać pełne rozpoznanie","Stosować zatwierdzony, możliwie neutralny i minimalny zakres treści","Podawać PESEL dla pewności","Zawsze wymieniać wszystkie wcześniejsze wizyty"],"correct":1,"feedback":"Minimalizacja ogranicza skutki sytuacji, gdy wiadomość trafi do osoby mającej dostęp do telefonu."},{"id":"R06","name":"Błędny e-mail pacjenta","text":"Pacjent dyktuje nowy adres e-mail, na który ma trafić dokument. Co wcześniej?","answers":["Od razu wysłać","Przeprowadzić właściwą weryfikację i sprawdzić adres zgodnie z procedurą","Wystarczy, że adres zawiera nazwisko","Wysłać najpierw pełną dokumentację testowo"],"correct":1,"feedback":"Zmiana kanału dostarczenia wrażliwych danych wymaga pewności co do tożsamości i poprawności adresu."},{"id":"R07","name":"Wywoływanie pacjenta","text":"Która zasada jest najważniejsza przy wywoływaniu pacjentów?","answers":["Zawsze podać PESEL","Używać sposobu przyjętego w organizacji, ograniczając identyfikację do niezbędnego zakresu","Podawać diagnozę, żeby nie było pomyłki","Wywoływać pełnym adresem"],"correct":1,"feedback":"Należy równoważyć prawidłową identyfikację z minimalizacją ujawnianych danych."},{"id":"R08","name":"Dokumenty na ladzie","text":"Na ladzie leży lista pacjentów z godzinami wizyt. Co jest właściwe?","answers":["Może leżeć, jeśli rejestracja jest zajęta","Należy ją zabezpieczyć przed wglądem osób postronnych","Wystarczy odwrócić na noc","Można przykryć ulotką"],"correct":1,"feedback":"Listy zawierające dane pacjentów powinny być chronione przed przypadkowym wglądem."},{"id":"R09","name":"Centralna rejestracja","text":"Czy pracownik centralnej rejestracji powinien otwierać pełną historię pacjenta przy każdej zmianie terminu?","answers":["Tak, żeby wiedzieć wszystko","Nie, korzysta z danych potrzebnych do konkretnej czynności","Tak, jeśli pacjent ma wiele wizyt","Tak, bo pracuje dla tej samej firmy"],"correct":1,"feedback":"Przynależność do tej samej organizacji nie znosi zasady minimalizacji i dostępu według zadania."},{"id":"R10","name":"Osoba z upoważnieniem","text":"Osoba twierdzi, że jest upoważniona do odbioru dokumentacji. Co powinno nastąpić?","answers":["Wydanie po podaniu nazwiska pacjenta","Weryfikacja tożsamości osoby oraz istnienia i zakresu jej uprawnienia","Wydanie, jeśli ma dowód osobisty, bez sprawdzania upoważnienia","Wysłanie na dowolny wskazany e-mail"],"correct":1,"feedback":"Dowód potwierdza tożsamość, ale nie zawsze uprawnienie. Trzeba sprawdzić oba elementy."},{"id":"R11","name":"Pracodawca pacjenta","text":"Pracodawca dzwoni, aby potwierdzić, czy pracownik był dziś u lekarza. Co robi rejestracja?","answers":["Potwierdza, bo pracodawca płaci wynagrodzenie","Nie ujawnia bez właściwej podstawy/uprawnienia; stosuje procedurę","Podaje tylko godzinę","Potwierdza po podaniu NIP firmy"],"correct":1,"feedback":"Fakt wizyty jest daną osobową i może ujawniać informacje o zdrowiu. Sam status pracodawcy nie daje automatycznego prawa do informacji."},{"id":"R12","name":"Osoba obok pacjenta","text":"Pacjent stoi przy ladzie z partnerem. Czy to wystarcza, aby omawiać przy partnerze pełne dane medyczne?","answers":["Tak, obecność oznacza zgodę na wszystko","Nie należy automatycznie tak zakładać; zakres rozmowy trzeba dostosować i w razie potrzeby potwierdzić wolę pacjenta","Tak, jeśli partner trzyma dokumenty","Tak, gdy pacjent się nie sprzeciwia"],"correct":1,"feedback":"Sama obecność osoby trzeciej nie jest zawsze wystarczającą podstawą do nieograniczonego ujawnienia."},{"id":"R13","name":"Kartka z PESEL","text":"Pacjent podaje kartkę z PESEL. Czy pracownik powinien zostawić ją na ladzie po obsłudze?","answers":["Tak","Nie; należy zwrócić/zabezpieczyć zgodnie z procedurą, aby inni jej nie widzieli","Może ją wyrzucić do kosza","Może zrobić kopię"],"correct":1,"feedback":"Nawet krótkotrwały dokument z identyfikatorem wymaga ochrony przed wglądem osób postronnych."},{"id":"R14","name":"Przekazanie między placówkami","text":"Rejestratorka z innej placówki prosi o pełną kartę pacjenta, choć chce tylko ustalić termin. Co zrobić?","answers":["Wysłać całość, bo to ta sama sieć","Przekazać tylko zakres potrzebny do zadania lub użyć systemu zgodnie z uprawnieniami","Wysłać prywatnym komunikatorem","Wydrukować i zostawić do odbioru"],"correct":1,"feedback":"Ta sama organizacja nie uzasadnia automatycznie przekazywania pełnego zakresu danych."},{"id":"R15","name":"Presja rozmówcy","text":"Rozmówca denerwuje się i żąda natychmiast informacji, odmawiając weryfikacji. Co powinien zrobić pracownik?","answers":["Ulec, żeby uniknąć skargi","Nie ujawniać danych bez wymaganej weryfikacji; spokojnie wyjaśnić procedurę i zaproponować właściwą ścieżkę","Podać połowę danych","Poprosić kolegę, żeby podał informację"],"correct":1,"feedback":"Presja czasu lub emocje nie znoszą obowiązku ochrony poufności."}]
+[
+  {
+    "id": "R01",
+    "name": "Telefoniczna weryfikacja",
+    "text": "Rozmówca mówi, że jest pacjentem i prosi o szczegóły wizyty. Jaki model jest najbezpieczniejszy?",
+    "answers": [
+      "Poprosić rozmówcę o samodzielne podanie danych kontrolnych wymaganych procedurą, dobranych proporcjonalnie do zakresu informacji",
+      "Odczytać rozmówcy część danych z systemu i poprosić wyłącznie o potwierdzenie",
+      "Zweryfikować rozmówcę numerem telefonu widocznym na ekranie, jeśli jest zgodny z kartoteką",
+      "Poprosić o imię, nazwisko i PESEL niezależnie od rodzaju sprawy, bo większa liczba danych zawsze zwiększa bezpieczeństwo"
+    ],
+    "correct": 0,
+    "feedback": "Weryfikacja powinna polegać na aktywnym podaniu wymaganych informacji przez rozmówcę i być proporcjonalna do ryzyka."
+  },
+  {
+    "id": "R02",
+    "name": "Matka pełnoletniego pacjenta",
+    "text": "Matka 25-letniego pacjenta pyta o termin jego wizyty. Co zrobić?",
+    "answers": [
+      "Jeżeli matka zna PESEL i adres syna, można potwierdzić termin wizyty",
+      "Należy sprawdzić jej tożsamość oraz uprawnienie do uzyskania tej informacji zgodnie z procedurą",
+      "Można podać datę, ale nie godzinę ani nazwisko lekarza",
+      "Można potwierdzić wizytę, jeśli pacjent wcześniej korzystał z pomocy matki przy rejestracji"
+    ],
+    "correct": 1,
+    "feedback": "Pokrewieństwo z dorosłym pacjentem nie daje automatycznie prawa do jego danych."
+  },
+  {
+    "id": "R03",
+    "name": "Kolejka przy ladzie",
+    "text": "Pacjent pyta przy pełnej kolejce o wynik wrażliwego badania. Co powinien zrobić pracownik?",
+    "answers": [
+      "Odpowiedzieć półgłosem, jeśli pacjent sam poruszył temat przy kolejce",
+      "Zapewnić bardziej prywatny sposób rozmowy i ograniczyć ujawnienie szczegółów osobom postronnym",
+      "Podać tylko nazwę badania, a wynik zapisać na kartce i wręczyć bez weryfikacji",
+      "Poprosić kolejkę o odsunięcie się, bez zmiany miejsca rozmowy"
+    ],
+    "correct": 1,
+    "feedback": "Obowiązek poufności wymaga takiej organizacji rozmowy, aby ograniczyć przypadkowe ujawnienie."
+  },
+  {
+    "id": "R04",
+    "name": "Ekran rejestracji",
+    "text": "Monitor rejestratorki jest widoczny dla pacjentów czekających w kolejce. Co należy zrobić?",
+    "answers": [
+      "Jeżeli na ekranie widać tylko nazwiska i godziny wizyt, dodatkowe zabezpieczenie nie jest potrzebne",
+      "Należy tak ustawić stanowisko lub zastosować zabezpieczenie, aby osoby postronne nie mogły odczytywać danych",
+      "Wystarczy ustawić automatyczną blokadę ekranu po pięciu minutach bezczynności",
+      "Można pozostawić monitor widoczny, jeśli rejestratorka kontroluje, kto stoi przy ladzie"
+    ],
+    "correct": 1,
+    "feedback": "Ochrona prywatności obejmuje organizację stanowiska i ograniczenie widoczności danych dla osób postronnych."
+  },
+  {
+    "id": "R05",
+    "name": "SMS przypominający",
+    "text": "Co jest dobrą zasadą przy SMS przypominającym o wizycie?",
+    "answers": [
+      "Wiadomość powinna zawierać tyle szczegółów, aby pacjent jednoznacznie wiedział, jakiego świadczenia dotyczy, nawet jeśli ujawnia specjalizację",
+      "Należy stosować zatwierdzoną treść o możliwie neutralnym i minimalnym zakresie informacji",
+      "Można podać nazwisko lekarza i rozpoznanie, jeśli wiadomość jest wysyłana na numer zapisany w systemie",
+      "Najbezpieczniej nie wysyłać żadnych przypomnień, ponieważ SMS zawsze stanowi naruszenie poufności"
+    ],
+    "correct": 1,
+    "feedback": "Minimalizacja ogranicza skutki sytuacji, gdy wiadomość trafi do osoby mającej dostęp do telefonu."
+  },
+  {
+    "id": "R06",
+    "name": "Błędny e-mail pacjenta",
+    "text": "Pacjent dyktuje nowy adres e-mail, na który ma trafić dokument. Co wcześniej?",
+    "answers": [
+      "Przeprowadzić wymaganą weryfikację i upewnić się co do poprawności nowego adresu przed wysłaniem dokumentu",
+      "Wysłać najpierw wiadomość testową zawierającą nazwisko pacjenta i poprosić o potwierdzenie",
+      "Zmienić adres w systemie od razu, jeśli nowy adres zawiera imię lub nazwisko pacjenta",
+      "Wysłać dokument na stary i nowy adres jednocześnie, aby ograniczyć ryzyko niedostarczenia"
+    ],
+    "correct": 0,
+    "feedback": "Zmiana kanału dostarczenia wrażliwych danych wymaga pewności co do tożsamości i poprawności adresu."
+  },
+  {
+    "id": "R07",
+    "name": "Wywoływanie pacjenta",
+    "text": "Która zasada jest najważniejsza przy wywoływaniu pacjentów?",
+    "answers": [
+      "Zawsze używać pełnego imienia i nazwiska, ponieważ poprawna identyfikacja ma pierwszeństwo przed minimalizacją",
+      "Stosować przyjęty w organizacji sposób identyfikacji, ujawniając tylko zakres potrzebny do bezpiecznego wywołania pacjenta",
+      "Używać numeru PESEL, ponieważ jest bardziej jednoznaczny niż nazwisko",
+      "Dostosowywać sposób wywołania wyłącznie do życzenia pacjenta, niezależnie od procedury placówki"
+    ],
+    "correct": 1,
+    "feedback": "Należy równoważyć prawidłową identyfikację z minimalizacją ujawnianych danych."
+  },
+  {
+    "id": "R08",
+    "name": "Dokumenty na ladzie",
+    "text": "Na ladzie leży lista pacjentów z godzinami wizyt. Co jest właściwe?",
+    "answers": [
+      "Lista może pozostać na ladzie, jeżeli znajduje się po stronie personelu",
+      "Należy zabezpieczyć ją przed wglądem osób postronnych i odkładać w miejsce kontrolowane, gdy nie jest używana",
+      "Wystarczy usunąć z listy numery telefonów, pozostawiając nazwiska i godziny wizyt",
+      "Można przykryć ją innymi dokumentami, jeśli rejestracja jest stale obsadzona"
+    ],
+    "correct": 1,
+    "feedback": "Listy zawierające dane pacjentów powinny być chronione przed przypadkowym wglądem."
+  },
+  {
+    "id": "R09",
+    "name": "Centralna rejestracja",
+    "text": "Czy pracownik centralnej rejestracji powinien otwierać pełną historię pacjenta przy każdej zmianie terminu?",
+    "answers": [
+      "Pracownik może otwierać pełną historię, jeśli dostęp wynika z pracy w centralnej rejestracji",
+      "Powinien korzystać z danych potrzebnych do konkretnej czynności, a szerszy dostęp tylko wtedy, gdy rzeczywiście jest uzasadniony",
+      "Przy zmianie terminu zawsze należy sprawdzić wcześniejsze rozpoznania, aby uniknąć pomyłki",
+      "Pełna historia może być przeglądana, jeśli pacjent jest obsługiwany w więcej niż jednej placówce tej samej organizacji"
+    ],
+    "correct": 1,
+    "feedback": "Przynależność do tej samej organizacji nie znosi zasady minimalizacji i dostępu według zadania."
+  },
+  {
+    "id": "R10",
+    "name": "Osoba z upoważnieniem",
+    "text": "Osoba twierdzi, że jest upoważniona do odbioru dokumentacji. Co powinno nastąpić?",
+    "answers": [
+      "Jeżeli osoba okaże dowód osobisty, można wydać dokumentację bez dodatkowej kontroli",
+      "Trzeba zweryfikować tożsamość osoby oraz istnienie i zakres jej uprawnienia do odbioru dokumentacji",
+      "Jeżeli w systemie jest upoważnienie, można pominąć sprawdzenie tożsamości odbiorcy",
+      "Wystarczy telefoniczne potwierdzenie pacjenta w chwili odbioru, niezależnie od zapisanej procedury"
+    ],
+    "correct": 1,
+    "feedback": "Dowód potwierdza tożsamość, ale nie zawsze uprawnienie. Trzeba sprawdzić oba elementy."
+  },
+  {
+    "id": "R11",
+    "name": "Pracodawca pacjenta",
+    "text": "Pracodawca dzwoni, aby potwierdzić, czy pracownik był dziś u lekarza. Co robi rejestracja?",
+    "answers": [
+      "Można potwierdzić sam fakt wizyty, jeżeli pracodawca nie pyta o rozpoznanie",
+      "Nie należy ujawniać informacji bez właściwej podstawy lub uprawnienia; trzeba zastosować obowiązującą procedurę",
+      "Można podać informację, jeżeli rozmówca dzwoni z numeru firmowego pracodawcy",
+      "Można potwierdzić obecność pacjenta, jeśli wizyta odbyła się w godzinach pracy"
+    ],
+    "correct": 1,
+    "feedback": "Fakt wizyty jest daną osobową i może ujawniać informacje o zdrowiu. Sam status pracodawcy nie daje automatycznego prawa do informacji."
+  },
+  {
+    "id": "R12",
+    "name": "Osoba obok pacjenta",
+    "text": "Pacjent stoi przy ladzie z partnerem. Czy to wystarcza, aby omawiać przy partnerze pełne dane medyczne?",
+    "answers": [
+      "Obecność partnera przy ladzie można uznać za zgodę na przekazanie informacji organizacyjnych i medycznych",
+      "Nie należy automatycznie zakładać zgody na pełne ujawnienie; zakres rozmowy trzeba dostosować i w razie potrzeby potwierdzić wolę pacjenta",
+      "Jeśli partner pomaga pacjentowi odpowiadać na pytania, można przekazać mu wszystkie informacje",
+      "Wystarczy zapytać partnera, czy pacjent pozwala mu słuchać rozmowy"
+    ],
+    "correct": 1,
+    "feedback": "Sama obecność osoby trzeciej nie jest zawsze wystarczającą podstawą do nieograniczonego ujawnienia."
+  },
+  {
+    "id": "R13",
+    "name": "Kartka z PESEL",
+    "text": "Pacjent podaje kartkę z PESEL. Czy pracownik powinien zostawić ją na ladzie po obsłudze?",
+    "answers": [
+      "Kartkę należy po obsłudze zwrócić pacjentowi albo zabezpieczyć zgodnie z procedurą, tak aby nie była dostępna dla innych",
+      "Można pozostawić ją przy stanowisku do końca zmiany, jeśli nie ma na niej nazwiska",
+      "Można wyrzucić ją do zwykłego kosza po przepisaniu numeru do systemu",
+      "Najbezpieczniej wykonać kopię i zniszczyć oryginał, aby zachować ślad weryfikacji"
+    ],
+    "correct": 0,
+    "feedback": "Nawet krótkotrwały dokument z identyfikatorem wymaga ochrony przed wglądem osób postronnych."
+  },
+  {
+    "id": "R14",
+    "name": "Przekazanie między placówkami",
+    "text": "Rejestratorka z innej placówki prosi o pełną kartę pacjenta, choć chce tylko ustalić termin. Co zrobić?",
+    "answers": [
+      "W ramach jednej organizacji można przekazać pełną kartę, jeśli odbiorca jest pracownikiem innej placówki",
+      "Należy udostępnić wyłącznie zakres potrzebny do ustalenia terminu albo skorzystać z systemu w granicach nadanych uprawnień",
+      "Można przesłać pełną kartę, jeśli odbiorca zobowiąże się usunąć ją po rejestracji",
+      "Należy przekazać dokumentację, jeśli pacjent był wcześniej leczony w obu placówkach"
+    ],
+    "correct": 1,
+    "feedback": "Ta sama organizacja nie uzasadnia automatycznie przekazywania pełnego zakresu danych."
+  },
+  {
+    "id": "R15",
+    "name": "Presja rozmówcy",
+    "text": "Rozmówca denerwuje się i żąda natychmiast informacji, odmawiając weryfikacji. Co powinien zrobić pracownik?",
+    "answers": [
+      "Jeżeli rozmówca poprawnie poda część danych, można zrezygnować z pozostałych elementów weryfikacji, aby uspokoić sytuację",
+      "Nie ujawniać danych bez wymaganej weryfikacji; wyjaśnić procedurę i wskazać bezpieczną alternatywną ścieżkę",
+      "Przekazać wyłącznie informacje organizacyjne, nawet jeśli procedura wymaga wcześniejszej weryfikacji",
+      "Skierować rozmowę do innego pracownika, który może podjąć decyzję o pominięciu weryfikacji"
+    ],
+    "correct": 1,
+    "feedback": "Presja czasu lub emocje nie znoszą obowiązku ochrony poufności."
+  }
+]
