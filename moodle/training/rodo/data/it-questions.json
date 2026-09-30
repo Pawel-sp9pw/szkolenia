@@ -1,1 +1,197 @@
-[{"id":"I01","name":"Konto administratora","text":"Administrator ma osobne konto zwykłe i uprzywilejowane. Którego powinien używać do codziennej poczty?","answers":["Uprzywilejowanego","Zwykłego; konto admin tylko do zadań wymagających podwyższonych praw","Dowolnego","Wspólnego konta root"],"correct":1,"feedback":"Rozdzielenie kont ogranicza ekspozycję uprawnień uprzywilejowanych."},{"id":"I02","name":"Offboarding","text":"Pracownik odchodzi z firmy. Co jest kluczowym działaniem IT?","answers":["Zostawić konto aktywne przez rok","Terminowo zablokować/odebrać dostęp zgodnie z procesem offboardingu","Zmienić tylko nazwę konta","Usunąć logi użytkownika"],"correct":1,"feedback":"Nieaktywne konta z uprawnieniami są istotnym ryzykiem nieautoryzowanego dostępu."},{"id":"I03","name":"Wspólny root","text":"Zespół używa jednego hasła root bez indywidualnego audytu. Jaki problem powstaje?","answers":["Żaden","Brak rozliczalności i zwiększone ryzyko współdzielenia sekretu","Tylko kłopot z długością hasła","Wyłącznie problem licencyjny"],"correct":1,"feedback":"Indywidualna identyfikacja działań jest ważna dla rozliczalności i dochodzenia incydentów."},{"id":"I04","name":"Środowisko testowe","text":"Jaki zestaw danych jest preferowany do testowania nowej funkcji?","answers":["Pełna produkcyjna baza pacjentów","Dane syntetyczne lub skutecznie zanonimizowane, jeśli pozwalają osiągnąć cel","Eksport z ostatniego dnia","Baza produkcyjna bez haseł"],"correct":1,"feedback":"Testowanie nie uzasadnia automatycznie kopiowania realnych danych do słabiej chronionego środowiska."},{"id":"I05","name":"Backup","text":"Co oznacza dojrzały proces backupu?","answers":["Samo pojawienie się pliku backup","Wykonywanie kopii, ochrona ich oraz regularne testy odtwarzania","Kopiowanie bazy na laptop administratora","Jedna kopia na tym samym serwerze"],"correct":1,"feedback":"Art. 32 RODO podkreśla zdolność przywrócenia dostępności oraz testowanie skuteczności zabezpieczeń."},{"id":"I06","name":"Ransomware","text":"Po ataku ransomware administrator chce od razu wyczyścić logi i przeinstalować serwer. Co najpierw?","answers":["Zawsze usunąć logi","Zabezpieczyć istotne dowody/logi i działać według procedury incydentowej","Wyłączyć monitoring","Opublikować logi w internecie"],"correct":1,"feedback":"Materiał dowodowy jest potrzebny do analizy zakresu i przyczyn incydentu."},{"id":"I07","name":"Serwisant zewnętrzny","text":"Dostawca prosi o stałe konto administratora „na wypadek awarii”. Co jest lepsze?","answers":["Stałe wspólne konto bez logów","Kontrolowany, ograniczony i najlepiej czasowy dostęp zgodny z umową/procedurą","Hasło przesłane SMS-em bez rejestru","Konto administratora pracownika IT"],"correct":1,"feedback":"Dostęp dostawcy powinien być minimalny, rozliczalny i ograniczony do potrzeb."},{"id":"I08","name":"Sekret API","text":"Gdzie nie powinien znajdować się produkcyjny klucz API?","answers":["W zarządzanym sejfie sekretów","W publicznym lub szeroko dostępnym repozytorium kodu","W kontrolowanym systemie secrets management","W rozwiązaniu przeznaczonym do bezpiecznego przechowywania sekretów"],"correct":1,"feedback":"Sekrety w kodzie/repozytorium mogą zostać skopiowane i wykorzystane poza kontrolą."},{"id":"I09","name":"MFA","text":"Gdzie MFA ma szczególne znaczenie?","answers":["Na kontach o wysokich uprawnieniach i dostępie zdalnym, zgodnie z oceną ryzyka","Wyłącznie na komputerach bez danych","Nigdy w ochronie zdrowia","Tylko dla stażystów"],"correct":0,"feedback":"Silne uwierzytelnianie jest jednym z typowych środków ograniczających ryzyko przejęcia konta."},{"id":"I10","name":"Eksport SQL","text":"Administrator wykonuje pełny dump bazy na /tmp i zapomina go usunąć. Jak ocenić ryzyko?","answers":["Brak ryzyka, to tylko plik techniczny","Dump jest pełnoprawnym zbiorem danych i może omijać kontrolę aplikacji","Ryzyko tylko jeśli rozszerzenie to .csv","Brak, jeśli serwer jest w LAN"],"correct":1,"feedback":"Eksport może zawierać całość danych i wymaga kontroli dostępu, szyfrowania oraz retencji."},{"id":"I11","name":"Minimalne uprawnienia","text":"Konto integracji potrzebuje odczytu jednej tabeli. Jakie prawa nadać?","answers":["Administrator bazy","Tylko niezbędny zakres do realizacji integracji","Pełny odczyt wszystkich baz","Root na systemie"],"correct":1,"feedback":"Zasada najmniejszych uprawnień ogranicza skutki kompromitacji konta."},{"id":"I12","name":"Nowy SaaS","text":"Przed podłączeniem zewnętrznej usługi SaaS do danych pacjentów należy przede wszystkim:","answers":["Tylko sprawdzić cenę","Ocenić zakres danych, role stron, bezpieczeństwo, umowę/powierzenie i ewentualne transfery","Założyć darmowe konto testowe na produkcji","Wysłać próbkę pełnej bazy"],"correct":1,"feedback":"Art. 28 RODO i zasady bezpieczeństwa wymagają oceny dostawcy i warunków przetwarzania."},{"id":"I13","name":"Podgląd pacjenta podczas supportu","text":"Administrator może odtworzyć błąd na sztucznym koncie. Czy powinien mimo to otwierać rekord realnego pacjenta?","answers":["Tak, bo ma uprawnienia admina","Nie, jeśli nie jest to potrzebne; należy minimalizować wgląd w realne dane","Tak, jeśli pacjent jest w innej placówce","Tak po anonimizacji logów"],"correct":1,"feedback":"Diagnostyka powinna korzystać z najmniejszego potrzebnego zakresu danych."},{"id":"I14","name":"Dostępność","text":"Czy utrata dostępności danych z powodu awarii może być istotna z perspektywy RODO?","answers":["Nie","Tak, bezpieczeństwo obejmuje również dostępność i zdolność odtworzenia","Tylko jeśli ktoś ukradł dane","Tylko w marketingu"],"correct":1,"feedback":"Art. 32 RODO obejmuje dostępność i odporność systemów oraz odtwarzanie."},{"id":"I15","name":"Logi","text":"Dlaczego warto chronić logi systemowe?","answers":["Nie zawierają żadnych danych","Mogą zawierać dane osobowe i jednocześnie są ważne dla rozliczalności oraz analizy incydentów","Służą tylko do statystyk","Można je udostępniać wszystkim"],"correct":1,"feedback":"Logi często zawierają identyfikatory i ślady działań, dlatego wymagają odpowiedniej retencji i kontroli dostępu."}]
+[
+  {
+    "id": "I01",
+    "name": "Konto administratora",
+    "text": "Administrator ma osobne konto zwykłe i uprzywilejowane. Którego powinien używać do codziennej poczty?",
+    "answers": [
+      "Konta uprzywilejowanego, jeśli ma włączone MFA i silne hasło",
+      "Zwykłego konta; konto uprzywilejowane powinno być używane tylko do zadań wymagających podwyższonych praw",
+      "Dowolnego z obu kont, jeśli stacja robocza znajduje się w sieci wewnętrznej",
+      "Konta uprzywilejowanego tylko do wiadomości od innych administratorów"
+    ],
+    "correct": 1,
+    "feedback": "Rozdzielenie kont ogranicza ekspozycję uprawnień uprzywilejowanych."
+  },
+  {
+    "id": "I02",
+    "name": "Offboarding",
+    "text": "Pracownik odchodzi z firmy. Co jest kluczowym działaniem IT?",
+    "answers": [
+      "Zablokować konto dopiero po zakończeniu okresu wypowiedzenia, nawet jeśli pracownik przestał świadczyć pracę wcześniej",
+      "Terminowo odebrać lub zablokować dostęp zgodnie z procesem offboardingu i zakresem zakończonych obowiązków",
+      "Zmienić hasło i pozostawić konto aktywne na potrzeby ewentualnego dostępu do poczty",
+      "Usunąć konto natychmiast wraz z logami, aby ograniczyć dalsze przechowywanie danych"
+    ],
+    "correct": 1,
+    "feedback": "Nieaktywne konta z uprawnieniami są istotnym ryzykiem nieautoryzowanego dostępu."
+  },
+  {
+    "id": "I03",
+    "name": "Wspólny root",
+    "text": "Zespół używa jednego hasła root bez indywidualnego audytu. Jaki problem powstaje?",
+    "answers": [
+      "Wspólne konto jest dopuszczalne, jeśli hasło jest długie i zmieniane co miesiąc",
+      "Głównym problemem jest brak indywidualnej rozliczalności oraz zwiększone ryzyko związane ze współdzieleniem sekretu",
+      "Wspólne konto jest bezpieczne, jeśli logi zawierają adres IP stanowiska",
+      "Problem występuje tylko wtedy, gdy zespół liczy więcej niż dwie osoby"
+    ],
+    "correct": 1,
+    "feedback": "Indywidualna identyfikacja działań jest ważna dla rozliczalności i dochodzenia incydentów."
+  },
+  {
+    "id": "I04",
+    "name": "Środowisko testowe",
+    "text": "Jaki zestaw danych jest preferowany do testowania nowej funkcji?",
+    "answers": [
+      "Kopia produkcyjnej bazy po usunięciu loginów użytkowników",
+      "Dane syntetyczne lub skutecznie zanonimizowane, jeśli pozwalają wiarygodnie przeprowadzić test",
+      "Pełna baza produkcyjna w odizolowanej sieci testowej, jeśli dostęp ma wyłącznie IT",
+      "Eksport ostatnich 24 godzin, ponieważ mniejsza ilość danych oznacza automatycznie zgodność z minimalizacją"
+    ],
+    "correct": 1,
+    "feedback": "Testowanie nie uzasadnia automatycznie kopiowania realnych danych do słabiej chronionego środowiska."
+  },
+  {
+    "id": "I05",
+    "name": "Backup",
+    "text": "Co oznacza dojrzały proces backupu?",
+    "answers": [
+      "Regularne wykonywanie kopii i monitorowanie, czy zadanie backupu zakończyło się kodem sukcesu",
+      "Wykonywanie i odpowiednia ochrona kopii wraz z regularnym testowaniem możliwości odtworzenia",
+      "Utrzymywanie co najmniej dwóch kopii na tym samym systemie pamięci masowej",
+      "Szyfrowanie kopii bez potrzeby testowania odtwarzania, jeśli mechanizm backupu jest sprawdzonym produktem"
+    ],
+    "correct": 1,
+    "feedback": "Art. 32 RODO podkreśla zdolność przywrócenia dostępności oraz testowanie skuteczności zabezpieczeń."
+  },
+  {
+    "id": "I06",
+    "name": "Ransomware",
+    "text": "Po ataku ransomware administrator chce od razu wyczyścić logi i przeinstalować serwer. Co najpierw?",
+    "answers": [
+      "Natychmiast przeinstalować system, a logi skopiować dopiero po przywróceniu usług",
+      "Zabezpieczyć istotne dowody i logi oraz działać według procedury incydentowej przed czynnościami, które mogą je zniszczyć",
+      "Najpierw przywrócić dane z kopii, bo dostępność ma zawsze pierwszeństwo przed analizą",
+      "Odłączyć system od sieci i usunąć wszystkie logi aplikacyjne, pozostawiając tylko systemowe"
+    ],
+    "correct": 1,
+    "feedback": "Materiał dowodowy jest potrzebny do analizy zakresu i przyczyn incydentu."
+  },
+  {
+    "id": "I07",
+    "name": "Serwisant zewnętrzny",
+    "text": "Dostawca prosi o stałe konto administratora „na wypadek awarii”. Co jest lepsze?",
+    "answers": [
+      "Stałe konto imienne dostawcy z pełnymi uprawnieniami, jeśli dostęp jest chroniony MFA",
+      "Kontrolowany, możliwie ograniczony i czasowy dostęp, zgodny z umową i rejestrowany",
+      "Wspólne konto serwisowe używane wyłącznie podczas awarii, jeśli hasło jest przechowywane w sejfie",
+      "Konto jednego z administratorów wewnętrznych udostępniane dostawcy pod nadzorem"
+    ],
+    "correct": 1,
+    "feedback": "Dostęp dostawcy powinien być minimalny, rozliczalny i ograniczony do potrzeb."
+  },
+  {
+    "id": "I08",
+    "name": "Sekret API",
+    "text": "Gdzie nie powinien znajdować się produkcyjny klucz API?",
+    "answers": [
+      "W prywatnym repozytorium kodu dostępnym całemu zespołowi programistycznemu",
+      "W publicznym lub zbyt szeroko dostępnym repozytorium kodu",
+      "W zarządzanym systemie przechowywania sekretów z kontrolą dostępu i rotacją",
+      "W mechanizmie konfiguracji, który nie zapisuje sekretu w historii zmian kodu"
+    ],
+    "correct": 1,
+    "feedback": "Sekrety w kodzie/repozytorium mogą zostać skopiowane i wykorzystane poza kontrolą."
+  },
+  {
+    "id": "I09",
+    "name": "MFA",
+    "text": "Gdzie MFA ma szczególne znaczenie?",
+    "answers": [
+      "Przede wszystkim dla kont uprzywilejowanych i dostępu zdalnego, zgodnie z oceną ryzyka",
+      "Wyłącznie tam, gdzie hasło ma mniej niż 14 znaków",
+      "Tylko dla kont użytkowników końcowych, bo administratorzy korzystają z sieci zaufanej",
+      "Głównie w systemach publicznych; w sieci wewnętrznej MFA nie wnosi istotnej wartości"
+    ],
+    "correct": 0,
+    "feedback": "Silne uwierzytelnianie jest jednym z typowych środków ograniczających ryzyko przejęcia konta."
+  },
+  {
+    "id": "I10",
+    "name": "Eksport SQL",
+    "text": "Administrator wykonuje pełny dump bazy na /tmp i zapomina go usunąć. Jak ocenić ryzyko?",
+    "answers": [
+      "Ryzyko jest ograniczone, jeśli /tmp jest czyszczone po restarcie serwera",
+      "Dump jest pełnoprawnym zbiorem danych i może ominąć zabezpieczenia aplikacji, dlatego wymaga ochrony oraz kontrolowanej retencji",
+      "Ryzyko dotyczy głównie wydajności i zajętości dysku, jeśli katalog ma prawa 700",
+      "Plik jest bezpieczny, jeśli pozostaje na tym samym serwerze co baza"
+    ],
+    "correct": 1,
+    "feedback": "Eksport może zawierać całość danych i wymaga kontroli dostępu, szyfrowania oraz retencji."
+  },
+  {
+    "id": "I11",
+    "name": "Minimalne uprawnienia",
+    "text": "Konto integracji potrzebuje odczytu jednej tabeli. Jakie prawa nadać?",
+    "answers": [
+      "Nadać odczyt całej bazy, ale ograniczyć połączenia do jednego adresu IP",
+      "Nadać wyłącznie zakres potrzebny do działania integracji i nic więcej",
+      "Nadać rolę administratora bazy, ale używać jej tylko przez dedykowane konto techniczne",
+      "Nadać dostęp do schematu aplikacji, bo ograniczanie do jednej tabeli utrudni przyszłe aktualizacje"
+    ],
+    "correct": 1,
+    "feedback": "Zasada najmniejszych uprawnień ogranicza skutki kompromitacji konta."
+  },
+  {
+    "id": "I12",
+    "name": "Nowy SaaS",
+    "text": "Przed podłączeniem zewnętrznej usługi SaaS do danych pacjentów należy przede wszystkim:",
+    "answers": [
+      "Najpierw sprawdzić certyfikaty bezpieczeństwa dostawcy; pozostałe kwestie można ustalić po wdrożeniu",
+      "Przed podłączeniem ocenić zakres danych, role stron, podstawy i umowy, zabezpieczenia oraz ewentualne transfery",
+      "Wykonać test na małej próbce danych produkcyjnych, aby ustalić faktyczny zakres przetwarzania",
+      "Jeżeli dostawca działa w UE, dodatkowa analiza ról i warunków przetwarzania nie jest potrzebna"
+    ],
+    "correct": 1,
+    "feedback": "Art. 28 RODO i zasady bezpieczeństwa wymagają oceny dostawcy i warunków przetwarzania."
+  },
+  {
+    "id": "I13",
+    "name": "Podgląd pacjenta podczas supportu",
+    "text": "Administrator może odtworzyć błąd na sztucznym koncie. Czy powinien mimo to otwierać rekord realnego pacjenta?",
+    "answers": [
+      "Administrator może otworzyć realny rekord, jeśli ma uprawnienia i nie modyfikuje danych",
+      "Jeżeli błąd można odtworzyć na danych testowych, nie należy bez potrzeby otwierać rekordu realnego pacjenta",
+      "Można użyć dowolnego rekordu produkcyjnego, jeśli po analizie wyczyści się historię dostępu",
+      "Realne dane są preferowane, bo zapewniają większą wiarygodność diagnostyki niż konto testowe"
+    ],
+    "correct": 1,
+    "feedback": "Diagnostyka powinna korzystać z najmniejszego potrzebnego zakresu danych."
+  },
+  {
+    "id": "I14",
+    "name": "Dostępność",
+    "text": "Czy utrata dostępności danych z powodu awarii może być istotna z perspektywy RODO?",
+    "answers": [
+      "Tak, ponieważ bezpieczeństwo danych obejmuje również dostępność i zdolność ich odtworzenia",
+      "Nie, jeśli integralność i poufność danych pozostały nienaruszone",
+      "Tylko wtedy, gdy awaria trwała dłużej niż czas określony w polityce ciągłości działania",
+      "Tak, ale wyłącznie gdy przyczyną był cyberatak, a nie awaria sprzętowa"
+    ],
+    "correct": 0,
+    "feedback": "Art. 32 RODO obejmuje dostępność i odporność systemów oraz odtwarzanie."
+  },
+  {
+    "id": "I15",
+    "name": "Logi",
+    "text": "Dlaczego warto chronić logi systemowe?",
+    "answers": [
+      "Logi należy chronić głównie przed zmianą, ale ich odczyt może być szeroki, bo nie są danymi biznesowymi",
+      "Logi mogą zawierać dane osobowe i są istotne dla rozliczalności oraz analizy incydentów, więc wymagają kontroli dostępu i retencji",
+      "Logi można przechowywać bezterminowo, ponieważ służą celom bezpieczeństwa",
+      "Najbezpieczniej wyłączyć szczegółowe logowanie w systemach zawierających dane pacjentów, aby zmniejszyć zakres danych"
+    ],
+    "correct": 1,
+    "feedback": "Logi często zawierają identyfikatory i ślady działań, dlatego wymagają odpowiedniej retencji i kontroli dostępu."
+  }
+]
