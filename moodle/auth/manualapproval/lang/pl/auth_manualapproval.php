@@ -41,3 +41,4 @@ $string['notification_body'] = 'Nowy użytkownik oczekuje na zatwierdzenie.\n\nI
 $string['notification_small'] = 'Nowa rejestracja: {$a->fullname} ({$a->username})';
 $string['messageprovider:newregistration'] = 'Powiadomienia o nowych rejestracjach';
 $string['privacy:metadata'] = 'Wtyczka nie przechowuje własnych danych osobowych poza standardowymi danymi konta użytkownika Moodle.';
+$string['task_sync_portal_wiedzy_cohort'] = 'Synchronizacja użytkowników z kohortą Portalu Wiedzy';
