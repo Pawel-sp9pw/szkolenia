@@ -152,3 +152,143 @@ body.fub-student-mode.pagelayout-mycourses .block:not(.block_myoverview) {
         background-size: contain;
     }
 }
+
+
+/* Report Builder: pełna szerokość edytora. Poprzednio tryb studenta mógł
+   ograniczać .main-inner do 1200 px również w popupie administracyjnym. */
+body#page-admin-reportbuilder-edit.pagelayout-popup #page,
+body#page-admin-reportbuilder-edit.pagelayout-popup #page-content,
+body#page-admin-reportbuilder-edit.pagelayout-popup .main-inner,
+body.path-admin.pagelayout-popup .main-inner {
+    width: 100% !important;
+    max-width: none !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+body#page-admin-reportbuilder-edit .reportbuilder-wrapper,
+body#page-admin-reportbuilder-edit .reportbuilder-report {
+    width: 100%;
+    max-width: none;
+}
+
+/* Moje kursy: dwa rozwijane drzewa — Portal Wiedzy i Szkolenia. */
+body.fub-student-mode.pagelayout-mycourses .fub-course-overview-hidden {
+    display: none !important;
+}
+
+.fub-course-trees {
+    display: grid;
+    gap: 1rem;
+}
+
+.fub-course-tree-section {
+    border: 1px solid #dfe5dc;
+    border-radius: .75rem;
+    background: #fff;
+    overflow: hidden;
+}
+
+.fub-course-tree-section-title {
+    cursor: pointer;
+    padding: 1rem 1.25rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+    background: #f6f9f3;
+    user-select: none;
+}
+
+.fub-course-tree-section-body {
+    padding: 1rem 1.25rem 1.25rem;
+}
+
+.fub-course-tree-search {
+    max-width: 34rem;
+    margin-bottom: 1rem;
+}
+
+.fub-course-tree {
+    font-size: .97rem;
+}
+
+.fub-course-tree-category {
+    margin: .2rem 0;
+}
+
+.fub-course-tree-category > summary {
+    cursor: pointer;
+    padding: .4rem .55rem;
+    border-radius: .4rem;
+    font-weight: 600;
+}
+
+.fub-course-tree-category > summary:hover {
+    background: #f5f7f4;
+}
+
+.fub-course-tree-children {
+    margin-left: .9rem;
+    padding-left: .75rem;
+    border-left: 1px solid #e0e5de;
+}
+
+.fub-course-tree-courses {
+    list-style: none;
+    margin: .25rem 0 .45rem;
+    padding: 0;
+}
+
+.fub-course-tree-courses li {
+    display: flex;
+    align-items: center;
+    gap: .65rem;
+    min-height: 2.2rem;
+    padding: .28rem .45rem;
+    border-radius: .35rem;
+}
+
+.fub-course-tree-courses li:hover {
+    background: #f8faf7;
+}
+
+.fub-course-tree-link {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.fub-course-status {
+    flex: 0 0 auto;
+    border-radius: 999px;
+    padding: .15rem .55rem;
+    font-size: .78rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.fub-course-status-complete {
+    background: #e8f5e9;
+    color: #21652b;
+}
+
+.fub-course-status-pending {
+    background: #f2f3f2;
+    color: #5d635d;
+}
+
+@media (max-width: 767.98px) {
+    .fub-course-tree-section-body {
+        padding: .8rem;
+    }
+
+    .fub-course-tree-children {
+        margin-left: .4rem;
+        padding-left: .5rem;
+    }
+
+    .fub-course-tree-courses li {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: .25rem;
+    }
+}
