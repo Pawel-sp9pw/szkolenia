@@ -9,10 +9,15 @@ require_login();
 admin_externalpage_setup('authmanualapprovalpending');
 require_capability('moodle/user:update', context_system::instance());
 
+$mandatorycohort = $DB->get_record('cohort', [
+    'idnumber' => 'FUB-PORTAL-WIEDZY',
+    'contextid' => context_system::instance()->id,
+]);
+
 $cohorts = $DB->get_records_select(
     'cohort',
-    'idnumber LIKE :prefix AND visible = :visible',
-    ['prefix' => 'FUB-%', 'visible' => 1],
+    'idnumber LIKE :prefix AND visible = :visible AND idnumber <> :mandatory',
+    ['prefix' => 'FUB-%', 'visible' => 1, 'mandatory' => 'FUB-PORTAL-WIEDZY'],
     'name ASC',
     'id,name,idnumber'
 );
@@ -49,6 +54,9 @@ if ($action === 'approve' && $userid > 0) {
         if (!cohort_is_member($cohortid, $user->id)) {
             cohort_add_member($cohortid, $user->id);
         }
+    }
+    if ($mandatorycohort && !cohort_is_member($mandatorycohort->id, $user->id)) {
+        cohort_add_member($mandatorycohort->id, $user->id);
     }
 
     $DB->set_field('user', 'confirmed', 1, ['id' => $user->id]);
