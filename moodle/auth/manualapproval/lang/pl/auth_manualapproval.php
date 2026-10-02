@@ -44,3 +44,18 @@ $string['privacy:metadata'] = 'Wtyczka nie przechowuje własnych danych osobowyc
 $string['task_sync_portal_wiedzy_cohort'] = 'Synchronizacja użytkowników z kohortą Portalu Wiedzy';
 
 $string['report_portal_acknowledgements'] = 'Portal Wiedzy – potwierdzenia zapoznania';
+
+$string['portalreport'] = 'Portal Wiedzy – zapoznanie z dokumentami';
+$string['portalreport_help'] = 'Wybierz dokument (kurs) Portalu Wiedzy, aby wyświetlić osoby, które potwierdziły zapoznanie.';
+$string['choosecourse'] = 'Wybierz dokument';
+$string['showreport'] = 'Pokaż raport';
+$string['acknowledgedat'] = 'Data zapoznania';
+$string['portalreport_count'] = 'Liczba osób, które potwierdziły zapoznanie: {$a}';
+$string['portalreport_none'] = 'Nikt jeszcze nie potwierdził zapoznania z tym dokumentem.';
+$string['trainingreport'] = 'Szkolenia – ukończenia i oceny';
+$string['trainingreport_help'] = 'Raport pokazuje, kto ukończył szkolenie, jaką otrzymał ocenę i kiedy ukończył kurs. Możesz wybrać jedno szkolenie lub wyświetlić wszystkie.';
+$string['alltrainings'] = 'Wszystkie szkolenia';
+$string['completedat'] = 'Data ukończenia';
+$string['trainingreport_count'] = 'Liczba ukończeń: {$a}';
+$string['trainingreport_none'] = 'Brak ukończonych szkoleń dla wybranego zakresu.';
+$string['nograde'] = 'Brak oceny';
