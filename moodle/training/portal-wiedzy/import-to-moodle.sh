@@ -57,6 +57,10 @@ if [[ -z "$SOURCE_DIR" ]]; then
 
     echo "[3/4] Rozpakowuję dokumenty..."
     unzip -q "$ARCHIVE" -d "$TMPDIR/source"
+    chown -R www-data:www-data "$TMPDIR/source"
+    find "$TMPDIR/source" -type d -exec chmod 0750 {} +
+    find "$TMPDIR/source" -type f -exec chmod 0640 {} +
+    chmod 0755 "$TMPDIR"
 
     SOURCE_DIR="$TMPDIR/source"
 
