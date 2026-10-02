@@ -204,7 +204,11 @@ function fub_pw_match_tokens(string $text): array {
     $tokens = preg_split('/\\s+/u', fub_pw_match_normalize($text), -1, PREG_SPLIT_NO_EMPTY);
     $result = [];
     foreach ($tokens as $token) {
-        if (core_text::strlen($token) < 3 || in_array($token, $stop, true)) {
+        if (
+            core_text::strlen($token) < 3 ||
+            in_array($token, $stop, true) ||
+            str_starts_with($token, 'regulamin')
+        ) {
             continue;
         }
         if (preg_match('/^[0-9ivxlcdm.-]+$/u', $token)) {
