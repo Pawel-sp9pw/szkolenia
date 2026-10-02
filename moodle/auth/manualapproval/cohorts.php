@@ -12,8 +12,8 @@ require_capability('moodle/cohort:assign', $systemcontext);
 
 $cohorts = $DB->get_records_select(
     'cohort',
-    'idnumber LIKE :prefix AND contextid = :contextid',
-    ['prefix' => 'FUB-%', 'contextid' => $systemcontext->id],
+    'idnumber LIKE :prefix AND contextid = :contextid AND idnumber <> :mandatory',
+    ['prefix' => 'FUB-%', 'contextid' => $systemcontext->id, 'mandatory' => 'FUB-PORTAL-WIEDZY'],
     'name ASC',
     'id,name,idnumber,visible'
 );
@@ -45,10 +45,12 @@ if ($action === 'save' && $userid > 0) {
            JOIN {cohort} c ON c.id = cm.cohortid
           WHERE cm.userid = :userid
             AND c.idnumber LIKE :prefix
+            AND c.idnumber <> :mandatory
             AND c.contextid = :contextid',
         [
             'userid' => $user->id,
             'prefix' => 'FUB-%',
+            'mandatory' => 'FUB-PORTAL-WIEDZY',
             'contextid' => $systemcontext->id,
         ]
     );
@@ -129,10 +131,12 @@ if ($userid > 0) {
            JOIN {cohort} c ON c.id = cm.cohortid
           WHERE cm.userid = :userid
             AND c.idnumber LIKE :prefix
+            AND c.idnumber <> :mandatory
             AND c.contextid = :contextid',
         [
             'userid' => $user->id,
             'prefix' => 'FUB-%',
+            'mandatory' => 'FUB-PORTAL-WIEDZY',
             'contextid' => $systemcontext->id,
         ]
     );
@@ -226,11 +230,13 @@ if ($query !== '') {
                        JOIN {cohort_members} cm ON cm.cohortid = c.id
                       WHERE cm.userid = :userid
                         AND c.idnumber LIKE :prefix
+                        AND c.idnumber <> :mandatory
                         AND c.contextid = :contextid
                    ORDER BY c.name ASC',
                     [
                         'userid' => $founduser->id,
                         'prefix' => 'FUB-%',
+                        'mandatory' => 'FUB-PORTAL-WIEDZY',
                         'contextid' => $systemcontext->id,
                     ]
                 );
