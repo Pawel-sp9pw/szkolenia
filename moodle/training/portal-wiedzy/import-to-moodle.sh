@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-SCRIPT_VERSION="2026-10-02-v1"
+SCRIPT_VERSION="2026-10-02-v2"
 MOODLE_DIR="${MOODLE_DIR:-/var/www/moodle}"
 PHP_BIN="${PHP_BIN:-/usr/bin/php8.4}"
 SOURCE_DIR="${SOURCE_DIR:-}"
@@ -53,10 +53,28 @@ if [[ -z "$SOURCE_DIR" ]]; then
     cat "$PARTS_DIR/pw.zip.001" "$PARTS_DIR/pw.zip.002" "$PARTS_DIR/pw.zip.003" > "$ARCHIVE"
 
     echo "[2/4] Sprawdzam archiwum..."
+    set +e
     unzip -tq "$ARCHIVE"
+    ZIPTEST_RC=$?
+    set -e
+    if [[ $ZIPTEST_RC -gt 1 ]]; then
+        echo "Archiwum ZIP ma błędy uniemożliwiające import (kod: $ZIPTEST_RC)." >&2
+        exit "$ZIPTEST_RC"
+    elif [[ $ZIPTEST_RC -eq 1 ]]; then
+        echo "Uwaga: ZIP zawiera ostrzeżenia dotyczące nazw/kodowania plików; kontynuuję."
+    fi
 
     echo "[3/4] Rozpakowuję dokumenty..."
+    set +e
     unzip -q "$ARCHIVE" -d "$TMPDIR/source"
+    ZIPEXTRACT_RC=$?
+    set -e
+    if [[ $ZIPEXTRACT_RC -gt 1 ]]; then
+        echo "Rozpakowanie ZIP zakończyło się błędem (kod: $ZIPEXTRACT_RC)." >&2
+        exit "$ZIPEXTRACT_RC"
+    elif [[ $ZIPEXTRACT_RC -eq 1 ]]; then
+        echo "Uwaga: podczas rozpakowywania wystąpiły ostrzeżenia nazw/kodowania; kontynuuję."
+    fi
     chown -R www-data:www-data "$TMPDIR/source"
     find "$TMPDIR/source" -type d -exec chmod 0750 {} +
     find "$TMPDIR/source" -type f -exec chmod 0640 {} +
