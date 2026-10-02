@@ -6,9 +6,9 @@ Importer odtwarza strukturę dokumentów ze starego Portalu Wiedzy w Moodle 5.2.
 
 - główna kategoria: **Portal Wiedzy**,
 - foldery pośrednie: kategorie Moodle,
-- folder końcowy zawierający dokumenty: jeden kurs,
-- wszystkie pliki w folderze końcowym trafiają do tego samego kursu, dzięki czemu dokument główny i istniejące aneksy zachowują ciągłość,
-- jeśli plik leży bezpośrednio w folderze, który ma również podfoldery, taki plik staje się osobnym kursem w tej kategorii.
+- każdy dokument staje się osobnym kursem,
+- wyjątek: jeśli w jednym folderze jest dokładnie jeden dokument główny i jeden lub więcej plików zaczynających się od `Aneks`, aneksy są dołączane do kursu dokumentu głównego,
+- foldery pozostają kategoriami Moodle niezależnie od tego, czy zawierają podfoldery.
 
 Przykład:
 
