@@ -326,10 +326,15 @@ function fub_pw_get_or_create_course(
         return get_course($course->id);
     }
 
-    $short = 'PW | ' . $name;
-    if (core_text::strlen($short) > 90) {
-        $short = core_text::substr($short, 0, 78) . ' | ' . substr(sha1($coursekey), 0, 8);
-    }
+    // Moodle wymaga globalnie unikalnej krótkiej nazwy kursu.
+    // Ta sama nazwa dokumentu może występować w kilku gałęziach Portalu Wiedzy,
+    // dlatego zawsze dodajemy stabilny skrót ścieżki źródłowej.
+    $suffix = substr(sha1($coursekey), 0, 8);
+    $prefix = 'PW | ';
+    $separator = ' | ';
+    $maxnamelen = 100 - core_text::strlen($prefix . $separator . $suffix);
+    $shortnamepart = core_text::substr($name, 0, max(1, $maxnamelen));
+    $short = $prefix . $shortnamepart . $separator . $suffix;
 
     $fields = (object)[
         'fullname' => $name,
