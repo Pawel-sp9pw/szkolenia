@@ -29,6 +29,8 @@ require_once($CFG->dirroot . '/mod/choice/lib.php');
         'help' => false,
         'source' => '',
         'dry-run' => false,
+        'repair-grouping' => false,
+        'force-repair' => false,
     ],
     ['h' => 'help']
 );
@@ -46,6 +48,12 @@ Opcje:
       Katalog źródłowy zawierający strukturę folderów i dokumenty.
   --dry-run
       Tylko pokazuje plan importu, bez zmian w Moodle.
+  --repair-grouping
+      Po dodaniu aneksu do dokumentu głównego usuwa stary, osobny kurs aneksu.
+      Kurs z istniejącymi potwierdzeniami użytkowników nie zostanie usunięty.
+  --force-repair
+      Pozwala usunąć osobny kurs aneksu mimo istniejących potwierdzeń.
+      Używaj wyłącznie świadomie.
   -h, --help
       Pomoc.
 
@@ -72,6 +80,8 @@ if (!is_dir($source)) {
 }
 
 $dryrun = !empty($options['dry-run']);
+$repairgrouping = !empty($options['repair-grouping']);
+$forcerepair = !empty($options['force-repair']);
 
 const FUB_PW_ROOT_IDNUMBER = 'FUB-PW';
 const FUB_PW_COHORT_IDNUMBER = 'FUB-PORTAL-WIEDZY';
@@ -583,6 +593,55 @@ function fub_pw_add_confirmation(stdClass $course, int $sectionnum, string $cour
     return (int)$created->coursemodule;
 }
 
+function fub_pw_count_acknowledgements(int $courseid): int {
+    global $DB;
+
+    $sql = "
+        SELECT COUNT(1)
+          FROM {choice_answers} ca
+          JOIN {choice} ch ON ch.id = ca.choiceid
+          JOIN {course_modules} cm ON cm.instance = ch.id
+          JOIN {modules} m ON m.id = cm.module
+         WHERE cm.course = :courseid
+           AND m.name = 'choice'
+           AND cm.idnumber LIKE :pattern
+    ";
+
+    return (int)$DB->count_records_sql($sql, [
+        'courseid' => $courseid,
+        'pattern' => 'PW-CONFIRM-%',
+    ]);
+}
+
+function fub_pw_repair_old_attachment_course(
+    string $relcategory,
+    string $filepath,
+    int $targetcourseid,
+    bool $forcerepair
+): void {
+    global $DB;
+
+    $oldkey = trim($relcategory . '/' . basename($filepath), '/');
+    $oldidnumber = fub_pw_course_idnumber($oldkey);
+    $oldcourse = $DB->get_record('course', ['idnumber' => $oldidnumber]);
+
+    if (!$oldcourse || (int)$oldcourse->id === $targetcourseid) {
+        return;
+    }
+
+    $acknowledgements = fub_pw_count_acknowledgements((int)$oldcourse->id);
+    if ($acknowledgements > 0 && !$forcerepair) {
+        mtrace(
+            "UWAGA: nie usuwam starego kursu aneksu '{$oldcourse->fullname}' (ID {$oldcourse->id}); " .
+            "ma potwierdzenia użytkowników: {$acknowledgements}. Użyj --force-repair tylko po świadomej decyzji."
+        );
+        return;
+    }
+
+    mtrace("Naprawa grupowania: usuwam stary osobny kurs aneksu '{$oldcourse->fullname}' (ID {$oldcourse->id}).");
+    delete_course($oldcourse, false);
+}
+
 function fub_pw_ensure_course_completion(stdClass $course, int $confirmationcmid): void {
     global $DB;
 
@@ -617,6 +676,7 @@ mtrace('============================================================');
 mtrace('FUB – Portal Wiedzy');
 mtrace('Źródło: ' . $source);
 mtrace('Tryb: ' . ($dryrun ? 'TYLKO PLAN' : 'IMPORT'));
+mtrace('Naprawa istniejącego grupowania: ' . ($repairgrouping ? 'TAK' : 'NIE'));
 mtrace('Liczba planowanych kursów: ' . count($plan));
 mtrace('============================================================');
 
@@ -659,6 +719,19 @@ foreach ($plan as $item) {
 
     foreach ($item['files'] as $file) {
         fub_pw_add_resource($course, 1, $file, $item['coursekey']);
+    }
+
+    // Przy ponownym imporcie po poprawie grupowania aneks został już dodany
+    // do kursu dokumentu głównego. Opcjonalnie usuwamy jego dawny osobny kurs.
+    if ($repairgrouping && $item['type'] === 'documentwithannexes' && count($item['files']) > 1) {
+        foreach (array_slice($item['files'], 1) as $relatedfile) {
+            fub_pw_repair_old_attachment_course(
+                $item['relcategory'],
+                $relatedfile,
+                (int)$course->id,
+                $forcerepair
+            );
+        }
     }
 
     $confirmationcmid = fub_pw_add_confirmation($course, 1, $item['coursekey']);
