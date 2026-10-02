@@ -241,8 +241,31 @@ function fub_pw_relation_score(string $attachment, string $basefile): float {
         return 0.0;
     }
 
-    $intersection = array_intersect($subjecttokens, $basetokens);
-    return count($intersection) / max(1, count($subjecttokens));
+    // Dopasowanie fleksyjne/prefiksowe dla nazw typu:
+    // "Regulamin Organizacyjny" <-> "do Regulaminu Organizacyjnego".
+    $matched = 0;
+    foreach ($subjecttokens as $subjecttoken) {
+        foreach ($basetokens as $basetoken) {
+            if ($subjecttoken === $basetoken) {
+                $matched++;
+                break;
+            }
+
+            $minlen = min(core_text::strlen($subjecttoken), core_text::strlen($basetoken));
+            if ($minlen >= 8) {
+                $prefixlen = min(10, $minlen);
+                if (
+                    core_text::substr($subjecttoken, 0, $prefixlen) ===
+                    core_text::substr($basetoken, 0, $prefixlen)
+                ) {
+                    $matched++;
+                    break;
+                }
+            }
+        }
+    }
+
+    return $matched / max(1, count($subjecttokens));
 }
 
 function fub_pw_add_file_courses(array $files, string $relcategory, string $coursekeyprefix, array &$plan): void {
