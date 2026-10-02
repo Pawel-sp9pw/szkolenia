@@ -20,6 +20,7 @@ require_once($CFG->dirroot . '/cohort/lib.php');
 require_once($CFG->libdir . '/completionlib.php');
 require_once($CFG->dirroot . '/completion/criteria/completion_criteria_activity.php');
 require_once($CFG->dirroot . '/enrol/cohort/locallib.php');
+require_once($CFG->libdir . '/resourcelib.php');
 require_once($CFG->dirroot . '/mod/resource/lib.php');
 require_once($CFG->dirroot . '/mod/choice/lib.php');
 
