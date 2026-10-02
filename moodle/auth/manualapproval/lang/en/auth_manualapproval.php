@@ -41,3 +41,4 @@ $string['notification_body'] = 'A new user is waiting for approval.\n\nName: {$a
 $string['notification_small'] = 'New registration: {$a->fullname} ({$a->username})';
 $string['messageprovider:newregistration'] = 'New registration notifications';
 $string['privacy:metadata'] = 'The plugin does not store personal data outside the standard Moodle user account fields.';
+$string['task_sync_portal_wiedzy_cohort'] = 'Sync users with the Knowledge Portal cohort';
