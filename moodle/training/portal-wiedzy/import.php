@@ -20,6 +20,8 @@ require_once($CFG->dirroot . '/cohort/lib.php');
 require_once($CFG->libdir . '/completionlib.php');
 require_once($CFG->dirroot . '/completion/criteria/completion_criteria_activity.php');
 require_once($CFG->dirroot . '/enrol/cohort/locallib.php');
+require_once($CFG->dirroot . '/mod/resource/lib.php');
+require_once($CFG->dirroot . '/mod/choice/lib.php');
 
 [$options, $unrecognized] = cli_get_params(
     [
@@ -262,7 +264,7 @@ function fub_pw_get_or_create_cohort(bool $dryrun): ?stdClass {
 }
 
 function fub_pw_sync_all_users_to_cohort(stdClass $cohort): int {
-    global $DB;
+    global $CFG, $DB;
 
     $guestid = (int)$CFG->siteguest;
     $users = $DB->get_records_select(
