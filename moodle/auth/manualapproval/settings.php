@@ -34,3 +34,18 @@ $ADMIN->add('accounts', new admin_externalpage(
     new moodle_url('/auth/manualapproval/cohorts.php'),
     'moodle/cohort:assign'
 ));
+
+
+$ADMIN->add('reports', new admin_externalpage(
+    'authmanualapprovalportalreport',
+    get_string('portalreport', 'auth_manualapproval'),
+    new moodle_url('/auth/manualapproval/report_portal.php'),
+    'moodle/site:config'
+));
+
+$ADMIN->add('reports', new admin_externalpage(
+    'authmanualapprovaltrainingreport',
+    get_string('trainingreport', 'auth_manualapproval'),
+    new moodle_url('/auth/manualapproval/report_training.php'),
+    'moodle/site:config'
+));
