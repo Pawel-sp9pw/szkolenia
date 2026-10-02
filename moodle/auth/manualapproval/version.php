@@ -4,8 +4,8 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'auth_manualapproval';
-$plugin->version = 2026091501;
+$plugin->version = 2026100201;
 $plugin->requires = 2026042000;
 $plugin->supported = [502, 502];
 $plugin->maturity = MATURITY_STABLE;
-$plugin->release = '1.1.1';
+$plugin->release = '1.1.2';
