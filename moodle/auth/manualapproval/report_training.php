@@ -62,7 +62,7 @@ if ($courseid) {
 }
 
 $sql = "
-    SELECT CONCAT(cc.course, '-', cc.userid) AS rowkey,
+    SELECT CONCAT(c.id, '-', u.id) AS rowkey,
            c.id AS courseid,
            c.fullname AS coursename,
            u.id AS userid,
@@ -72,21 +72,32 @@ $sql = "
            u.email,
            cc.timecompleted,
            gg.finalgrade,
+           gg.timemodified AS gradetimemodified,
            gi.grademax,
-           gi.grademin
-      FROM {course_completions} cc
-      JOIN {course} c ON c.id = cc.course
-      JOIN {user} u ON u.id = cc.userid
- LEFT JOIN {grade_items} gi
+           gi.grademin,
+           gi.gradepass
+      FROM {course} c
+      JOIN {grade_items} gi
         ON gi.courseid = c.id
        AND gi.itemtype = 'course'
- LEFT JOIN {grade_grades} gg
+      JOIN {grade_grades} gg
         ON gg.itemid = gi.id
-       AND gg.userid = u.id
-     WHERE cc.timecompleted > 0
-       AND c.id <> :siteid
+       AND gg.finalgrade IS NOT NULL
+      JOIN {user} u
+        ON u.id = gg.userid
+ LEFT JOIN {course_completions} cc
+        ON cc.course = c.id
+       AND cc.userid = u.id
+     WHERE c.id <> :siteid
        AND (c.idnumber IS NULL OR c.idnumber NOT LIKE :pwpattern)
        AND u.deleted = 0
+       AND (
+            cc.timecompleted > 0
+            OR (
+                gg.finalgrade IS NOT NULL
+                AND (gi.gradepass <= 0 OR gg.finalgrade >= gi.gradepass)
+            )
+       )
        {$coursewhere}
   ORDER BY c.fullname ASC, u.lastname ASC, u.firstname ASC, u.username ASC
 ";
@@ -130,7 +141,10 @@ if (!$records) {
             s($record->username),
             s($record->email),
             $grade,
-            userdate((int)$record->timecompleted, get_string('strftimedatetimeshort')),
+            userdate(
+                (int)($record->timecompleted ?: $record->gradetimemodified),
+                get_string('strftimedatetimeshort')
+            ),
         ];
     }
 
