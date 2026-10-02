@@ -52,9 +52,9 @@ Opcje:
 Zasady:
   - główna kategoria Moodle: Portal Wiedzy,
   - foldery pośrednie stają się kategoriami,
-  - folder końcowy zawierający dokumenty staje się jednym kursem,
-  - wszystkie dokumenty z takiego folderu (np. dokument główny + aneksy) trafiają do jednego kursu,
-  - pliki leżące bezpośrednio w kategorii z podfolderami stają się osobnymi kursami,
+  - każdy dokument staje się osobnym kursem,
+  - wyjątek: gdy folder zawiera dokładnie jeden dokument główny i pliki zaczynające się od \"Aneks\", aneksy są dołączane do kursu dokumentu głównego,
+  - foldery zawsze pozostają kategoriami Moodle,
   - każdy kurs ma potwierdzenie "Zapoznałem/-am się",
   - kurs jest synchronizowany z kohortą FUB-PORTAL-WIEDZY.
 
@@ -136,36 +136,63 @@ function fub_pw_relpath(string $path, string $source): string {
     return str_replace(DIRECTORY_SEPARATOR, '/', $relative);
 }
 
+function fub_pw_is_annex(string $filename): bool {
+    $name = core_text::strtolower(fub_pw_clean_name($filename));
+    return (bool)preg_match('/^aneks(?:\\s|[-_.]|$)/u', $name);
+}
+
+function fub_pw_add_file_courses(array $files, string $relcategory, string $coursekeyprefix, array &$plan): void {
+    if (!$files) {
+        return;
+    }
+
+    // Wyjątek dla ciągłości dokumentu: jeżeli w jednym folderze znajduje się
+    // dokładnie jeden dokument główny i jeden lub więcej plików zaczynających
+    // się od "Aneks", wszystkie aneksy trafiają do kursu dokumentu głównego.
+    $annexes = [];
+    $basefiles = [];
+    foreach ($files as $file) {
+        if (fub_pw_is_annex(basename($file))) {
+            $annexes[] = $file;
+        } else {
+            $basefiles[] = $file;
+        }
+    }
+
+    if (count($basefiles) === 1 && count($annexes) >= 1) {
+        $basefile = $basefiles[0];
+        $allfiles = array_merge([$basefile], $annexes);
+        $plan[] = [
+            'type' => 'documentwithannexes',
+            'relcategory' => $relcategory,
+            'coursename' => fub_pw_clean_name(basename($basefile)),
+            'coursekey' => trim($coursekeyprefix . '/' . basename($basefile), '/'),
+            'files' => $allfiles,
+        ];
+        return;
+    }
+
+    // Domyślnie każdy dokument jest osobnym kursem.
+    foreach ($files as $file) {
+        $plan[] = [
+            'type' => 'filecourse',
+            'relcategory' => $relcategory,
+            'coursename' => fub_pw_clean_name(basename($file)),
+            'coursekey' => trim($coursekeyprefix . '/' . basename($file), '/'),
+            'files' => [$file],
+        ];
+    }
+}
+
 function fub_pw_discover(string $dir, string $source, array $allowedextensions, array &$plan): void {
     $files = fub_pw_supported_files($dir, $allowedextensions);
     $subdirs = fub_pw_subdirs($dir);
     $rel = fub_pw_relpath($dir, $source);
 
-    if ($files && !$subdirs) {
-        // Folder końcowy = jeden kurs. Dzięki temu dokument główny i aneksy zachowują ciągłość.
-        $plan[] = [
-            'type' => 'leafcourse',
-            'relcategory' => dirname($rel) === '.' ? '' : dirname($rel),
-            'coursename' => basename($dir),
-            'coursekey' => $rel,
-            'files' => $files,
-        ];
-        return;
-    }
-
-    if ($files) {
-        // Folder ma też podfoldery, więc pozostaje kategorią.
-        // Każdy plik bezpośrednio w nim staje się osobnym kursem.
-        foreach ($files as $file) {
-            $plan[] = [
-                'type' => 'filecourse',
-                'relcategory' => $rel,
-                'coursename' => fub_pw_clean_name(basename($file)),
-                'coursekey' => trim($rel . '/' . basename($file), '/'),
-                'files' => [$file],
-            ];
-        }
-    }
+    // Każdy folder pozostaje kategorią. Pliki znajdujące się bezpośrednio
+    // w folderze są zamieniane na osobne kursy, z wyjątkiem jednoznacznego
+    // zestawu: jeden dokument główny + aneksy.
+    fub_pw_add_file_courses($files, $rel, $rel, $plan);
 
     foreach ($subdirs as $subdir) {
         fub_pw_discover($subdir, $source, $allowedextensions, $plan);
