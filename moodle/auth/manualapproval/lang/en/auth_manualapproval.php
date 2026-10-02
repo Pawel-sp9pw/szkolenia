@@ -44,3 +44,18 @@ $string['privacy:metadata'] = 'The plugin does not store personal data outside t
 $string['task_sync_portal_wiedzy_cohort'] = 'Sync users with the Knowledge Portal cohort';
 
 $string['report_portal_acknowledgements'] = 'Knowledge Portal – acknowledgements';
+
+$string['portalreport'] = 'Knowledge Portal – document acknowledgements';
+$string['portalreport_help'] = 'Select a Knowledge Portal document (course) to display users who confirmed that they read it.';
+$string['choosecourse'] = 'Select document';
+$string['showreport'] = 'Show report';
+$string['acknowledgedat'] = 'Acknowledged at';
+$string['portalreport_count'] = 'Users who acknowledged the document: {$a}';
+$string['portalreport_none'] = 'Nobody has acknowledged this document yet.';
+$string['trainingreport'] = 'Training – completions and grades';
+$string['trainingreport_help'] = 'Shows who completed which training, the received grade and completion date. Select one course or display all.';
+$string['alltrainings'] = 'All training courses';
+$string['completedat'] = 'Completed at';
+$string['trainingreport_count'] = 'Completions: {$a}';
+$string['trainingreport_none'] = 'No completed training courses in the selected range.';
+$string['nograde'] = 'No grade';
