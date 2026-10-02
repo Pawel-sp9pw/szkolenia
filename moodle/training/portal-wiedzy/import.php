@@ -136,9 +136,99 @@ function fub_pw_relpath(string $path, string $source): string {
     return str_replace(DIRECTORY_SEPARATOR, '/', $relative);
 }
 
-function fub_pw_is_annex(string $filename): bool {
-    $name = core_text::strtolower(fub_pw_clean_name($filename));
-    return (bool)preg_match('/^aneks(?:\\s|[-_.]|$)/u', $name);
+function fub_pw_match_normalize(string $name): string {
+    $name = core_text::strtolower(fub_pw_clean_name($name));
+    $name = str_replace(['–', '—', '_', '/', '\\'], ' ', $name);
+    $name = preg_replace('/[^\\p{L}\\p{N}]+/u', ' ', $name);
+    $name = preg_replace('/\\s+/u', ' ', (string)$name);
+    return trim((string)$name);
+}
+
+function fub_pw_relation_subject(string $filename): string {
+    $name = fub_pw_match_normalize($filename);
+
+    // Najmocniejszy sygnał: "Aneks/Załącznik ... do <dokumentu>".
+    if (preg_match('/\\b(?:aneks|załącznik)\\b.*?\\bdo\\b\\s+(.+)$/u', $name, $m)) {
+        return trim($m[1]);
+    }
+
+    // Częsty wariant w archiwum: "Zarządzenie ... Aneks nr X do Regulaminu ...".
+    if (preg_match('/\\baneks\\b.*?\\bdo\\b\\s+(.+)$/u', $name, $m)) {
+        return trim($m[1]);
+    }
+
+    // Jeżeli w nazwie jest jednoznaczne wskazanie konkretnego regulaminu,
+    // wykorzystujemy część od słowa "regulamin".
+    if (preg_match('/\\b(regulamin(?:u|em|ie|owy|owa|owe)?\\b.+)$/u', $name, $m)) {
+        return trim($m[1]);
+    }
+
+    // Aneks bez "do" - zostawiamy temat po numerze aneksu. Będzie połączony
+    // tylko wtedy, gdy dopasowanie do dokumentu głównego jest jednoznaczne.
+    if (preg_match('/^aneks\\b(?:\\s+nr)?\\s*[0-9ivxlcdm.\\/-]*\\s*(.+)$/u', $name, $m)) {
+        return trim($m[1]);
+    }
+
+    return '';
+}
+
+function fub_pw_is_related_attachment(string $filename): bool {
+    $name = fub_pw_match_normalize($filename);
+
+    if (preg_match('/\\baneks\\b/u', $name)) {
+        return true;
+    }
+
+    // "Załącznik" sam w sobie często jest niezależnym formularzem, dlatego
+    // traktujemy go jako część dokumentu tylko przy jawnym "... do ...".
+    return (bool)preg_match('/\\bzałącznik\\b.*\\bdo\\b/u', $name);
+}
+
+function fub_pw_match_tokens(string $text): array {
+    $stop = [
+        'do', 'dla', 'w', 'we', 'z', 'ze', 'i', 'oraz', 'na', 'nr', 'numer',
+        'aneks', 'aneksu', 'załącznik', 'załącznika', 'zarządzenie', 'zarządzenia',
+        'prezesa', 'fundacja', 'fundacji', 'unia', 'bracka', 'fub',
+        'wydanie', 'wydania', 'wersja', 'zmiana', 'zmiany', 'dotyczący', 'dotycząca',
+    ];
+    $tokens = preg_split('/\\s+/u', fub_pw_match_normalize($text), -1, PREG_SPLIT_NO_EMPTY);
+    $result = [];
+    foreach ($tokens as $token) {
+        if (core_text::strlen($token) < 3 || in_array($token, $stop, true)) {
+            continue;
+        }
+        if (preg_match('/^[0-9ivxlcdm.-]+$/u', $token)) {
+            continue;
+        }
+        $result[$token] = true;
+    }
+    return array_keys($result);
+}
+
+function fub_pw_relation_score(string $attachment, string $basefile): float {
+    $subject = fub_pw_relation_subject($attachment);
+    if ($subject === '') {
+        return 0.0;
+    }
+
+    $subjectnorm = fub_pw_match_normalize($subject);
+    $basenorm = fub_pw_match_normalize($basefile);
+
+    if ($subjectnorm !== '' && (
+        str_contains($basenorm, $subjectnorm) ||
+        (core_text::strlen($basenorm) >= 12 && str_contains($subjectnorm, $basenorm))
+    )) {
+        return 1.0;
+    }
+
+    $subjecttokens = fub_pw_match_tokens($subjectnorm);
+    $basetokens = fub_pw_match_tokens($basenorm);
+    if (!$subjecttokens || !$basetokens) {
+        return 0.0;
+    }
+
+    $intersection = array_intersect($subjecttokens, $basetokens);
+    return count($intersection) / max(1, count($subjecttokens));
 }
 
 function fub_pw_add_file_courses(array $files, string $relcategory, string $coursekeyprefix, array &$plan): void {
@@ -146,36 +236,61 @@ function fub_pw_add_file_courses(array $files, string $relcategory, string $cour
         return;
     }
 
-    // Wyjątek dla ciągłości dokumentu: jeżeli w jednym folderze znajduje się
-    // dokładnie jeden dokument główny i jeden lub więcej plików zaczynających
-    // się od "Aneks", wszystkie aneksy trafiają do kursu dokumentu głównego.
-    $annexes = [];
+    $attachments = [];
     $basefiles = [];
     foreach ($files as $file) {
-        if (fub_pw_is_annex(basename($file))) {
-            $annexes[] = $file;
+        if (fub_pw_is_related_attachment(basename($file))) {
+            $attachments[] = $file;
         } else {
             $basefiles[] = $file;
         }
     }
 
-    if (count($basefiles) === 1 && count($annexes) >= 1) {
-        $basefile = $basefiles[0];
-        $allfiles = array_merge([$basefile], $annexes);
+    $groups = [];
+    foreach ($basefiles as $file) {
+        $groups[$file] = [];
+    }
+
+    $unmatched = [];
+    foreach ($attachments as $attachment) {
+        $scores = [];
+        foreach ($basefiles as $basefile) {
+            $score = fub_pw_relation_score(basename($attachment), basename($basefile));
+            if ($score > 0) {
+                $scores[$basefile] = $score;
+            }
+        }
+
+        arsort($scores, SORT_NUMERIC);
+        $bestfiles = array_keys($scores);
+        $bestscore = $bestfiles ? (float)$scores[$bestfiles[0]] : 0.0;
+        $secondscore = count($bestfiles) > 1 ? (float)$scores[$bestfiles[1]] : 0.0;
+
+        // Łączymy tylko dopasowania jednoznaczne. Próg 0,60 pozwala uwzględnić
+        // dodatkowe słowa typu "Podmiotu Leczniczego", ale nie łączy przypadkowych aneksów.
+        if ($bestscore >= 0.60 && ($secondscore < $bestscore || $bestscore >= 0.95)) {
+            $groups[$bestfiles[0]][] = $attachment;
+        } else {
+            $unmatched[] = $attachment;
+        }
+    }
+
+    foreach ($basefiles as $basefile) {
+        $related = $groups[$basefile] ?? [];
         $plan[] = [
-            'type' => 'documentwithannexes',
+            'type' => $related ? 'documentwithannexes' : 'filecourse',
             'relcategory' => $relcategory,
             'coursename' => fub_pw_clean_name(basename($basefile)),
             'coursekey' => trim($coursekeyprefix . '/' . basename($basefile), '/'),
-            'files' => $allfiles,
+            'files' => array_merge([$basefile], $related),
         ];
-        return;
     }
 
-    // Domyślnie każdy dokument jest osobnym kursem.
-    foreach ($files as $file) {
+    // Jeżeli aneksu nie dało się jednoznacznie przypisać, pozostaje osobnym
+    // kursem zamiast ryzykować połączenie z niewłaściwym dokumentem.
+    foreach ($unmatched as $file) {
         $plan[] = [
-            'type' => 'filecourse',
+            'type' => 'unmatchedattachment',
             'relcategory' => $relcategory,
             'coursename' => fub_pw_clean_name(basename($file)),
             'coursekey' => trim($coursekeyprefix . '/' . basename($file), '/'),
