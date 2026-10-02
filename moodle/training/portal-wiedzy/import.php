@@ -452,7 +452,7 @@ function fub_pw_add_confirmation(stdClass $course, int $sectionnum, string $cour
     $data->limitanswers = 0;
     $data->showunanswered = 0;
     $data->includeinactive = 0;
-    $data->showresults = CHOICE_SHOWRESULTS_NEVER;
+    $data->showresults = CHOICE_SHOWRESULTS_NOT;
     $data->publish = CHOICE_PUBLISH_ANONYMOUS;
     $data->showavailable = 0;
     $data->completion = COMPLETION_TRACKING_AUTOMATIC;
