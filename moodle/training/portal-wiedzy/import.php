@@ -374,7 +374,7 @@ function fub_pw_get_or_create_category(string $relpath, bool $dryrun): ?\core_co
         $rootcat = \core_course_category::create([
             'name' => 'Portal Wiedzy',
             'idnumber' => FUB_PW_ROOT_IDNUMBER,
-            'description' => 'Instrukcje, procedury, regulaminy i dokumenty organizacyjne Fundacji Unia Bracka.',
+            'description' => 'Instrukcje, procedury, regulaminy i dokumenty organizacyjne Fundacji „Unia Bracka”.',
             'descriptionformat' => FORMAT_HTML,
             'visible' => 1,
         ]);
