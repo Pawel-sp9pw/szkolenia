@@ -7,8 +7,12 @@ $string['passwordagain'] = 'Powtórz hasło';
 $string['passwordsdonotmatch'] = 'Podane hasła nie są identyczne.';
 $string['registrationcomplete'] = 'Rejestracja zakończona';
 $string['accountawaitingapproval'] = 'Konto zostało utworzone i oczekuje na zatwierdzenie administratora.';
-$string['signupmessage'] = 'Twój login: {$a->username}\n\nAktywacja konta nastąpi w ciągu maksymalnie {$a->days} dni roboczych. Po tym czasie spróbuj zalogować się używając powyższego loginu i podanego podczas rejestracji hasła. W razie problemów skontaktuj się telefonicznie z administratorem szkoleń.';
-$string['signupmessagephone'] = 'Twój login: {$a->username}\n\nAktywacja konta nastąpi w ciągu maksymalnie {$a->days} dni roboczych. Po tym czasie spróbuj zalogować się używając powyższego loginu i podanego podczas rejestracji hasła. W razie problemów skontaktuj się telefonicznie: {$a->phone}.';
+$string['signupmessage'] = 'Twój login: {$a->username}
+
+Aktywacja konta nastąpi w ciągu maksymalnie {$a->days} dni roboczych. Po tym czasie spróbuj zalogować się używając powyższego loginu i podanego podczas rejestracji hasła. W razie problemów skontaktuj się telefonicznie z administratorem.';
+$string['signupmessagephone'] = 'Twój login: {$a->username}
+
+Aktywacja konta nastąpi w ciągu maksymalnie {$a->days} dni roboczych. Po tym czasie spróbuj zalogować się używając powyższego loginu i podanego podczas rejestracji hasła. W razie problemów skontaktuj się telefonicznie: {$a->phone}.';
 $string['continuetologin'] = 'Przejdź do logowania';
 $string['activationdays'] = 'Czas aktywacji konta';
 $string['activationdays_desc'] = 'Liczba dni roboczych podawana użytkownikowi jako maksymalny czas oczekiwania na aktywację konta.';
