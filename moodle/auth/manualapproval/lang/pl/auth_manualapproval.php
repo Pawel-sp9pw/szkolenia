@@ -37,7 +37,14 @@ $string['cohortssaved'] = 'Zapisano kohorty użytkownika {$a}.';
 $string['nocohortsassigned'] = 'Brak';
 $string['registeredat'] = 'Data rejestracji';
 $string['notification_subject'] = 'Nowa rejestracja w Moodle';
-$string['notification_body'] = "Nowy użytkownik oczekuje na zatwierdzenie.\n\nImię i nazwisko: {$a->fullname}\nLogin: {$a->username}\nPrzychodnia Bracka: {$a->institution}\nStanowisko: {$a->department}\n\nPrzejdź do listy kont oczekujących w Portalu Wiedzy, zweryfikuj dane, wybierz kohorty szkoleniowe i zatwierdź konto.";
+$string['notification_body'] = 'Nowy użytkownik oczekuje na zatwierdzenie.
+
+Imię i nazwisko: {$a->fullname}
+Login: {$a->username}
+Przychodnia Bracka: {$a->institution}
+Stanowisko: {$a->department}
+
+Przejdź do listy kont oczekujących w Portalu Wiedzy, zweryfikuj dane, wybierz kohorty szkoleniowe i zatwierdź konto.'
 $string['notification_small'] = 'Nowa rejestracja: {$a->fullname} ({$a->username})';
 $string['messageprovider:newregistration'] = 'Powiadomienia o nowych rejestracjach';
 $string['privacy:metadata'] = 'Wtyczka nie przechowuje własnych danych osobowych poza standardowymi danymi konta użytkownika Moodle.';
