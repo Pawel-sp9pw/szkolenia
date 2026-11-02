@@ -103,7 +103,20 @@ class auth_plugin_manualapproval extends auth_plugin_base {
 
         echo $OUTPUT->header();
         echo $OUTPUT->notification(get_string('accountawaitingapproval', 'auth_manualapproval'), 'notifysuccess');
-        echo $OUTPUT->box(nl2br(s($message)), 'generalbox');
+
+        $messagelines = preg_split('/\\R/u', $message, 2);
+        $loginline = trim((string)($messagelines[0] ?? ''));
+        $restmessage = trim((string)($messagelines[1] ?? ''));
+
+        $messagehtml = html_writer::div(
+            s($loginline),
+            'fw-bold fs-3 mb-3'
+        );
+        if ($restmessage !== '') {
+            $messagehtml .= html_writer::div(nl2br(s($restmessage)));
+        }
+
+        echo $OUTPUT->box($messagehtml, 'generalbox');
         echo $OUTPUT->single_button(new moodle_url('/login/index.php'), get_string('continuetologin', 'auth_manualapproval'), 'get');
         echo $OUTPUT->footer();
     }
