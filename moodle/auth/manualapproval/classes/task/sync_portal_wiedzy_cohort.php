@@ -42,5 +42,22 @@ class sync_portal_wiedzy_cohort extends \core\task\scheduled_task {
         }
 
         mtrace("FUB-PORTAL-WIEDZY: dodano użytkowników: {$added}");
+
+        $courses = $DB->get_records_select(
+            'course',
+            'id <> :siteid',
+            ['siteid' => SITEID],
+            '',
+            'id'
+        );
+
+        $courseslinked = 0;
+        foreach ($courses as $course) {
+            if (\auth_manualapproval\portal_wiedzy::ensure_course_enrolment((int)$course->id)) {
+                $courseslinked++;
+            }
+        }
+
+        mtrace("FUB-PORTAL-WIEDZY: podpięto kohortę do kursów: {$courseslinked}");
     }
 }
