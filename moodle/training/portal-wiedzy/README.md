@@ -2,12 +2,18 @@
 
 Importer odtwarza strukturę dokumentów ze starego Portalu Wiedzy w Moodle 5.2.x.
 
+## Branding i domena
+
+- adres: **https://pw.uniabracka.pl**,
+- nazwa witryny: **Portal Wiedzy**,
+- opis witryny: **Fundacja „Unia Bracka”**.
+
 ## Docelowa struktura
 
 - główna kategoria: **Portal Wiedzy**,
 - foldery pośrednie: kategorie Moodle,
-- każdy dokument staje się osobnym kursem,
-- wyjątek: jeśli w jednym folderze jest dokładnie jeden dokument główny i jeden lub więcej plików zaczynających się od `Aneks`, aneksy są dołączane do kursu dokumentu głównego,
+- każdy dokument główny staje się osobnym kursem,
+- aneksy oraz inne jednoznacznie powiązane dokumenty zmieniające są dołączane do kursu dokumentu głównego,
 - foldery pozostają kategoriami Moodle niezależnie od tego, czy zawierają podfoldery.
 
 Przykład:
