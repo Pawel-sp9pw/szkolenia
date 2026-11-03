@@ -21,9 +21,28 @@ $categories = $DB->get_records('course_categories', null, '', 'id,name,path,pare
 $portalroot = $DB->get_record('course_categories', ['idnumber' => 'FUB-PW'], 'id', IGNORE_MISSING);
 $portalrootid = $portalroot ? (int)$portalroot->id : 0;
 
-$portalcourses = array_filter($courses, static function($course): bool {
-    return str_starts_with((string)$course->idnumber, 'FUB-PW-COURSE-');
-});
+$isportalcategory = static function(int $categoryid) use ($categories, $portalrootid): bool {
+    if ($portalrootid <= 0 || $categoryid <= 0 || empty($categories[$categoryid])) {
+        return false;
+    }
+
+    if ($categoryid === $portalrootid) {
+        return true;
+    }
+
+    $path = trim((string)$categories[$categoryid]->path, '/');
+    if ($path === '') {
+        return false;
+    }
+
+    $ids = array_values(array_filter(array_map('intval', explode('/', $path))));
+    return in_array($portalrootid, $ids, true);
+};
+
+$portalcourses = array_filter(
+    $courses,
+    static fn($course): bool => $isportalcategory((int)$course->category)
+);
 
 $completionmap = [];
 if ($portalcourses) {
@@ -111,7 +130,7 @@ $portal = ['name' => 'Portal Wiedzy', 'categories' => [], 'courses' => []];
 $training = ['name' => 'Szkolenia', 'categories' => [], 'courses' => []];
 
 foreach ($courses as $course) {
-    $isportal = str_starts_with((string)$course->idnumber, 'FUB-PW-COURSE-');
+    $isportal = $isportalcategory((int)$course->category);
     $parts = auth_manualapproval_category_parts(
         (int)$course->category,
         $categories,
